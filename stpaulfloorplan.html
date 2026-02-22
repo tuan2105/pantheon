@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St. Paul's Cathedral Architectural Rendering</title>
+    <style>
+        /* --- Main Page Base Styles --- */
+        body {
+            font-family: 'Georgia', serif;
+            background: #2c241b; /* Dark wood study background */
+            background-image: radial-gradient(circle at center, #3a3024 0%, #1e1812 100%);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* --- The Complete Document Container --- */
+        .main-document {
+            display: flex;
+            flex-direction: column; /* Stack top, middle, bottom rows */
+            width: 1300px;
+            height: 900px;
+            background-color: #f0e6d2; /* Parchment base */
+            background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+            border: 8px solid #5c4a38;
+            border-style: ridge;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        /* --- Shared Styles for Illustration Panels --- */
+        .illustration-panel {
+            background-color: #e8dec8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        /* Common style for all inserted images to look antique */
+        .illustration-panel img {
+            width: auto;
+            height: auto;
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border: 2px solid #4a3b2c;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            filter: sepia(40%) contrast(115%) brightness(95%); /* Antique filter */
+        }
+
+
+        /* --- Top Banner Row --- */
+        .top-banner {
+            height: 160px; /* Fixed height for top image */
+            border-bottom: 4px solid #5c4a38;
+        }
+
+        /* --- Middle Section Row (Left Img | Map | Right Img) --- */
+        .middle-section {
+            flex: 1; /* Takes all remaining available height */
+            display: flex;
+            flex-direction: row;
+            position: relative;
+        }
+
+        .side-panel {
+            flex: 0 0 280px; /* Fixed width for side images */
+            background-color: #e0d5c0;
+        }
+        .side-panel.left { border-right: 4px solid #5c4a38; }
+        .side-panel.right { border-left: 4px solid #5c4a38; }
+
+
+        /* --- Bottom Banner Row --- */
+        .bottom-banner {
+            height: 180px; /* Fixed height for bottom image */
+            border-top: 4px solid #5c4a38;
+        }
+
+
+        /* --- THE MAP SECTION (Central part of middle row) --- */
+        .map-center-container {
+            flex: 1; /* Takes remaining width in the middle row */
+            position: relative;
+            background-color: #f5f3eb;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(139, 115, 85, 0.05) 10px, rgba(139, 115, 85, 0.05) 20px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Locks aspect ratio so markers stay aligned */
+        .map-frame {
+            position: relative;
+            width: 100%;
+            max-height: 100%;
+            aspect-ratio: 800 / 600;
+        }
+
+        .map-title { 
+            position: absolute; top: 15px; left: 20px; font-size: 24px; font-weight: bold; color: #4a3b2c; letter-spacing: 2px; text-transform: uppercase; border-bottom: 3px double #4a3b2c; padding-bottom: 5px; z-index: 5; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+
+        /* --- Puzzle Markers & Code Boxes --- */
+        .spot { position: absolute; z-index: 10; }
+
+        .marker {
+            width: 26px; height: 26px;
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #a30000);
+            border: 2px solid #5c0000; color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-family: 'Times New Roman', serif; font-size: 16px; position: absolute; transform: translate(-50%, -50%); box-shadow: 2px 2px 6px rgba(0,0,0,0.5); cursor: crosshair; text-shadow: 1px 1px 1px #000;
+        }
+
+        .code-box {
+            position: absolute; background-color: #fffbf0; padding: 6px 10px; border: 1px solid #8b7355; border-bottom-width: 3px; font-family: 'Courier New', Courier, monospace; font-size: 16px; border-radius: 2px; white-space: nowrap; box-shadow: 4px 4px 12px rgba(0,0,0,0.2); transform: rotate(-1deg);
+        }
+
+        .r { color: #b71c1c; font-weight: bold; text-shadow: 0px 0px 1px rgba(183, 28, 28, 0.2); }
+        .b { color: #2c241b; font-weight: bold; }
+
+        /* Exact Percentages for Map Locations */
+        #spot1 { left: 68.75%; top: 58.00%; } /* South Choir Aisle */
+        #spot1 .code-box { top: 15px; left: 15px; }
+        #spot2 { left: 53.75%; top: 28.33%; } /* North Transept Main */
+        #spot2 .code-box { top: -50px; left: -180px; transform: rotate(1deg); }
+        #spot3 { left: 60.00%; top: 28.33%; } /* North Transept East Aisle */
+        #spot3 .code-box { top: -15px; left: 25px; }
+        #spot4 { left: 35.00%; top: 42.00%; } /* North Nave Aisle */
+        #spot4 .code-box { top: -50px; left: -90px; }
+        #spot5 { left: 53.75%; top: 71.66%; } /* South Transept */
+        #spot5 .code-box { top: 15px; left: 20px; transform: rotate(1deg);}
+        
+        /* --- Home Button --- */
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            padding: 12px 20px;
+            background-color: #5c4a38;
+            color: #f0e6d2;
+            border: 2px solid #3a2e22;
+            border-radius: 4px;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .home-button:hover {
+            background-color: #6b5a47;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+        
+        .home-button:active {
+            background-color: #4a3b2c;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-button">⌂ Home</a>
+
+    <div class="main-document">
+        
+        <div class="illustration-panel top-banner">
+            <img src="https://www.archiseek.com/wp-content/gallery/australia-victoria/0003.jpg" alt="St. Paul's Architectural Section">
+        </div>
+
+
+        <div class="middle-section">
+            
+            <div class="illustration-panel side-panel left">
+                <img src="https://i.pinimg.com/736x/5b/58/a2/5b58a2b056289b90ecd2c2cd51eeb30b.jpg" alt="St. Paul's Exterior Engraving">
+            </div>
+
+            <div class="map-center-container">
+                <div class="map-frame">
+                    <div class="map-title">Floor Plan</div>
+                    
+                    <svg width="100%" height="100%" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top:0; left:0;">
+                        <defs>
+                            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8b7355" stroke-width="0.5" stroke-opacity="0.3"/>
+                            </pattern>
+                            <g id="col"><rect x="-6" y="-6" width="12" height="12" fill="#4a3b2c"/></g>
+                            <g id="pier"><path d="M -15,-15 L 15,-15 L 15,15 L -15,15 Z" fill="#4a3b2c" stroke="#3a2e22" stroke-width="2"/></g>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#grid)" />
+
+                        <g transform="translate(710, 80) scale(0.8)" stroke="#4a3b2c" stroke-width="2">
+                            <circle cx="0" cy="0" r="30" fill="none" stroke-width="3" />
+                            <path d="M 0,-40 L 8,-15 L 0,0 L -8,-15 Z" fill="#4a3b2c"/>
+                            <text x="-6" y="-45" font-family="Times New Roman" font-size="18" font-weight="bold" fill="#4a3b2c" stroke="none">N</text>
+                        </g>
+
+                        <g transform="translate(30, 0)">
+                            <path d="M 150,240 L 330,240 L 330,120 L 360,120 A 40,30 0 0,1 440,120 L 470,120 L 470,240 L 620,240 A 60,60 0 0,1 620,360 L 470,360 L 470,480 L 440,480 A 40,30 0 0,1 360,480 L 330,480 L 330,360 L 150,360 L 150,400 L 90,400 L 90,360 L 110,360 L 110,240 L 90,240 L 90,200 L 150,200 Z" fill="#fdfcf8" stroke="#4a3b2c" stroke-width="4" stroke-linejoin="round" filter="drop-shadow(3px 3px 2px rgba(0,0,0,0.1))"/>
+                            <circle cx="400" cy="300" r="55" fill="rgba(139, 115, 85, 0.1)" stroke="#4a3b2c" stroke-width="3"/>
+                            <circle cx="400" cy="300" r="45" fill="none" stroke="#4a3b2c" stroke-width="1.5" stroke-dasharray="8 4"/>
+                            <use href="#pier" x="335" y="235" /><use href="#pier" x="465" y="235" /><use href="#pier" x="465" y="365" /><use href="#pier" x="335" y="365" />
+                            <use href="#col" x="180" y="265" /><use href="#col" x="220" y="265" /><use href="#col" x="260" y="265" /><use href="#col" x="300" y="265" />
+                            <use href="#col" x="180" y="335" /><use href="#col" x="220" y="335" /><use href="#col" x="260" y="335" /><use href="#col" x="300" y="335" />
+                            <use href="#col" x="500" y="265" /><use href="#col" x="540" y="265" /><use href="#col" x="580" y="265" />
+                            <use href="#col" x="500" y="335" /><use href="#col" x="540" y="335" /><use href="#col" x="580" y="335" />
+                            <use href="#col" x="370" y="150" /><use href="#col" x="370" y="190" /><use href="#col" x="430" y="150" /><use href="#col" x="430" y="190" />
+                            <use href="#col" x="370" y="450" /><use href="#col" x="370" y="410" /><use href="#col" x="430" y="450" /><use href="#col" x="430" y="410" />
+                            <path d="M 150,265 L 320,265 M 150,335 L 320,335 M 480,265 L 610,265 M 480,335 L 610,335" fill="none" stroke="#4a3b2c" stroke-width="1" stroke-dasharray="5 3"/>
+                        </g>
+                    </svg>
+
+                    <div class="spot" id="spot1">
+                        <div class="marker">1</div>
+                        <div class="code-box"><span class="r">ζ</span><span class="r">ω</span><span class="b">ζ</span><span class="r">θ</span><span class="r">ν</span><span class="b">ω</span><span class="r">δ</span><span class="r">ω</span><span class="b">ι</span><span class="r">ν</span><span class="r">ν</span><span class="b">ν</span><span class="r">ε</span><span class="b">ε</span></div>
+                    </div>
+                    <div class="spot" id="spot2">
+                        <div class="marker">2</div>
+                        <div class="code-box"><span class="r">ζ</span><span class="r">ω</span><span class="b">β</span><span class="r">θ</span><span class="r">ν</span><span class="b">ε</span><span class="r">ζ</span><span class="r">ε</span><span class="b">ρ</span><span class="r">ρ</span><span class="r">β</span><span class="b">ψ</span><span class="r">ι</span><span class="r">σ</span><span class="b">τ</span></div>
+                    </div>
+                    <div class="spot" id="spot3">
+                        <div class="marker">3</div>
+                        <div class="code-box"><span class="r">τ</span><span class="r">θ</span><span class="b">θ</span><span class="r">ω</span><span class="r">μ</span><span class="b">ι</span><span class="r">α</span><span class="r">σ</span><span class="b">ρ</span><span class="r">π</span><span class="r">ι</span><span class="r">γ</span><span class="b">δ</span><span class="r">τ</span><span class="r">ω</span><span class="r">ν</span><span class="b">ω</span></div>
+                    </div>
+                    <div class="spot" id="spot4">
+                        <div class="marker">4</div>
+                        <div class="code-box"><span class="r">ζ</span><span class="r">ω</span><span class="r">σ</span><span class="b">υ</span><span class="r">θ</span><span class="r">υ</span><span class="r">α</span><span class="b">τ</span><span class="r">ρ</span><span class="r">ε</span><span class="r">ψ</span><span class="b">σ</span><span class="r">ν</span><span class="r">ω</span><span class="r">λ</span><span class="b">ι</span><span class="r">δ</span><span class="r">σ</span><span class="b">δ</span></div>
+                    </div>
+                    <div class="spot" id="spot5">
+                        <div class="marker">5</div>
+                        <div class="code-box"><span class="r">θ</span><span class="r">ω</span><span class="r">ρ</span><span class="b">ε</span><span class="r">α</span><span class="r">τ</span><span class="r">ι</span><span class="b">μ</span><span class="r">ω</span><span class="r">ν</span><span class="r">ε</span><span class="b">α</span><span class="r">λ</span><span class="r">σ</span><span class="r">ω</span><span class="b">π</span><span class="r">ν</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="illustration-panel side-panel right">
+                <img src="https://stpaulsshop.co.uk/cdn/shop/files/13486_StPaulsCathederal_IsometricPoster_Websiteimage_9193fde0-edc6-4745-83eb-849322e7c186.png?v=1754572996" alt="St. Paul's Isometric View">
+            </div>
+
+        </div>
+
+
+        <div class="illustration-panel bottom-banner">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTik3bFwF1B7nXiwq3wLl6zwJzhbnvR5ZzGTg&s" alt="St. Paul's Dome Cross-Section">
+        </div>
+
+    </div>
+</body>
+</html>
