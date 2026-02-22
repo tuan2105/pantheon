@@ -27,6 +27,7 @@
             z-index: 1000;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             box-sizing: border-box;
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
@@ -37,6 +38,22 @@
             border: 1px solid #ccc;
             width: 300px;
             font-size: 16px;
+            margin-left: auto; /* push to the right in the toolbar */
+        }
+
+        /* Home button in toolbar */
+        #homeBtn {
+            display: inline-block;
+            color: #fff;
+            text-decoration: none;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        #homeBtn:hover {
+            background: rgba(255,255,255,0.04);
         }
 
         /* Map Viewport Styles */
@@ -67,6 +84,7 @@
             top: 0; left: 0; bottom: 0; right: 0;
             pointer-events: none; 
             z-index: 2;
+            overflow: visible;
         }
         .border-row {
             position: absolute;
@@ -76,19 +94,20 @@
             grid-template-columns: repeat(17, 1fr);
             pointer-events: auto;
         }
-        .border-top { top: 0; }
-        .border-bottom { bottom: 0; }
+        /* move rows just outside the image so they don't cover it */
+        .border-top { top: -40px; }
+        .border-bottom { bottom: -40px; }
         .border-col {
             position: absolute;
-            top: 40px;
-            bottom: 40px;
+            top: -40px;
+            bottom: -40px;
             width: 40px;
             display: grid;
             grid-template-rows: repeat(8, 1fr);
             pointer-events: auto;
         }
-        .border-left { left: 0; }
-        .border-right { right: 0; }
+        .border-left { left: -40px; }
+        .border-right { right: -40px; }
         
         .border-cell {
             background-color: #5c3a21; /* Vintage brown */
@@ -185,6 +204,7 @@
 <body>
 
     <div id="toolbar">
+        <a id="homeBtn" href="index.html">Home</a>
         <input type="text" id="searchBar" placeholder="Search for locations...">
     </div>
 
