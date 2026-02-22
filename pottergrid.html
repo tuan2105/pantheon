@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vintage 8x8 Grids</title>
+<style>
+    /* Vintage Theme Base */
+    body {
+        font-family: 'Georgia', serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 60px 40px;
+        background-color: #f4ecd8; /* Parchment background */
+        background-image: radial-gradient(#d7cbb3 1px, transparent 1px); /* Subtle texture */
+        background-size: 20px 20px;
+        color: #3e2723; /* Dark brown text */
+        margin: 0;
+    }
+
+    /* Home Button Top Left */
+    .home-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        text-decoration: none;
+        color: #fdf5e6;
+        background-color: #5c4033;
+        padding: 8px 16px;
+        border: 2px solid #3e2723;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 3px 3px 0px #3e2723;
+        transition: all 0.1s ease-in-out;
+    }
+
+    .home-btn:hover {
+        background-color: #3e2723;
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0px #3e2723;
+    }
+
+    .page-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 100px; /* Space between the sections */
+        max-width: 1200px;
+    }
+
+    .main-container {
+        display: flex;
+        gap: 80px; /* Space between left and right parts */
+        align-items: flex-start;
+        justify-content: center;
+        flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    }
+
+    .left-panel {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .right-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 50px; /* Space between the number grids */
+    }
+
+    .grid-wrapper {
+        position: relative;
+        width: 320px;
+        height: 320px;
+        box-shadow: 5px 5px 15px rgba(92, 64, 51, 0.2); /* Soft shadow for depth */
+        background-color: #fdf5e6; /* Old paper inner background */
+        padding: 4px;
+        border: 2px solid #8b7355; /* Outer vintage border */
+    }
+
+    .grid-table {
+        border-collapse: collapse;
+        width: 100%;
+        height: 100%;
+        table-layout: fixed;
+    }
+
+    .grid-table td {
+        border: 1px solid #5c4033; /* Dark brown inner lines */
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        vertical-align: middle;
+        padding: 0;
+        font-size: 18px;
+        font-family: 'Courier New', Courier, monospace; /* Typewriter font for cells */
+        font-weight: bold;
+        color: #2c1e16;
+    }
+
+    /* SVG overlay for drawing the lines */
+    .svg-layer {
+        position: absolute;
+        top: 4px; /* Offset to match the 4px padding of the wrapper */
+        left: 4px;
+        width: 312px; /* 320px - 8px padding */
+        height: 312px;
+        pointer-events: none;
+    }
+
+    polyline {
+        fill: none;
+        stroke: #9b2226; /* Faded crimson ink for vintage contrast */
+        stroke-width: 2.5px;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="home-btn">&#8592; Home</a>
+
+<div class="page-wrapper">
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="grid-wrapper">
+                <table class="grid-table">
+                    <tr><td>N</td><td></td><td>A</td><td></td><td>S</td><td></td><td>A</td><td></td></tr>
+                    <tr><td></td><td>F</td><td></td><td>I</td><td></td><td>N</td><td></td><td>M</td></tr>
+                    <tr><td></td><td></td><td>U</td><td></td><td></td><td>D</td><td>D</td><td></td></tr>
+                    <tr><td>B</td><td></td><td>Z</td><td>U</td><td>N</td><td></td><td>E</td><td>B</td></tr>
+                    <tr><td>E</td><td>R</td><td></td><td></td><td></td><td></td><td>A</td><td></td></tr>
+                    <tr><td></td><td>R</td><td></td><td>M</td><td></td><td>Y</td><td></td><td>T</td></tr>
+                    <tr><td></td><td></td><td>U</td><td></td><td>X</td><td></td><td>R</td><td></td></tr>
+                    <tr><td>I</td><td>X</td><td></td><td>L</td><td></td><td>E</td><td>S</td><td></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="grid-wrapper">
+                <table class="grid-table">
+                    <tr><td>1</td><td></td><td></td><td>3</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>B</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>1</td><td></td><td></td><td></td><td>7</td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td>2</td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td>5</td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td>E</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td>1</td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                </table>
+                <svg class="svg-layer" viewBox="0 0 312 312">
+                    <polyline points="58.5,58.5 214.5,58.5 214.5,136.5 136.5,136.5 136.5,214.5" />
+                </svg>
+            </div>
+
+            <div class="grid-wrapper">
+                <table class="grid-table">
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>1</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>B</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td>4</td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>2</td><td></td><td></td><td>4</td><td></td><td>3</td><td></td><td>1</td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td>E</td><td></td></tr>
+                </table>
+                <svg class="svg-layer" viewBox="0 0 312 312">
+                    <polyline points="19.5,136.5 19.5,175.5 58.5,175.5 58.5,253.5 97.5,253.5 97.5,310.5 273.5,310.5" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="grid-wrapper">
+                <table class="grid-table">
+                    <tr><td></td><td>P</td><td></td><td>O</td><td>T</td><td></td><td>T</td><td>E</td></tr>
+                    <tr><td>X</td><td></td><td>R</td><td></td><td>N</td><td></td><td>A</td><td></td></tr>
+                    <tr><td></td><td>B</td><td></td><td>I</td><td></td><td></td><td>T</td><td>U</td></tr>
+                    <tr><td>I</td><td></td><td>D</td><td>T</td><td></td><td></td><td>H</td><td></td></tr>
+                    <tr><td></td><td>Z</td><td></td><td></td><td>I</td><td>S</td><td></td><td>R</td></tr>
+                    <tr><td>S</td><td></td><td>O</td><td></td><td>V</td><td>T</td><td></td><td>A</td></tr>
+                    <tr><td></td><td>C</td><td></td><td>M</td><td></td><td>S</td><td>I</td><td>L</td></tr>
+                    <tr><td>D</td><td>I</td><td>E</td><td></td><td>E</td><td></td><td>R</td><td></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="grid-wrapper">
+                <table class="grid-table">
+                    <tr><td></td><td>2</td><td></td><td></td><td>1</td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>B</td><td>6</td><td></td><td></td><td>1</td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td>5</td><td></td><td>E</td><td></td></tr>
+                    <tr><td></td><td></td><td>2</td><td></td><td></td><td></td><td></td><td>2</td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td>3</td><td></td><td>2</td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                </table>
+            </div>
+
+            <div class="grid-wrapper">
+                <table class="grid-table">
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td>2</td><td></td></tr>
+                    <tr><td></td><td></td><td>0</td><td></td><td>B</td><td></td><td></td><td>3</td></tr>
+                    <tr><td></td><td></td><td></td><td>1</td><td></td><td>4</td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td>4</td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td>E</td><td>6</td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td>1</td><td></td><td>3</td><td></td></tr>
+                </table>
+            </div>
+
+            <div class="grid-wrapper">
+                <table class="grid-table">
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td>0</td><td></td><td></td><td></td></tr>
+                    <tr><td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td>B</td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>6</td><td></td><td></td><td></td><td>1</td><td></td><td></td></tr>
+                    <tr><td></td><td>6</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td>6</td><td></td><td>5</td><td></td><td>1</td></tr>
+                    <tr><td></td><td></td><td></td><td>3</td><td></td><td></td><td>E</td><td></td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="grid-wrapper">
+                <table class="grid-table">
+                    <tr><td></td><td>E</td><td></td><td></td><td>Z</td><td>L</td><td></td><td>B</td></tr>
+                    <tr><td>U</td><td></td><td></td><td>S</td><td></td><td>O</td><td>N</td><td></td></tr>
+                    <tr><td>S</td><td>L</td><td>A</td><td></td><td>T</td><td></td><td></td><td>B</td></tr>
+                    <tr><td></td><td>E</td><td></td><td></td><td>U</td><td>D</td><td>O</td><td></td></tr>
+                    <tr><td>C</td><td></td><td>N</td><td></td><td></td><td></td><td></td><td>N</td></tr>
+                    <tr><td></td><td>T</td><td></td><td>X</td><td>R</td><td></td><td>A</td><td></td></tr>
+                    <tr><td></td><td>I</td><td></td><td>O</td><td>N</td><td></td><td></td><td></td></tr>
+                    <tr><td>P</td><td>A</td><td></td><td>R</td><td></td><td>L</td><td></td><td>S</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="grid-wrapper">
+                <table class="grid-table">
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>1</td><td></td><td></td><td>2</td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td>7</td><td></td><td>3</td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td>B</td><td>5</td><td></td><td>5</td><td></td><td>1</td></tr>
+                    <tr><td></td><td>1</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td>1</td><td></td><td>6</td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td>E</td><td></td><td>2</td></tr>
+                </table>
+            </div>
+
+            <div class="grid-wrapper">
+                <table class="grid-table">
+                    <tr><td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td>6</td><td>B</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>4</td><td></td><td></td><td></td><td>1</td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td>2</td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td>4</td><td></td><td>2</td><td></td><td></td><td></td></tr>
+                    <tr><td>3</td><td></td><td></td><td></td><td>E</td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td>3</td><td></td><td></td><td>1</td><td></td><td></td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
