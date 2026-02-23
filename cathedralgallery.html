@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>London Clues Gallery - Centered</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Page Styling */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            
+            /* Set the background image */
+            background-image: url('https://historyreclaimed.co.uk/wp-content/uploads/2023/06/St-Pauls-Cathedral-scaled.jpeg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #ffffff;
+            
+            /* Flex centering for main content column */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px 40px 20px; /* Added extra top padding to avoid hitting the home button */
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Home Button Styling */
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .home-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Styling for the top info box with "Frosted Glass" effect */
+        .info-box {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); 
+            padding: 25px 40px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 50px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 80%;
+        }
+
+        .info-box p {
+            margin: 12px 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Image Gallery - Switched to Flexbox for auto-centering bottom items */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Centers the items on the bottom row */
+            gap: 35px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        /* Container for each individual image card */
+        .image-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 15px;
+            overflow: hidden; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            
+            /* Fixed width and height for uniform cards */
+            width: 300px;
+            height: 350px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .image-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* The actual images */
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Prevents cropping */
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* The number pin styling */
+        .pin {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: #ffffff;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            z-index: 10;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="home-btn">← Home</a>
+
+    <div class="info-box">
+        <p>Trafalgar Square = A</p>
+        <p>3 = +44 344 225 1826</p>
+        <p>A5 = 9</p>
+    </div>
+
+    <div class="gallery">
+        <div class="image-card">
+            <div class="pin">7</div>
+            <img src="https://i.pinimg.com/474x/fb/93/c3/fb93c3812669b6c1b840643b5f624c8f.jpg" alt="Image 7">
+        </div>
+
+         <div class="image-card">
+            <div class="pin">11</div>
+            <img src="https://thumbs.dreamstime.com/b/shard-london-black-white-glass-ninety-five-storey-skyscraper-designed-italian-architect-renzo-piano-southwark-195473818.jpg" alt="Image 11">
+        </div>
+
+        <div class="image-card">
+            <div class="pin">2</div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC82nEfhMCtlKEd98lSWC5c10W_bzf04dOFw&s" alt="Image 2">
+        </div>
+
+        <div class="image-card">
+            <div class="pin">12</div>
+            <img src="https://rooseveltjeanfrancois.com/wp-content/uploads/2017/12/st-thomas-becket-9204211-2-402.jpg?w=1200&h=1200" alt="Image 12">
+        </div>
+
+        <div class="image-card">
+            <div class="pin">5</div>
+            <img src="luna.png" alt="Image 5">
+        </div>
+        
+        <div class="image-card">
+            <div class="pin">1</div>
+            <img src="https://lh3.googleusercontent.com/proxy/k_R5dRceJB9PbDbis8M5wLphF9zKUfNsJOLgOKzByQuWN9s-3wCKlmO23FHtpYozWJvB-cW9ADmwXXzaUZIWDFCWiFkEVANz" alt="Image 1 placeholder">
+        </div>
+
+        <div class="image-card">
+            <div class="pin">8</div>
+            <img src="https://www.johnpester.co.uk/cdn/shop/products/Thames_Skyline_bw_8dcf4ce3-970f-460c-8f7a-5cc7030886c9_1024x1024@2x.jpg?v=1583703657" alt="Image 8">
+        </div>
+
+        <div class="image-card">
+            <div class="pin">6</div>
+            <img src="lupin.png" alt="Image 6">
+        </div>
+
+        <div class="image-card">
+            <div class="pin">10</div>
+            <img src="https://i.ibb.co/fYSJN0sX/XMIM6-LCHMRISRDU5-PQ7-DZTODBY-modified.png" alt="Image 10">
+        </div>
+
+        <div class="image-card">
+            <div class="pin">4</div>
+            <img src="https://i0.wp.com/philipcarli.com/wp-content/uploads/2022/08/peterpanmovie1.jpg?fit=1001%2C768&ssl=1" alt="Image 4">
+        </div>
+    </div>
+
+</body>
+</html>
