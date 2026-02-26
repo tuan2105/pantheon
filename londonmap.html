@@ -31,6 +31,55 @@
             box-sizing: border-box;
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
+        /* Zoom Controls */
+        #map-controls {
+            position: absolute;
+            right: 18px;
+            bottom: 18px;
+            z-index: 1200;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(20,20,20,0.45);
+            padding: 8px;
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
+        }
+        #map-controls button {
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        #map-controls input[type="range"] {
+            width: 140px;
+        }
+
+        /* Responsive adjustments for phones */
+        @media (max-width: 600px) {
+            #toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                padding: 8px;
+            }
+            #searchBar {
+                width: 100%;
+                box-sizing: border-box;
+                font-size: 16px;
+            }
+            #map-controls {
+                right: 10px;
+                bottom: 10px;
+                padding: 6px;
+            }
+            #map-controls input[type="range"] {
+                width: 100px;
+            }
+            #map-viewport { touch-action: none; }
+        }
 
         input[type="text"] {
             padding: 8px;
@@ -644,6 +693,12 @@
             <div class="map-text-item" data-angle="0" style="left: 2241.67px; top: 413.333px; transform: translate(-50%, -50%) rotate(0deg);">UTO</div>
             <div class="map-text-item" data-angle="0" style="left: 2052px; top: 136px; transform: translate(-50%, -50%) rotate(0deg);">AZN</div>
         </div>
+        <div id="map-controls" aria-label="Map zoom controls">
+            <button id="zoomOut" title="Zoom out">−</button>
+            <input id="zoomRange" type="range" min="0.2" max="5" step="0.01" value="0.6" aria-label="Zoom level">
+            <button id="zoomIn" title="Zoom in">+</button>
+            <button id="resetZoom" title="Reset view">⤢</button>
+        </div>
     </div>
 
     <script>
@@ -696,21 +751,88 @@
             viewport.style.cursor = 'grab';
         });
 
+        // Smooth wheel zoom (reduced sensitivity for touchpads)
         viewport.addEventListener('wheel', (e) => {
             e.preventDefault();
-            const zoomDelta = e.deltaY > 0 ? -0.1 : 0.1;
-            adjustZoom(zoomDelta);
+            const delta = -e.deltaY * 0.001; // small incremental change
+            adjustZoom(delta);
         }, { passive: false });
 
         function adjustZoom(delta) {
-            scale += delta;
-            scale = Math.max(0.2, Math.min(scale, 5));
+            // delta is additive small increment (from wheel/buttons)
+            scale = Math.max(0.2, Math.min(scale + delta, 5));
             updateTransform();
         }
 
         function updateTransform() {
             content.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
         }
+
+        // --- Zoom controls (buttons + slider) ---
+        const zoomRange = document.getElementById('zoomRange');
+        const zoomInBtn = document.getElementById('zoomIn');
+        const zoomOutBtn = document.getElementById('zoomOut');
+        const resetBtn = document.getElementById('resetZoom');
+
+        zoomInBtn.addEventListener('click', () => { adjustZoom(0.1); });
+        zoomOutBtn.addEventListener('click', () => { adjustZoom(-0.1); });
+        zoomRange.addEventListener('input', (e) => {
+            scale = parseFloat(e.target.value);
+            updateTransform();
+        });
+        resetBtn.addEventListener('click', () => {
+            scale = 0.6; panX = 111; panY = 42; updateTransform();
+        });
+
+        // keep the slider in sync
+        const syncSlider = () => { if (zoomRange) zoomRange.value = scale; };
+
+        // --- Touch support: pan + pinch zoom ---
+        let touchPan = null;
+        let pinchStartDist = null;
+        let pinchStartScale = null;
+
+        function getTouchDist(t0, t1) {
+            const dx = t0.clientX - t1.clientX;
+            const dy = t0.clientY - t1.clientY;
+            return Math.hypot(dx, dy);
+        }
+
+        viewport.addEventListener('touchstart', (ev) => {
+            if (ev.touches.length === 1) {
+                touchPan = { x: ev.touches[0].clientX, y: ev.touches[0].clientY, startPanX: panX, startPanY: panY };
+            } else if (ev.touches.length === 2) {
+                pinchStartDist = getTouchDist(ev.touches[0], ev.touches[1]);
+                pinchStartScale = scale;
+            }
+        }, { passive: false });
+
+        viewport.addEventListener('touchmove', (ev) => {
+            if (ev.touches.length === 1 && touchPan) {
+                ev.preventDefault();
+                const dx = ev.touches[0].clientX - touchPan.x;
+                const dy = ev.touches[0].clientY - touchPan.y;
+                panX = touchPan.startPanX + dx;
+                panY = touchPan.startPanY + dy;
+                updateTransform();
+            } else if (ev.touches.length === 2 && pinchStartDist != null) {
+                ev.preventDefault();
+                const curDist = getTouchDist(ev.touches[0], ev.touches[1]);
+                const factor = curDist / pinchStartDist;
+                scale = Math.max(0.2, Math.min(pinchStartScale * factor, 5));
+                updateTransform();
+            }
+        }, { passive: false });
+
+        viewport.addEventListener('touchend', (ev) => {
+            if (ev.touches.length === 0) {
+                touchPan = null; pinchStartDist = null; pinchStartScale = null;
+            }
+        });
+
+        // patch updateTransform to sync the slider
+        const _oldUpdate = updateTransform;
+        updateTransform = function() { _oldUpdate(); syncSlider(); };
 
         // --- Search Functionality ---
         document.getElementById('searchBar').addEventListener('input', (e) => {
