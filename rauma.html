@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Re-Genesis: Hall of Echoes</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --bg-color: #050914;
+            --text-color: #c9d1d9;
+            --red-door: rgba(139, 0, 0, 0.2);
+            --red-glow: #ff2a2a;
+            --blue-door: rgba(0, 61, 102, 0.2);
+            --blue-glow: #00e5ff;
+            --green-door: rgba(0, 77, 0, 0.2);
+            --green-glow: #39ff14;
+            --unlocked-bg: rgba(88, 166, 255, 0.1);
+            --unlocked-glow: #58a6ff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-color);
+            font-family: 'Share Tech Mono', monospace;
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+            margin: 0;
+            position: relative;
+        }
+
+        /* Home Button */
+        .home-btn {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            color: var(--blue-glow);
+            text-decoration: none;
+            font-size: 16px;
+            border: 1px solid var(--blue-glow);
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            background: rgba(0, 229, 255, 0.05);
+            text-shadow: 0 0 5px var(--blue-glow);
+            box-shadow: inset 0 0 5px rgba(0, 229, 255, 0.2);
+        }
+
+        .home-btn:hover {
+            background: rgba(0, 229, 255, 0.2);
+            box-shadow: 0 0 15px var(--blue-glow), inset 0 0 10px var(--blue-glow);
+        }
+
+        h1 {
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px var(--blue-glow);
+        }
+
+        /* Legend */
+        .legend {
+            margin: 0 auto 40px auto;
+            display: inline-flex;
+            justify-content: center;
+            gap: 25px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 25px;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .color-box {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        /* Grid and Doors */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .door {
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 25px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .door::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: currentColor;
+            opacity: 0.8;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .door:hover {
+            transform: translateY(-5px);
+        }
+
+        .door-red { 
+            color: var(--red-glow);
+            background: var(--red-door); 
+            border-color: rgba(255, 42, 42, 0.3);
+        }
+        .door-red:hover { box-shadow: 0 10px 20px rgba(255, 42, 42, 0.2), inset 0 0 15px rgba(255, 42, 42, 0.1); }
+
+        .door-blue { 
+            color: var(--blue-glow);
+            background: var(--blue-door); 
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+        .door-blue:hover { box-shadow: 0 10px 20px rgba(0, 229, 255, 0.2), inset 0 0 15px rgba(0, 229, 255, 0.1); }
+
+        .door-green { 
+            color: var(--green-glow);
+            background: var(--green-door); 
+            border-color: rgba(57, 255, 20, 0.3);
+        }
+        .door-green:hover { box-shadow: 0 10px 20px rgba(57, 255, 20, 0.2), inset 0 0 15px rgba(57, 255, 20, 0.1); }
+
+        .door-number {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px currentColor;
+        }
+
+        input[type="text"] {
+            width: 85%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-align: center;
+            font-family: inherit;
+            font-size: 14px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: currentColor;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        button {
+            padding: 8px 20px;
+            background-color: transparent;
+            color: currentColor;
+            border: 1px solid currentColor;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        button:hover { 
+            background-color: currentColor; 
+            color: #000;
+            box-shadow: 0 0 10px currentColor;
+        }
+        
+        button.error { 
+            background-color: #ff2a2a; 
+            color: #000; 
+            border-color: #ff2a2a; 
+            box-shadow: 0 0 15px #ff2a2a;
+        }
+
+        .unlocked {
+            color: var(--unlocked-glow) !important;
+            background: var(--unlocked-bg) !important;
+            border-color: var(--unlocked-glow) !important;
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.3) !important;
+        }
+
+        .success-text {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        .echo-name {
+            color: #fff;
+            font-size: 15px;
+            margin-top: 15px;
+            opacity: 0.9;
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 5px currentColor; }
+            50% { text-shadow: 0 0 20px currentColor; }
+            100% { text-shadow: 0 0 5px currentColor; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="home-btn">&#9664; Home</a>
+
+    <h1>Hall of Echoes</h1>
+
+    <div class="legend">
+        <div class="legend-item" style="color: var(--blue-glow);"><div class="color-box" style="background: var(--blue-glow);"></div>???</div>
+        <div class="legend-item" style="color: var(--green-glow);"><div class="color-box" style="background: var(--green-glow);"></div>???</div>
+        <div class="legend-item" style="color: var(--red-glow);"><div class="color-box" style="background: var(--red-glow);"></div>???</div>
+    </div>
+
+    <div class="grid-container" id="door-grid"></div>
+
+    <script>
+        // Database of the 36 Historical Figures
+        const figures = [
+            { id: 1, answers: ["adolf hitler", "hitler"], color: "red", name: "Adolf Hitler" },
+            { id: 2, answers: ["john fitzgerald kennedy", "john f kennedy", "kennedy", "jfk"], color: "green", name: "John F. Kennedy" },
+            { id: 3, answers: ["julius caesar", "caesar"], color: "blue", name: "Julius Caesar" },
+            { id: 4, answers: ["george washington", "washington"], color: "blue", name: "George Washington" },
+            { id: 5, answers: ["winston churchill", "churchill"], color: "green", name: "Winston Churchill" },
+            { id: 6, answers: ["napoleon bonaparte", "napoleon"], color: "blue", name: "Napoleon Bonaparte" },
+            { id: 7, answers: ["muammar gaddafi", "gaddafi"], color: "green", name: "Muammar Gaddafi" },
+            { id: 8, answers: ["abraham lincoln", "lincoln"], color: "blue", name: "Abraham Lincoln" },
+            { id: 9, answers: ["marie curie", "curie"], color: "blue", name: "Marie Curie" },
+            { id: 10, answers: ["robert oppenheimer", "oppenheimer"], color: "red", name: "Robert Oppenheimer" },
+            { id: 11, answers: ["isaac newton", "newton"], color: "green", name: "Isaac Newton" },
+            { id: 12, answers: ["james watt", "watt"], color: "green", name: "James Watt" },
+            { id: 13, answers: ["nikola tesla", "tesla"], color: "blue", name: "Nikola Tesla" },
+            { id: 14, answers: ["charles darwin", "darwin"], color: "blue", name: "Charles Darwin" },
+            { id: 15, answers: ["jane goodall", "goodall"], color: "green", name: "Jane Goodall" },
+            { id: 16, answers: ["thomas edison", "edison"], color: "blue", name: "Thomas Edison" },
+            { id: 17, answers: ["pablo picasso", "picasso"], color: "green", name: "Pablo Picasso" },
+            { id: 18, answers: ["plato"], color: "blue", name: "Plato" },
+            { id: 19, answers: ["ludwig van beethoven", "beethoven"], color: "green", name: "Ludwig van Beethoven" },
+            { id: 20, answers: ["wolfgang amadeus mozart", "mozart"], color: "blue", name: "Wolfgang Amadeus Mozart" },
+            { id: 21, answers: ["charles dickens", "dickens"], color: "blue", name: "Charles Dickens" },
+            { id: 22, answers: ["brothers grimm", "the brothers grimm", "grimm"], color: "green", name: "The Brothers Grimm" },
+            { id: 23, answers: ["salvador dali", "dali"], color: "blue", name: "Salvador Dali" },
+            { id: 24, answers: ["beatrix potter", "potter"], color: "green", name: "Beatrix Potter" },
+            { id: 25, answers: ["jack the ripper", "ripper"], color: "red", name: "Jack the Ripper" },
+            { id: 26, answers: ["henry howard holmes", "h h holmes", "holmes"], color: "red", name: "H.H. Holmes" },
+            { id: 27, answers: ["bonnie parker", "bonnie"], color: "green", name: "Bonnie Parker" },
+            { id: 28, answers: ["clyde barrow", "clyde"], color: "green", name: "Clyde Barrow" },
+            { id: 29, answers: ["charles manson", "manson"], color: "blue", name: "Charles Manson" },
+            { id: 30, answers: ["rudolf hess", "hess"], color: "green", name: "Rudolf Hess" },
+            { id: 31, answers: ["zodiac killer", "zodiac"], color: "red", name: "Zodiac Killer" },
+            { id: 32, answers: ["attila the hun", "attila"], color: "green", name: "Attila the Hun" },
+            { id: 33, answers: ["john glenn", "glenn"], color: "green", name: "John Glenn" },
+            { id: 34, answers: ["muhammad ali", "ali"], color: "green", name: "Muhammad Ali" },
+            { id: 35, answers: ["grace hopper", "hopper"], color: "green", name: "Grace Hopper" },
+            { id: 36, answers: ["karl marx", "marx"], color: "blue", name: "Karl Marx" }
+        ];
+
+        const grid = document.getElementById('door-grid');
+
+        // Function to clean user input
+        function sanitizeInput(input) {
+            return input.toLowerCase().trim().replace(/[^a-z0-9 ]/g, "");
+        }
+
+        // Check Password Logic
+        function checkPassword(doorId) {
+            const inputField = document.getElementById(`input-${doorId}`);
+            const btn = document.getElementById(`btn-${doorId}`);
+            const doorDiv = document.getElementById(`door-${doorId}`);
+            
+            const userInput = sanitizeInput(inputField.value);
+            const figure = figures.find(f => f.id === doorId);
+
+            if (figure.answers.includes(userInput)) {
+                // Success
+                doorDiv.className = 'door unlocked';
+                doorDiv.innerHTML = `
+                    <div class="door-number">SECTOR ${doorId}</div>
+                    <div class="success-text">ACCESS GRANTED</div>
+                    <div class="echo-name">ECHO: ${figure.name}</div>
+                `;
+            } else {
+                // Error feedback
+                btn.textContent = "DENIED";
+                btn.classList.add("error");
+                inputField.value = "";
+                setTimeout(() => {
+                    btn.textContent = "UNLOCK";
+                    btn.classList.remove("error");
+                }, 800);
+            }
+        }
+
+        // Generate the Doors
+        figures.forEach(figure => {
+            const doorDiv = document.createElement('div');
+            doorDiv.className = `door door-${figure.color}`;
+            doorDiv.id = `door-${figure.id}`;
+
+            doorDiv.innerHTML = `
+                <div class="door-number">SECTOR ${figure.id}</div>
+                <input type="text" id="input-${figure.id}" placeholder="ENTER NAME" autocomplete="off" onkeypress="if(event.key === 'Enter') checkPassword(${figure.id})">
+                <button id="btn-${figure.id}" onclick="checkPassword(${figure.id})">UNLOCK</button>
+            `;
+            grid.appendChild(doorDiv);
+        });
+    </script>
+</body>
+</html>
