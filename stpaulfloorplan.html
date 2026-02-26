@@ -24,14 +24,17 @@
             display: flex;
             flex-direction: column; /* Stack top, middle, bottom rows */
             width: 1300px;
-            height: 900px;
+            /* allow height to grow with content rather than fixed */
+            /* height: 900px; */
+            max-width: 90vw;   /* make container responsive */
+            max-height: 90vh;
             background-color: #f0e6d2; /* Parchment base */
             background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');
             border: 8px solid #5c4a38;
             border-style: ridge;
             box-shadow: 0 30px 60px rgba(0,0,0,0.8);
             border-radius: 4px;
-            overflow: hidden;
+            overflow: auto; /* allow scrolling if content exceeds max-height */
         }
 
         /* --- Shared Styles for Illustration Panels --- */
@@ -172,6 +175,38 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
+        /* --- Gallery for code-box images at bottom --- */
+        .code-gallery {
+            background-color: #e8dec8;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+        .code-gallery .image-item {
+            position: relative;
+            width: 200px;
+            flex: 0 0 auto;
+            text-align: center;
+        }
+        .code-gallery .image-item img {
+            max-width: 100%;
+            height: auto;
+            max-height: 200px;
+            border: 2px solid #4a3b2c;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            filter: sepia(40%) contrast(115%) brightness(95%);
+        }
+        .code-gallery .image-item .code-box {
+            /* make box flow beneath the image rather than overlaying it */
+            position: static;
+            display: block;
+            margin: 8px auto 0;
+            transform: rotate(0deg);
+            white-space: normal;
+            width: auto;
+            max-width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -180,7 +215,7 @@
     <div class="main-document">
         
         <div class="illustration-panel top-banner">
-            <img src="https://www.archiseek.com/wp-content/gallery/australia-victoria/0003.jpg" alt="St. Paul's Architectural Section">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTik3bFwF1B7nXiwq3wLl6zwJzhbnvR5ZzGTg&s" alt="St. Paul's Dome Cross-Section">
         </div>
 
 
@@ -227,23 +262,19 @@
 
                     <div class="spot" id="spot1">
                         <div class="marker">1</div>
-                        <div class="code-box"><span class="r">ζ</span><span class="r">ω</span><span class="b">ζ</span><span class="r">θ</span><span class="r">ν</span><span class="b">ω</span><span class="r">δ</span><span class="r">ω</span><span class="b">ι</span><span class="r">ν</span><span class="r">ν</span><span class="b">ν</span><span class="r">ε</span><span class="b">ε</span></div>
                     </div>
                     <div class="spot" id="spot2">
                         <div class="marker">2</div>
-                        <div class="code-box"><span class="r">ζ</span><span class="r">ω</span><span class="b">β</span><span class="r">θ</span><span class="r">ν</span><span class="b">ε</span><span class="r">ζ</span><span class="r">ε</span><span class="b">ρ</span><span class="r">ρ</span><span class="r">β</span><span class="b">ψ</span><span class="r">ι</span><span class="r">σ</span><span class="b">τ</span></div>
                     </div>
+                    
                     <div class="spot" id="spot3">
                         <div class="marker">3</div>
-                        <div class="code-box"><span class="r">τ</span><span class="r">θ</span><span class="b">θ</span><span class="r">ω</span><span class="r">μ</span><span class="b">ι</span><span class="r">α</span><span class="r">σ</span><span class="b">ρ</span><span class="r">π</span><span class="r">ι</span><span class="r">γ</span><span class="b">δ</span><span class="r">τ</span><span class="r">ω</span><span class="r">ν</span><span class="b">ω</span></div>
                     </div>
                     <div class="spot" id="spot4">
                         <div class="marker">4</div>
-                        <div class="code-box"><span class="r">ζ</span><span class="r">ω</span><span class="r">σ</span><span class="b">υ</span><span class="r">θ</span><span class="r">υ</span><span class="r">α</span><span class="b">τ</span><span class="r">ρ</span><span class="r">ε</span><span class="r">ψ</span><span class="b">σ</span><span class="r">ν</span><span class="r">ω</span><span class="r">λ</span><span class="b">ι</span><span class="r">δ</span><span class="r">σ</span><span class="b">δ</span></div>
                     </div>
                     <div class="spot" id="spot5">
                         <div class="marker">5</div>
-                        <div class="code-box"><span class="r">θ</span><span class="r">ω</span><span class="r">ρ</span><span class="b">ε</span><span class="r">α</span><span class="r">τ</span><span class="r">ι</span><span class="b">μ</span><span class="r">ω</span><span class="r">ν</span><span class="r">ε</span><span class="b">α</span><span class="r">λ</span><span class="r">σ</span><span class="r">ω</span><span class="b">π</span><span class="r">ν</span></div>
                     </div>
                 </div>
             </div>
@@ -256,7 +287,31 @@
 
 
         <div class="illustration-panel bottom-banner">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTik3bFwF1B7nXiwq3wLl6zwJzhbnvR5ZzGTg&s" alt="St. Paul's Dome Cross-Section">
+            <img src="https://www.archiseek.com/wp-content/gallery/australia-victoria/0003.jpg" alt="St. Paul's Architectural Section">
+        </div>
+
+        <!-- gallery of images with moved code-boxes -->
+        <div class="code-gallery">
+            <div class="image-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNfDoRrfqx3BdnlWu--WKJTZhvoHbw8XhUsQ&s" alt="Gallery image 1">
+                <div class="code-box"><span class="r">θ</span><span class="r">ω</span><span class="r">ρ</span><span class="b">ε</span><span class="r">α</span><span class="r">τ</span><span class="r">ι</span><span class="b">μ</span><span class="r">ω</span><span class="r">ν</span><span class="r">ε</span><span class="b">α</span><span class="r">λ</span><span class="r">σ</span><span class="r">ω</span><span class="b">π</span><span class="r">ν</span></div>
+            </div>
+            <div class="image-item">
+                <img src="https://footprintsoflondon.com/live/wp-content/uploads/2015/01/johndonne.jpg" alt="Gallery image 2">
+                <div class="code-box"><span class="r">ζ</span><span class="r">ω</span><span class="b">ζ</span><span class="r">θ</span><span class="r">ν</span><span class="b">ω</span><span class="r">δ</span><span class="r">ω</span><span class="b">ι</span><span class="r">ν</span><span class="r">ν</span><span class="b">ν</span><span class="r">ε</span><span class="b">ε</span></div>
+            </div>
+            <div class="image-item">
+                <img src="https://www.stpauls.co.uk/sites/default/files/2024-07/thomas_pictonwebresize.jpg" alt="Gallery image 3">
+                <div class="code-box"><span class="r">τ</span><span class="r">θ</span><span class="b">θ</span><span class="r">ω</span><span class="r">μ</span><span class="b">ι</span><span class="r">α</span><span class="r">σ</span><span class="b">ρ</span><span class="r">π</span><span class="r">ι</span><span class="r">γ</span><span class="b">δ</span><span class="r">τ</span><span class="r">ω</span><span class="r">ν</span><span class="b">ω</span></div>
+            </div>
+            <div class="image-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyDbeImQh_xbDWKV9oje7X7vJKkufszWok1w&s" alt="Gallery image 4">
+                <div class="code-box"><span class="r">ζ</span><span class="r">ω</span><span class="b">β</span><span class="r">θ</span><span class="r">ν</span><span class="b">ε</span><span class="r">ζ</span><span class="r">ε</span><span class="b">ρ</span><span class="r">ρ</span><span class="r">β</span><span class="b">ψ</span><span class="r">ι</span><span class="r">σ</span><span class="b">τ</span></div>
+            </div>
+            <div class="image-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Statue_of_Joshua_Reynolds%2C_St_Paul%27s_Cathedral_01.jpg/960px-Statue_of_Joshua_Reynolds%2C_St_Paul%27s_Cathedral_01.jpg" alt="Gallery image 5">
+                <div class="code-box"><span class="r">ζ</span><span class="r">ω</span><span class="r">σ</span><span class="b">υ</span><span class="r">θ</span><span class="r">υ</span><span class="r">α</span><span class="b">τ</span><span class="r">ρ</span><span class="r">ε</span><span class="r">ψ</span><span class="b">σ</span><span class="r">ν</span><span class="r">ω</span><span class="r">λ</span><span class="b">ι</span><span class="r">δ</span><span class="r">σ</span><span class="b">δ</span></div>
+            </div>
         </div>
 
     </div>
