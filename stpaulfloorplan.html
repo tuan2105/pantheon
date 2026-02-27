@@ -419,39 +419,39 @@
     <script>
         // player stats
         let playerStats = {
-            peopleSmart: 0,
-            pictureSmart: 0,
-            logicSmart: 0,
-            visualSmart: 0,
-            wordSmart: 0
+            PeopleSmart: 0,
+            PictureSmart: 0,
+            LogicSmart: 0,
+            VisualSmart: 0,
+            WordSmart: 0
         };
 
         // dialogue configuration
         const dialogueOptions = [
             {
                 text: "Why are you here and who made you like this?",
-                requirement: { stat: 'peopleSmart', value: 3, operator: '>' },
-                response: "I exist to guide seekers through St. Paul's puzzles. My creator left clues embedded in the architecture."
+                requirement: { stat: 'PeopleSmart', value: 3, operator: '>' },
+                
             },
             {
                 text: "Hint on the Floor Plan",
-                requirement: { stat: 'pictureSmart', value: 3, operator: '>' },
-                response: "Examine the spatial relationships: the proportions and circles may hide numerals or directions."
+                requirement: { stat: 'PictureSmart', value: 3, operator: '>' },
+                
             },
             {
                 text: "Hint on the strange Paper Grids",
-                requirement: { stat: ['logicSmart','pictureSmart'], value: 6, operator: '>' },
-                response: "Combine the grid patterns with the floor plan geometry; look for overlapping coordinates."
+                requirement: { stat: ['LogicSmart','PictureSmart'], value: 6, operator: '>' },
+                
             },
             {
                 text: "Hint on the Gallery",
-                requirement: { stat: ['visualSmart','wordSmart'], value: 6, operator: '>' },
-                response: "Notice the hidden letters within each gallery image. They spell out a key phrase when read in order."
+                requirement: { stat: ['VisualSmart','WordSmart'], value: 6, operator: '>' },
+                
             },
             {
                 text: "How do we progress through the red door",
-                requirement: { stat: 'peopleSmart', value: 5, operator: '=' },
-                response: "Only those with perfect insight into people can convince the guardian to open it."
+                requirement: { stat: 'PeopleSmart', value: 5, operator: '=' },
+                
             }
         ];
 
