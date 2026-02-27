@@ -814,7 +814,7 @@
     <!-- Dialogue Modal and Overlay -->
     <div id="dialogue-overlay"></div>
     <div id="dialogue-modal">
-        <h2>Conan</h2>
+        <h2>Young Sir Arthur Conan Doyle</h2>
         <div class="dialogue-options" id="dialogue-options"></div>
     </div>
 
@@ -831,37 +831,34 @@
         // --- Player Stats ---
         // These can be modified by other parts of the game
         let playerStats = {
-            peopleSmart: 0,
-            visualSmart: 0,
-            wordSmart: 0
+            PeopleSmart: 0,
+            VisualSmart: 0,
+            WordSmart: 0
         };
 
         // --- Conan NPC Dialogue Options ---
         const dialogueOptions = [
             {
                 text: "Where are we and what should we do?",
-                requirement: { stat: 'peopleSmart', value: 1, operator: '>' },
-                response: "This is London during Beatrix Potter's time! We need to find clues about her stories and solve the puzzles hidden around the city."
+                requirement: { stat: 'PeopleSmart', value: 1, operator: '>' }
+                
             },
             {
                 text: "How do you read this map of Beatrix Potter?",
-                requirement: { stat: 'peopleSmart', value: 3, operator: '>' },
-                response: "The map shows important locations in London that inspired Beatrix Potter. Each colored point represents a different type of place - churches, hospitals, police stations, and famous attractions."
+                requirement: { stat: 'PeopleSmart', value: 3, operator: '>' }
             },
             {
                 text: "Hint on puzzle 1, 2, or 3",
-                requirement: { stat: 'visualSmart', value: 2, operator: '>' },
-                response: "Look carefully at the visual patterns on the map. Some locations are marked with special symbols and colors that might lead you to the answer."
+                requirement: { stat: 'VisualSmart', value: 2, operator: '>' }
+                
             },
             {
                 text: "Hint on puzzle 4 or 5",
-                requirement: { stat: 'wordSmart', value: 3, operator: '>' },
-                response: "Pay attention to the letters and words scattered around the map. They might combine to form important phrases or clues."
+                requirement: { stat: 'WordSmart', value: 3, operator: '>' }
             },
             {
                 text: "How can we find Beatrix Potter?",
-                requirement: { stat: 'peopleSmart', value: 5, operator: '=' },
-                response: "By solving all the puzzles and uncovering the connections between London's landmarks and her beloved stories, we may find her!"
+                requirement: { stat: 'PeopleSmart', value: 5, operator: '=' }
             }
         ];
 
