@@ -297,6 +297,67 @@
         }
         .dialogue-option.disabled .skill-req { color: #999; }
     </style>
+    <style>
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .main-document {
+                width: 100vw;
+                max-width: 100vw;
+                padding: 8px;
+                border-radius: 0;
+                max-height: 100vh;
+            }
+
+            /* Hide peripheral panels to focus on the floor plan */
+            .top-banner, .bottom-banner, .side-panel.left, .side-panel.right {
+                display: none;
+            }
+
+            .map-center-container {
+                padding: 6px;
+            }
+
+            /* Make the map take most of the screen and keep it readable */
+            .map-frame {
+                width: 100%;
+                aspect-ratio: 4 / 3;
+                max-height: calc(72vh);
+            }
+
+            .map-title { top: 8px; left: 12px; font-size: 16px; }
+
+            /* Make markers easier to tap */
+            .marker { width: 34px; height: 34px; font-size: 18px; }
+
+            /* Move and scale Potter NPC to remain inside the map frame */
+            #potter-npc { right: 10px; bottom: 10px; }
+            #potter-npc img { max-width: 72px; }
+
+            /* Bottom-sheet dialogue modal */
+            #dialogue-modal {
+                left: 8px;
+                right: 8px;
+                bottom: 8px;
+                top: auto;
+                transform: none;
+                border-radius: 12px;
+                max-height: 68vh;
+                padding: 18px;
+            }
+
+            #dialogue-overlay { background: rgba(0,0,0,0.6); }
+
+            .dialogue-option {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 14px 12px;
+                font-size: 16px;
+            }
+
+            /* Reposition home button to bottom-left for easier thumb reach */
+            .home-button { top: auto; left: 14px; right: auto; bottom: 16px; }
+        }
+    </style>
 </head>
 <body>
     <a href="index.html" class="home-button">⌂ Home</a>
