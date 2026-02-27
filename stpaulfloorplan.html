@@ -207,6 +207,95 @@
             width: auto;
             max-width: 100%;
         }
+
+        /* Potter NPC */
+        #potter-npc {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            z-index: 50;
+            cursor: pointer;
+        }
+        #potter-npc img {
+            max-width: 120px;
+            height: auto;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+            transition: filter 0.2s ease;
+        }
+        #potter-npc img:hover {
+            filter: drop-shadow(0 4px 12px rgba(255, 235, 59, 0.6));
+        }
+
+        /* Dialogue modal (reused styling from londonmap) */
+        #dialogue-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            display: none;
+        }
+        #dialogue-overlay.show {
+            display: block;
+        }
+        #dialogue-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #f4eacc 0%, #e8dcc4 100%);
+            border: 3px solid #5c4033;
+            border-radius: 8px;
+            padding: 30px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 2000;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+        #dialogue-modal.show { display: block; }
+        #dialogue-modal h2 {
+            color: #000;
+            margin-top: 0;
+            font-family: 'IM Fell English', serif;
+            border-bottom: 2px solid #5c4033;
+            padding-bottom: 15px;
+        }
+        .dialogue-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .dialogue-option {
+            background: white;
+            border: 2px solid #5c4033;
+            border-radius: 6px;
+            padding: 12px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            color: #000;
+        }
+        .dialogue-option:hover:not(.disabled) {
+            background: #fff8dc;
+            border-color: #ffeb3b;
+            box-shadow: 0 2px 8px rgba(255, 235, 59, 0.3);
+        }
+        .dialogue-option.disabled {
+            background: #e0e0e0;
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .dialogue-option .skill-req {
+            font-size: 12px;
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        .dialogue-option.disabled .skill-req { color: #999; }
     </style>
 </head>
 <body>
@@ -276,6 +365,10 @@
                     <div class="spot" id="spot5">
                         <div class="marker">5</div>
                     </div>
+                    <!-- Potter NPC -->
+                    <div id="potter-npc">
+                        <img src="potter.png" alt="Potter">
+                    </div>
                 </div>
             </div>
 
@@ -315,5 +408,111 @@
         </div>
 
     </div>
+
+    <!-- Dialogue elements -->
+    <div id="dialogue-overlay"></div>
+    <div id="dialogue-modal">
+        <h2>Potter</h2>
+        <div class="dialogue-options" id="dialogue-options"></div>
+    </div>
+
+    <script>
+        // player stats
+        let playerStats = {
+            peopleSmart: 0,
+            pictureSmart: 0,
+            logicSmart: 0,
+            visualSmart: 0,
+            wordSmart: 0
+        };
+
+        // dialogue configuration
+        const dialogueOptions = [
+            {
+                text: "Why are you here and who made you like this?",
+                requirement: { stat: 'peopleSmart', value: 3, operator: '>' },
+                response: "I exist to guide seekers through St. Paul's puzzles. My creator left clues embedded in the architecture."
+            },
+            {
+                text: "Hint on the Floor Plan",
+                requirement: { stat: 'pictureSmart', value: 3, operator: '>' },
+                response: "Examine the spatial relationships: the proportions and circles may hide numerals or directions."
+            },
+            {
+                text: "Hint on the strange Paper Grids",
+                requirement: { stat: ['logicSmart','pictureSmart'], value: 6, operator: '>' },
+                response: "Combine the grid patterns with the floor plan geometry; look for overlapping coordinates."
+            },
+            {
+                text: "Hint on the Gallery",
+                requirement: { stat: ['visualSmart','wordSmart'], value: 6, operator: '>' },
+                response: "Notice the hidden letters within each gallery image. They spell out a key phrase when read in order."
+            },
+            {
+                text: "How do we progress through the red door",
+                requirement: { stat: 'peopleSmart', value: 5, operator: '=' },
+                response: "Only those with perfect insight into people can convince the guardian to open it."
+            }
+        ];
+
+        function meetsRequirement(req) {
+            if (Array.isArray(req.stat)) {
+                const total = req.stat.reduce((sum, s) => sum + (playerStats[s] || 0), 0);
+                if (req.operator === '>') return total > req.value;
+                if (req.operator === '=') return total === req.value;
+                if (req.operator === '>=') return total >= req.value;
+                return false;
+            } else {
+                const val = playerStats[req.stat] || 0;
+                if (req.operator === '>') return val > req.value;
+                if (req.operator === '=') return val === req.value;
+                if (req.operator === '>=') return val >= req.value;
+                return false;
+            }
+        }
+
+        function showDialogue() {
+            const modal = document.getElementById('dialogue-modal');
+            const overlay = document.getElementById('dialogue-overlay');
+            const container = document.getElementById('dialogue-options');
+            container.innerHTML = '';
+            dialogueOptions.forEach(opt => {
+                const div = document.createElement('div');
+                div.className = 'dialogue-option';
+                const meets = meetsRequirement(opt.requirement);
+                if (!meets) div.classList.add('disabled');
+                const skillName = Array.isArray(opt.requirement.stat) ?
+                    opt.requirement.stat.join(' + ') :
+                    opt.requirement.stat.replace(/([A-Z])/g, ' $1').trim();
+                const opSymbol = opt.requirement.operator;
+                div.innerHTML = `
+                    <div>${opt.text}</div>
+                    <div class="skill-req">Requires: ${skillName} ${opSymbol} ${opt.requirement.value}</div>
+                `;
+                if (meets) {
+                    div.addEventListener('click', () => {
+                        alert(`Potter: "${opt.response}"`);
+                        hideDialogue();
+                    });
+                }
+                container.appendChild(div);
+            });
+            modal.classList.add('show');
+            overlay.classList.add('show');
+        }
+        function hideDialogue() {
+            document.getElementById('dialogue-modal').classList.remove('show');
+            document.getElementById('dialogue-overlay').classList.remove('show');
+        }
+
+        // initialize NPC click
+        window.addEventListener('DOMContentLoaded', () => {
+            const npc = document.getElementById('potter-npc');
+            if (npc) npc.addEventListener('click', e => { e.stopPropagation(); showDialogue(); });
+            const overlay = document.getElementById('dialogue-overlay');
+            if (overlay) overlay.addEventListener('click', hideDialogue);
+        });
+    </script>
+
 </body>
 </html>
