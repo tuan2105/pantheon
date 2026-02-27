@@ -248,6 +248,111 @@
             text-shadow: 1px 1px 3px rgba(255,255,255,0.8), -1px -1px 3px rgba(255,255,255,0.8);
             pointer-events: none; /* Make text uninteractable so you can't accidentally click it */
         }
+
+        /* Conan NPC */
+        #conan-npc {
+            position: absolute;
+            left: 2600px;
+            top: 700px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        #conan-npc img {
+            max-width: 100px;
+            height: auto;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+            transition: filter 0.2s ease;
+        }
+
+        #conan-npc img:hover {
+            filter: drop-shadow(0 4px 12px rgba(255, 235, 59, 0.6));
+        }
+
+        /* Dialogue Modal */
+        #dialogue-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #f4eacc 0%, #e8dcc4 100%);
+            border: 3px solid #5c4033;
+            border-radius: 8px;
+            padding: 30px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 2000;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        #dialogue-modal.show {
+            display: block;
+        }
+
+        #dialogue-modal h2 {
+            color: #000;
+            margin-top: 0;
+            font-family: 'IM Fell English', serif;
+            border-bottom: 2px solid #5c4033;
+            padding-bottom: 15px;
+        }
+
+        .dialogue-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .dialogue-option {
+            background: white;
+            border: 2px solid #5c4033;
+            border-radius: 6px;
+            padding: 12px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            color: #000;
+        }
+
+        .dialogue-option:hover:not(.disabled) {
+            background: #fff8dc;
+            border-color: #ffeb3b;
+            box-shadow: 0 2px 8px rgba(255, 235, 59, 0.3);
+        }
+
+        .dialogue-option.disabled {
+            background: #e0e0e0;
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .dialogue-option .skill-req {
+            font-size: 12px;
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .dialogue-option.disabled .skill-req {
+            color: #999;
+        }
+
+        #dialogue-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            display: none;
+        }
+
+        #dialogue-overlay.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -363,7 +468,7 @@
             </div>
             <div class="glowing-point is-glowing" data-blue-text="st. paul's cathedral" data-red-text="14" style="left: 1632px; top: 482px;">
                 <div class="point-tooltip">
-                    <div class="line-blue">A5: St. Paul's Cathedral</div>
+                    <div class="line-blue">A6: St. Paul's Cathedral</div>
                     <div class="line-red">14</div>
                 </div>
             </div>
@@ -692,6 +797,11 @@
             <div class="map-text-item" data-angle="0" style="left: 2571.67px; top: 511.667px; transform: translate(-50%, -50%) rotate(0deg);">NAR</div>
             <div class="map-text-item" data-angle="0" style="left: 2241.67px; top: 413.333px; transform: translate(-50%, -50%) rotate(0deg);">UTO</div>
             <div class="map-text-item" data-angle="0" style="left: 2052px; top: 136px; transform: translate(-50%, -50%) rotate(0deg);">AZN</div>
+            
+            <!-- Conan NPC -->
+            <div id="conan-npc">
+                <img src="conan.png" alt="Conan">
+            </div>
         </div>
         <div id="map-controls" aria-label="Map zoom controls">
             <button id="zoomOut" title="Zoom out">−</button>
@@ -699,6 +809,13 @@
             <button id="zoomIn" title="Zoom in">+</button>
             <button id="resetZoom" title="Reset view">⤢</button>
         </div>
+    </div>
+
+    <!-- Dialogue Modal and Overlay -->
+    <div id="dialogue-overlay"></div>
+    <div id="dialogue-modal">
+        <h2>Conan</h2>
+        <div class="dialogue-options" id="dialogue-options"></div>
     </div>
 
     <script>
@@ -711,6 +828,106 @@
         const viewport = document.getElementById('map-viewport');
         const content = document.getElementById('map-content');
 
+        // --- Player Stats ---
+        // These can be modified by other parts of the game
+        let playerStats = {
+            peopleSmart: 0,
+            visualSmart: 0,
+            wordSmart: 0
+        };
+
+        // --- Conan NPC Dialogue Options ---
+        const dialogueOptions = [
+            {
+                text: "Where are we and what should we do?",
+                requirement: { stat: 'peopleSmart', value: 1, operator: '>' },
+                response: "This is London during Beatrix Potter's time! We need to find clues about her stories and solve the puzzles hidden around the city."
+            },
+            {
+                text: "How do you read this map of Beatrix Potter?",
+                requirement: { stat: 'peopleSmart', value: 3, operator: '>' },
+                response: "The map shows important locations in London that inspired Beatrix Potter. Each colored point represents a different type of place - churches, hospitals, police stations, and famous attractions."
+            },
+            {
+                text: "Hint on puzzle 1, 2, or 3",
+                requirement: { stat: 'visualSmart', value: 2, operator: '>' },
+                response: "Look carefully at the visual patterns on the map. Some locations are marked with special symbols and colors that might lead you to the answer."
+            },
+            {
+                text: "Hint on puzzle 4 or 5",
+                requirement: { stat: 'wordSmart', value: 3, operator: '>' },
+                response: "Pay attention to the letters and words scattered around the map. They might combine to form important phrases or clues."
+            },
+            {
+                text: "How can we find Beatrix Potter?",
+                requirement: { stat: 'peopleSmart', value: 5, operator: '=' },
+                response: "By solving all the puzzles and uncovering the connections between London's landmarks and her beloved stories, we may find her!"
+            }
+        ];
+
+        // Check if player meets requirement
+        function meetsRequirement(requirement) {
+            const statValue = playerStats[requirement.stat] || 0;
+            if (requirement.operator === '>') {
+                return statValue > requirement.value;
+            } else if (requirement.operator === '=') {
+                return statValue === requirement.value;
+            } else if (requirement.operator === '>=') {
+                return statValue >= requirement.value;
+            }
+            return false;
+        }
+
+        // Show dialogue modal
+        function showDialogue() {
+            const modal = document.getElementById('dialogue-modal');
+            const overlay = document.getElementById('dialogue-overlay');
+            const optionsContainer = document.getElementById('dialogue-options');
+
+            // Clear existing options
+            optionsContainer.innerHTML = '';
+
+            // Generate dialogue options
+            dialogueOptions.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'dialogue-option';
+
+                const meetRequirement = meetsRequirement(option.requirement);
+                if (!meetRequirement) {
+                    optionDiv.classList.add('disabled');
+                }
+
+                const reqText = option.requirement.operator === '=' ? '=' : '>';
+                const skillName = option.requirement.stat.replace(/([A-Z])/g, ' $1').trim();
+
+                optionDiv.innerHTML = `
+                    <div>${option.text}</div>
+                    <div class="skill-req">Requires: ${skillName} ${reqText} ${option.requirement.value}</div>
+                `;
+
+                if (meetRequirement) {
+                    optionDiv.addEventListener('click', () => {
+                        alert(`Conan: "${option.response}"`);
+                        hideDialogue();
+                    });
+                }
+
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            modal.classList.add('show');
+            overlay.classList.add('show');
+        }
+
+        // Hide dialogue modal
+        function hideDialogue() {
+            const modal = document.getElementById('dialogue-modal');
+            const overlay = document.getElementById('dialogue-overlay');
+            modal.classList.remove('show');
+            overlay.classList.remove('show');
+        }
+
+
         // --- Initialization ---
         window.onload = () => {
             // Simply attach click events to open tooltips. No more dragging.
@@ -721,6 +938,22 @@
                     tooltip.style.display = tooltip.style.display === 'block' ? 'none' : 'block';
                 });
             });
+
+            // Conan NPC click handler
+            const conanNpc = document.getElementById('conan-npc');
+            if (conanNpc) {
+                conanNpc.addEventListener('click', (e) => {
+                    e.stopPropagation(); // prevent panning the map on click
+                    showDialogue();
+                });
+            }
+
+            // Dialogue overlay click to close
+            const overlay = document.getElementById('dialogue-overlay');
+            if (overlay) {
+                overlay.addEventListener('click', hideDialogue);
+            }
+
             updateTransform();
         };
 
