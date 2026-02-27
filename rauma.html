@@ -138,7 +138,12 @@
             border-color: rgba(255, 42, 42, 0.3);
         }
         .door-red:hover { box-shadow: 0 10px 20px rgba(255, 42, 42, 0.2), inset 0 0 15px rgba(255, 42, 42, 0.1); }
-
+       .door-yellow { 
+            color: var(--yellow-glow);
+            background: var(--yellow-door); 
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        .door-yellow:hover { box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2), inset 0 0 15px rgba(255, 215, 0, 0.1); }
         .door-blue { 
             color: var(--blue-glow);
             background: var(--blue-door); 
@@ -257,40 +262,40 @@
         // Database of the 36 Historical Figures
         const figures = [
             { id: 1, answers: ["adolf hitler", "hitler"], color: "red", name: "Adolf Hitler" },
-            { id: 2, answers: ["john fitzgerald kennedy", "john f kennedy", "kennedy", "jfk"], color: "green", name: "John F. Kennedy" },
-            { id: 3, answers: ["julius caesar", "caesar"], color: "blue", name: "Julius Caesar" },
-            { id: 4, answers: ["george washington", "washington"], color: "blue", name: "George Washington" },
+            { id: 2, answers: ["john fitzgerald kennedy", "john f kennedy", "kennedy", "jfk"], color: "blue", name: "John F. Kennedy" },
+            { id: 3, answers: ["julius caesar", "caesar"], color: "green", name: "Julius Caesar" },
+            { id: 4, answers: ["george washington", "washington"], color: "yellow", name: "George Washington" },
             { id: 5, answers: ["winston churchill", "churchill"], color: "green", name: "Winston Churchill" },
-            { id: 6, answers: ["napoleon bonaparte", "napoleon"], color: "blue", name: "Napoleon Bonaparte" },
-            { id: 7, answers: ["muammar gaddafi", "gaddafi"], color: "green", name: "Muammar Gaddafi" },
-            { id: 8, answers: ["abraham lincoln", "lincoln"], color: "blue", name: "Abraham Lincoln" },
+            { id: 6, answers: ["napoleon bonaparte", "napoleon"], color: "green", name: "Napoleon Bonaparte" },
+            { id: 7, answers: ["muammar gaddafi", "gaddafi"], color: "yellow", name: "Muammar Gaddafi" },
+            { id: 8, answers: ["abraham lincoln", "lincoln"], color: "yellow", name: "Abraham Lincoln" },
             { id: 9, answers: ["marie curie", "curie"], color: "blue", name: "Marie Curie" },
             { id: 10, answers: ["robert oppenheimer", "oppenheimer"], color: "red", name: "Robert Oppenheimer" },
             { id: 11, answers: ["isaac newton", "newton"], color: "green", name: "Isaac Newton" },
-            { id: 12, answers: ["james watt", "watt"], color: "green", name: "James Watt" },
+            { id: 12, answers: ["james watt", "watt"], color: "blue", name: "James Watt" },
             { id: 13, answers: ["nikola tesla", "tesla"], color: "blue", name: "Nikola Tesla" },
             { id: 14, answers: ["charles darwin", "darwin"], color: "blue", name: "Charles Darwin" },
-            { id: 15, answers: ["jane goodall", "goodall"], color: "green", name: "Jane Goodall" },
+            { id: 15, answers: ["jane goodall", "goodall"], color: "blue", name: "Jane Goodall" },
             { id: 16, answers: ["thomas edison", "edison"], color: "blue", name: "Thomas Edison" },
-            { id: 17, answers: ["pablo picasso", "picasso"], color: "green", name: "Pablo Picasso" },
+            { id: 17, answers: ["pablo picasso", "picasso"], color: "blue", name: "Pablo Picasso" },
             { id: 18, answers: ["plato"], color: "blue", name: "Plato" },
-            { id: 19, answers: ["ludwig van beethoven", "beethoven"], color: "green", name: "Ludwig van Beethoven" },
+            { id: 19, answers: ["ludwig van beethoven", "beethoven"], color: "blue", name: "Ludwig van Beethoven" },
             { id: 20, answers: ["wolfgang amadeus mozart", "mozart"], color: "blue", name: "Wolfgang Amadeus Mozart" },
             { id: 21, answers: ["charles dickens", "dickens"], color: "blue", name: "Charles Dickens" },
-            { id: 22, answers: ["brothers grimm", "the brothers grimm", "grimm"], color: "green", name: "The Brothers Grimm" },
-            { id: 23, answers: ["salvador dali", "dali"], color: "blue", name: "Salvador Dali" },
-            { id: 24, answers: ["beatrix potter", "potter"], color: "green", name: "Beatrix Potter" },
+            { id: 22, answers: ["brothers grimm", "the brothers grimm", "grimm"], color: "green", name: "Grimm Brothers" },
+            { id: 23, answers: ["salvador dali", "dali"], color: "green", name: "Salvador Dali" },
+            { id: 24, answers: ["beatrix potter", "potter"], color: "blue", name: "Beatrix Potter" },
             { id: 25, answers: ["jack the ripper", "ripper"], color: "red", name: "Jack the Ripper" },
             { id: 26, answers: ["henry howard holmes", "h h holmes", "holmes"], color: "red", name: "H.H. Holmes" },
             { id: 27, answers: ["bonnie parker", "bonnie"], color: "green", name: "Bonnie Parker" },
-            { id: 28, answers: ["clyde barrow", "clyde"], color: "green", name: "Clyde Barrow" },
+            { id: 28, answers: ["clyde barrow", "clyde"], color: "blue", name: "Clyde Barrow" },
             { id: 29, answers: ["charles manson", "manson"], color: "blue", name: "Charles Manson" },
-            { id: 30, answers: ["rudolf hess", "hess"], color: "green", name: "Rudolf Hess" },
+            { id: 30, answers: ["rudolf hess", "hess"], color: "blue", name: "Rudolf Hess" },
             { id: 31, answers: ["zodiac killer", "zodiac"], color: "red", name: "Zodiac Killer" },
-            { id: 32, answers: ["attila the hun", "attila"], color: "green", name: "Attila the Hun" },
-            { id: 33, answers: ["john glenn", "glenn"], color: "green", name: "John Glenn" },
-            { id: 34, answers: ["muhammad ali", "ali"], color: "green", name: "Muhammad Ali" },
-            { id: 35, answers: ["grace hopper", "hopper"], color: "green", name: "Grace Hopper" },
+            { id: 32, answers: ["attila the hun", "attila"], color: "yellow", name: "Attila the Hun" },
+            { id: 33, answers: ["john glenn", "glenn"], color: "blue", name: "John Glenn" },
+            { id: 34, answers: ["muhammad ali", "ali"], color: "yellow", name: "Muhammad Ali" },
+            { id: 35, answers: ["grace hopper", "hopper"], color: "blue", name: "Grace Hopper" },
             { id: 36, answers: ["karl marx", "marx"], color: "blue", name: "Karl Marx" }
         ];
 
