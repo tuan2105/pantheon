@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Exhibition Tournament Puzzle</title>
+    <style>
+        /* Vintage Magazine Color Palette and Fonts */
+        :root {
+            --paper-bg: #f4ebd8;
+            --paper-dark: #e6d8bd;
+            --ink: #2b221a;
+            --ink-light: #4a3e31;
+            --accent: #7a1f1f;
+            --border-style: 2px solid var(--ink);
+        }
+
+        /* --- UI UPGRADE: OLD MAGAZINE BACKGROUND IMAGE --- */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            /* Applying the background image */
+            background-image: url('https://i.etsystatic.com/20009534/r/il/55285d/3541890928/il_570xN.3541890928_ipff.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-color: #222; /* Fallback desk background */
+            color: var(--ink);
+            line-height: 1.6;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        /* Home Button Styling */
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--paper-bg);
+            text-decoration: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border: 1px solid var(--paper-bg);
+            transition: all 0.2s;
+            z-index: 1000;
+        }
+
+        .home-btn:hover {
+            background-color: var(--paper-bg);
+            color: #222;
+        }
+
+        /* The Magazine Page */
+        .magazine-page {
+            max-width: 850px;
+            margin: 0 auto;
+            background-color: var(--paper-bg);
+            padding: 50px 60px;
+            box-shadow: 
+                inset 0 0 60px rgba(139, 115, 85, 0.2), 
+                0 15px 30px rgba(0,0,0,0.6);
+            position: relative;
+            border-radius: 4px;
+        }
+
+        /* Header Styling */
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-top: 4px double var(--ink);
+            border-bottom: 4px double var(--ink);
+            padding: 15px 0;
+            margin-top: 0;
+            margin-bottom: 30px;
+            color: var(--ink);
+        }
+
+        h2 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--ink-light);
+            padding-bottom: 5px;
+            color: var(--ink);
+            margin-top: 30px;
+        }
+
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+
+        strong {
+            color: var(--accent);
+        }
+
+        /* Button Styling */
+        #rosterBtn {
+            background-color: transparent;
+            color: var(--ink);
+            border: 2px solid var(--ink);
+            padding: 12px 25px;
+            font-family: 'Georgia', serif;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.2s;
+            box-shadow: 3px 3px 0 var(--ink);
+            box-sizing: border-box;
+        }
+
+        #rosterBtn:hover {
+            background-color: var(--ink);
+            color: var(--paper-bg);
+            box-shadow: 1px 1px 0 var(--ink);
+            transform: translate(2px, 2px);
+        }
+
+        #rosterContainer {
+            display: none; 
+            margin-top: 25px;
+        }
+
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        /* Combatant Cards */
+        .soldier-card {
+            background-color: var(--paper-dark);
+            border: 1px solid var(--ink);
+            box-shadow: 2px 2px 0 var(--ink-light);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .soldier-btn {
+            background: transparent;
+            color: var(--ink);
+            border: none;
+            padding: 15px;
+            width: 100%;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .soldier-btn::after {
+            content: '+';
+            font-size: 1.5em;
+            color: var(--accent);
+        }
+
+        .soldier-btn.active::after {
+            content: '−';
+        }
+
+        .soldier-info {
+            display: none;
+            padding: 0 15px 15px 15px;
+            border-top: 1px dashed var(--ink-light);
+            background-color: var(--paper-dark);
+            box-sizing: border-box;
+        }
+
+        .style-display {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        /* Vintage photo effect for icons */
+        .style-icon {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border: 1px solid var(--ink);
+            background-color: #fff;
+            padding: 5px;
+            filter: sepia(1) contrast(1.2) opacity(0.85); /* Gives an old print look */
+            mix-blend-mode: multiply; /* Blends nicely with the paper bg */
+            border-radius: 4px;
+        }
+
+        .style-details p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+
+        .style-highlight {
+            font-weight: bold;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        /* SVG Bracket Styling */
+        .bracket-container {
+            margin: 40px 0;
+            padding: 20px;
+            border: var(--border-style);
+            background-color: var(--paper-dark);
+            text-align: center;
+            overflow-x: auto; /* Handles tiny screen overflow cleanly */
+            border-radius: 4px;
+        }
+
+        .bracket-container h3 {
+            margin-top: 0;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--ink);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        svg {
+            min-width: 600px; /* Ensures minimum readable size for the bracket */
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            overflow: visible;
+        }
+
+        /* --- UI UPGRADE: MOBILE RESPONSIVENESS --- */
+        @media (max-width: 800px) {
+            body {
+                padding: 10px;
+                /* Background is cleaner static on mobile to avoid jumping on scroll */
+                background-attachment: scroll;
+            }
+            .magazine-page { 
+                padding: 25px 20px;
+                border-radius: 0;
+            }
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.3em; }
+
+            /* Home button adjustment for small screens */
+            .home-btn {
+                position: static;
+                display: block;
+                width: fit-content;
+                margin-bottom: 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            .roster-grid {
+                grid-template-columns: 1fr; /* Single column on phones */
+            }
+            svg {
+                transform-origin: left top;
+                transform: scale(0.8); /* Scale down slightly more for tiny screens, scrollable */
+                min-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="home-btn">◄ HOME</a>
+
+    <div class="magazine-page">
+        <h1>The Exhibition Tournament</h1>
+
+        <div class="section">
+            <h2>The Rules of Combat</h2>
+            <ul>
+                <li><strong>Combat Wheel:</strong> There are 6 combat styles. Every style naturally defeats 3 other styles, and loses to 2.</li>
+                <li><strong>Advantage (Left vs Right):</strong> In any matchup, the fighter with the favored combat style takes the <strong>Left Spot</strong>. The disadvantaged fighter starts in the ring, taking the <strong>Right Spot</strong>.</li>
+                <li><strong>The Ring Advantage:</strong> The ring (Right Spot) grants a slight tactical advantage. However, Combat Style advantage is stronger. Therefore, normally, the Favored fighter (Left Spot) wins.</li>
+                <li><strong>Unexpected Results:</strong> If the fighter with the disadvantaged style (in the Ring/Right Spot) manages to win anyway, this is classed as an "Unexpected Result".</li>
+                <li><strong>Same Style Matchups:</strong> If two fighters use the exact same combat style, there is no style advantage. The fighter originating from the higher-numbered starting spot (e.g., Spot 2 over Spot 1, or the 5-8 bracket over the 1-4 bracket) takes the Right Spot. Because they share a style, the Ring Advantage decides the match: <strong>the fighter in the Right Spot will always win.</strong></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>The Clues</h2>
+            <ol>
+                <li>Florian was the Tournament Champion, and Klaus occupied Spot 1.</li>
+                <li>There were exactly three "Unexpected Results" in the entire tournament. <strong>Emil</strong>, Florian, and Klaus each won exactly one match despite having a disadvantaged combat style.</li>
+                <li><strong>Walther</strong> was eliminated in the final Quarterfinal match of the bracket (Spots 7 vs 8) by a fellow Wrestler.</li>
+                <li><strong>Hans</strong> lost a predictable first-round match to the eventual runner-up.</li>
+                <li><strong>Dietmar</strong> was heavily favored in his Quarterfinal match against the eventual Champion, but suffered an unexpected defeat.</li>
+            </ol>
+        </div>
+
+        <button id="rosterBtn">Examine Combatants</button>
+        
+        <div id="rosterContainer">
+            <div class="roster-grid" id="rosterGrid">
+                </div>
+        </div>
+
+        <div class="bracket-container">
+            <h3>Official Match Bracket</h3>
+            <p><em>(Fill in the starting circles 1 through 8 top-to-bottom)</em></p>
+            
+            <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#2b221a" stroke-width="2">
+                    <path d="M 70 25 H 125 V 75 H 70" />
+                    <path d="M 125 50 H 200" />
+                    <path d="M 70 125 H 125 V 175 H 70" />
+                    <path d="M 125 150 H 200" />
+                    <path d="M 70 225 H 125 V 275 H 70" />
+                    <path d="M 125 250 H 200" />
+                    <path d="M 70 325 H 125 V 375 H 70" />
+                    <path d="M 125 350 H 200" />
+
+                    <path d="M 220 50 H 300 V 150 H 220" />
+                    <path d="M 300 100 H 400" />
+                    <path d="M 220 250 H 300 V 350 H 220" />
+                    <path d="M 300 300 H 400" />
+
+                    <path d="M 420 100 H 500 V 300 H 420" />
+                    <path d="M 500 200 H 600" />
+                    
+                    <path d="M 620 200 H 700" />
+                </g>
+
+                <g fill="#f4ebd8" stroke="#2b221a" stroke-width="2">
+                    <circle cx="50" cy="25" r="20" />
+                    <circle cx="50" cy="75" r="20" />
+                    <circle cx="50" cy="125" r="20" />
+                    <circle cx="50" cy="175" r="20" />
+                    <circle cx="50" cy="225" r="20" />
+                    <circle cx="50" cy="275" r="20" />
+                    <circle cx="50" cy="325" r="20" />
+                    <circle cx="50" cy="375" r="20" />
+
+                    <circle cx="200" cy="50" r="20" />
+                    <circle cx="200" cy="150" r="20" />
+                    <circle cx="200" cy="250" r="20" />
+                    <circle cx="200" cy="350" r="20" />
+
+                    <circle cx="400" cy="100" r="20" />
+                    <circle cx="400" cy="300" r="20" />
+
+                    <circle cx="600" cy="200" r="20" />
+                    
+                    <circle cx="720" cy="200" r="25" stroke-width="3" stroke="#7a1f1f"/>
+                </g>
+
+                <g font-family="'Georgia', serif" font-size="16" font-weight="bold" fill="#2b221a" text-anchor="middle" dominant-baseline="central">
+                    <text x="50" y="25">1</text>
+                    <text x="50" y="75">2</text>
+                    <text x="50" y="125">3</text>
+                    <text x="50" y="175">4</text>
+                    <text x="50" y="225">5</text>
+                    <text x="50" y="275">6</text>
+                    <text x="50" y="325">7</text>
+                    <text x="50" y="375">8</text>
+                    
+                    <text x="720" y="200" font-size="12" fill="#7a1f1f">WIN</text>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        // Data Structure for the roster
+        const fighters = [
+            { name: "Klaus", style: "Boxing" },
+            { name: "Hans", style: "Judo" },
+            { name: "Martin", style: "Knife" },
+            { name: "Emil", style: "Sambo" },
+            { name: "Dietmar", style: "Bayonet" },
+            { name: "Florian", style: "Boxing" },
+            { name: "Walther", style: "Wrestling" },
+            { name: "Petermax", style: "Wrestling" }
+        ];
+
+        // Combat matchups
+        const combatWheel = {
+            "Boxing": ["Wrestling", "Judo", "Knife"],
+            "Wrestling": ["Judo", "Knife", "Bayonet"],
+            "Judo": ["Knife", "Bayonet", "Sambo"],
+            "Knife": ["Bayonet", "Sambo", "Boxing"],
+            "Bayonet": ["Sambo", "Boxing", "Wrestling"],
+            "Sambo": ["Boxing", "Wrestling", "Judo"]
+        };
+
+        // Image URLs mapped to styles
+        const styleImages = {
+            "Boxing": "https://p7.hiclipart.com/preview/476/79/678/boxing-glove-sport-computer-icons-boxer.jpg",
+            "Wrestling": "https://toppng.com/uploads/preview/sport-wrestling-silhouette-1152343112287qrqvezyr.png",
+            "Judo": "https://p7.hiclipart.com/preview/892/340/965/summer-olympic-games-judo-computer-icons-sport-symbol.jpg",
+            "Knife": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCvTDQ1Iqe_OcXwiGrjOM5Sku81usnREVJYA&s",
+            "Bayonet": "https://thumbs.dreamstime.com/b/bayonet-rifle-transparent-icon-bayonet-rifle-symbol-desig-bayonet-rifle-transparent-icon-bayonet-rifle-symbol-design-130311156.jpg",
+            "Sambo": "https://thumbnail.imgbin.com/11/3/3/imgbin-asian-indoor-and-martial-arts-games-asian-indoor-games-kickboxing-mixed-martial-arts-muay-CKeCfqt7brKZAXPXs4CJaDmDG_t.jpg"
+        };
+
+        const rosterBtn = document.getElementById('rosterBtn');
+        const rosterContainer = document.getElementById('rosterContainer');
+        const rosterGrid = document.getElementById('rosterGrid');
+
+        // --- UI UPGRADE: MIX UP COMBATANTS LIST (shuffle function) ---
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Toggle visibility of the whole roster
+        rosterBtn.addEventListener('click', () => {
+            if (rosterContainer.style.display === 'block') {
+                rosterContainer.style.display = 'none';
+                rosterBtn.innerText = 'Examine Combatants';
+            } else {
+                rosterContainer.style.display = 'block';
+                rosterBtn.innerText = 'Hide Combatants';
+            }
+        });
+
+        // Initialize and Build Roster
+        function initializeRoster() {
+            // Mix the list before building
+            shuffleArray(fighters);
+            
+            // Clear existing content just in case
+            rosterGrid.innerHTML = '';
+
+            // Generate the HTML for each fighter card
+            fighters.forEach((fighter, index) => {
+                const card = document.createElement('div');
+                card.className = 'soldier-card';
+
+                const btn = document.createElement('button');
+                btn.className = 'soldier-btn';
+                btn.innerText = fighter.name;
+                
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'soldier-info';
+                
+                const beats = combatWheel[fighter.style].join(', ');
+                const imgSrc = styleImages[fighter.style];
+
+                infoDiv.innerHTML = `
+                    <div class="style-display">
+                        <img src="${imgSrc}" alt="${fighter.style} icon" class="style-icon">
+                        <div class="style-details">
+                            <p>Style: <span class="style-highlight">${fighter.style}</span></p>
+                            <p><strong>Favored Vs:</strong><br> ${beats}</p>
+                        </div>
+                    </div>
+                `;
+
+                // Toggle Logic: Allows multiple panels to be open simultaneously
+                btn.addEventListener('click', () => {
+                    const isCurrentlyOpen = infoDiv.style.display === 'block';
+                    
+                    if (!isCurrentlyOpen) {
+                        infoDiv.style.display = 'block';
+                        btn.classList.add('active');
+                    } else {
+                        infoDiv.style.display = 'none';
+                        btn.classList.remove('active');
+                    }
+                });
+
+                card.appendChild(btn);
+                card.appendChild(infoDiv);
+                rosterGrid.appendChild(card);
+            });
+        }
+
+        // Build roster on load
+        initializeRoster();
+
+    </script>
+</body>
+</html>
