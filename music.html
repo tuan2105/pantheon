@@ -12,6 +12,7 @@
             --accent-border: #d4cbb8;
             --highlight-glow: rgba(0, 200, 255, 0.6);
             --portrait-size: 85px;
+            --button-gold: #b08d57;
         }
 
         body {
@@ -23,26 +24,57 @@
             padding: 0;
         }
 
+        /* --- Home Button --- */
+        .home-nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: #fff;
+            border: 1px solid var(--accent-border);
+            border-radius: 4px;
+            text-decoration: none;
+            color: var(--main-dark);
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn-home:hover {
+            background-color: var(--button-gold);
+            color: white;
+            border-color: var(--button-gold);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
         /* --- Header --- */
         #header {
             width: 100%;
             text-align: center;
-            padding: 40px 20px 20px;
+            padding: 60px 20px 20px; /* Increased top padding for home button space */
             border-bottom: 2px solid var(--accent-border);
             box-sizing: border-box;
+            position: relative;
         }
 
         /* --- Main Layout --- */
         #main-container {
             display: flex;
-            flex-direction: column; /* Stacked by default for mobile */
+            flex-direction: column;
             padding: 20px;
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* Container for Portrait and Playlist */
         .top-section {
             display: flex;
             flex-wrap: wrap;
@@ -52,7 +84,7 @@
         }
 
         .playlist {
-            flex: 1 1 500px; /* Expands to fill space next to Bach */
+            flex: 1 1 500px;
             background: #fff;
             padding: 25px;
             border: 1px solid var(--accent-border);
@@ -60,14 +92,28 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
+        .playlist h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
         .playlist ol {
             columns: 2;
             gap: 30px;
+            margin-top: 15px;
+        }
+
+        .author {
+            color: #777;
+            font-size: 0.85em;
+            display: block;
         }
 
         /* --- Full Width Score Section --- */
         .score-section {
-            width: 100%; /* Force full width */
+            width: 100%;
             background: #fff;
             padding: 20px;
             border: 1px solid var(--accent-border);
@@ -77,7 +123,7 @@
         }
 
         #paper {
-            width: 100%; /* Ensures SVG stretches */
+            width: 100%;
         }
 
         /* --- Bach Side Panel --- */
@@ -129,23 +175,34 @@
             font-size: 0.85em;
             border-radius: 4px;
             cursor: pointer;
+            background: #fff;
+            width: 100%;
+            text-align: left;
         }
 
-        .dialogue-btn:hover { background: #f9f9f9; }
+        .dialogue-btn:hover { background: #fdfaf3; border-color: var(--button-gold); }
 
         /* --- Mobile Optimization --- */
         @media (max-width: 768px) {
             .playlist ol { columns: 1; }
             .top-section { flex-direction: column; align-items: center; }
             .bach-panel { order: -1; width: 100%; }
+            .home-nav { top: 10px; left: 10px; }
+            #header { padding-top: 70px; }
         }
     </style>
 </head>
 <body>
 
+<nav class="home-nav">
+    <a href="camp.html" class="btn-home">
+        <span style="margin-right: 8px;">🏠</span> Home
+    </a>
+</nav>
+
 <header id="header">
     <h1>Music History 101</h1>
-    <p>Decode the hidden message within <strong>"A Resting Place."</strong></p>
+    <p>Study the score and the list to find the resting message.</p>
 </header>
 
 <div id="main-container">
@@ -154,53 +211,59 @@
         <div class="playlist">
             <h3>Historic Playlist</h3>
             <ol>
-                <li>Aloha Oe <small>– Queen Liliʻuokalani</small></li>
-                <li>Blue Skies <small>– Irving Berlin</small></li>
-                <li>Indiana <small>– James F. Hanley</small></li>
-                <li>Always <small>– Irving Berlin</small></li>
-                <li>Dixie <small>– Daniel Decatur Emmett</small></li>
-                <li>Margie <small>– Con Conrad & Robinson</small></li>
-                <li>Avalon <small>– Al Jolson & Rose</small></li>
-                <li>Baby Face <small>– Harry Akst</small></li>
-                <li>Dinah <small>– Harry Akst</small></li>
-                <li>Nobody <small>– Bert Williams</small></li>
-                <li>Memories <small>– Egbert Van Alstyne</small></li>
-                <li>Trees <small>– Oscar Rasbach</small></li>
-                <li>Stardust <small>– Hoagy Carmichael</small></li>
-                <li>Chicago <small>– Fred Fisher</small></li>
-                <li>Rosalie <small>– Cole Porter</small></li>
-                <li>Lover <small>– Richard Rodgers</small></li>
-                <li>Smiles <small>– Lee S. Roberts</small></li>
-                <li>Manhattan <small>– Richard Rodgers</small></li>
+                <li>Aloha Oe <span class="author">– Queen Liliʻuokalani</span></li>
+                <li>Blue Skies <span class="author">– Irving Berlin</span></li>
+                <li>Indiana <span class="author">– James F. Hanley</span></li>
+                <li>Always <span class="author">– Irving Berlin</span></li>
+                <li>Dixie <span class="author">– Daniel Decatur Emmett</span></li>
+                <li>Margie <span class="author">– Con Conrad & Robinson</span></li>
+                <li>Avalon <span class="author">– Al Jolson & Rose</span></li>
+                <li>Baby Face <span class="author">– Harry Akst</span></li>
+                <li>Dinah <span class="author">– Harry Akst</span></li>
+                <li>Nobody <span class="author">– Bert Williams</span></li>
+                <li>Memories <span class="author">– Egbert Van Alstyne</span></li>
+                <li>Trees <span class="author">– Oscar Rasbach</span></li>
+                <li>Stardust <span class="author">– Hoagy Carmichael</span></li>
+                <li>Chicago <span class="author">– Fred Fisher</span></li>
+                <li>Rosalie <span class="author">– Cole Porter</span></li>
+                <li>Lover <span class="author">– Richard Rodgers</span></li>
+                <li>Smiles <span class="author">– Lee S. Roberts</span></li>
+                <li>Manhattan <span class="author">– Richard Rodgers</span></li>
             </ol>
         </div>
 
         <div class="bach-panel">
-            <div id="bach-portrait" class="bach-portrait-container">
+            <div id="bach-portrait" class="bach-portrait-container" title="Click to speak with Bach">
                 <img src="https://i.ibb.co/qwZCBm6/images-9.png" alt="Bach">
             </div>
             <div id="bach-dialogue" class="dialogue-box">
-                <strong style="display:block; margin-bottom:10px;">Johann Sebastian Bach</strong>
-                <div class="dialogue-btn">Just Chatting <br><small>(People Smart > 3)</small></div>
-                <div class="dialogue-btn">Hint on the puzzle <br><small>(Nature Smart > 3)</small></div>
-                <div class="dialogue-btn">Teach me basics <br><small>(People + Logic > 5)</small></div>
-                <div class="dialogue-btn">Keyword? <br><small>(People Smart = 5)</small></div>
+                <strong style="display:block; margin-bottom:10px; color: #3e2723;">Johann Sebastian Bach</strong>
+                <button class="dialogue-btn">Just Chatting <br><small>(People Smart > 3)</small></button>
+                <button class="dialogue-btn">Hint on the puzzle <br><small>(Nature Smart > 3)</small></button>
+                <button class="dialogue-btn">Teach me basics <br><small>(People + Logic > 5)</small></button>
+                <button class="dialogue-btn">Keyword? <br><small>(People Smart = 5)</small></button>
             </div>
         </div>
     </div>
 
     <div class="score-section">
+        <h3 style="text-align: center; margin-top: 0;">"A Resting Place"</h3>
         <div id="paper"></div>
     </div>
 
 </div>
 
 <script>
-    var abcString = "X:1\nT:A Resting Place\nM:none\nL:1/4\nK:C\nC z D E F G A | B c z d c B A G F | E F z G A B c | d c z B A G |\nF z E D C | D E F z G A | B z c d c B | A z G F E D C B, |\nC D z E F | G A z B c d | e z d c B A G F | E D z C B, |\nC z D E F G A B | c z d e d c B | A z G F E D C | D E z F G |\nA B c d z e | f e z d c B A G F |]";
+    // Corrected ABC String for 18 measures
+    var abcString = "X:1\nT:\nM:none\nL:1/4\nK:C\nC z D E F G A | B c z d c B A G F | E F z G A B c | d c z B A G |\nF z E D C | D E F z G A | B z c d c B | A z G F E D C B, |\nC D z E F | G A z B c d | e z d c B A G F | E D z C B, |\nC z D E F G A B | c z d e d c B | A z G F E D C | D E z F G |\nA B c d z e | f e z d c B A G F |]";
     
-    // The "responsive: 'resize'" option is key to making it fill the container width
-    ABCJS.renderAbc("paper", abcString, { responsive: 'resize' });
+    // Render music with responsive width
+    ABCJS.renderAbc("paper", abcString, { 
+        responsive: 'resize',
+        staffwidth: 1000 // Provides a baseline for the internal scaling
+    });
 
+    // Bach Interaction
     document.getElementById('bach-portrait').onclick = function() {
         document.getElementById('bach-dialogue').classList.toggle('visible');
     };
