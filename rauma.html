@@ -285,44 +285,75 @@
     <div class="grid-container" id="door-grid"></div>
 
     <script>
-        // Database of the 36 Historical Figures
-        const figures = [
-            { id: 1, answers: ["adolf hitler", "hitler"], color: "red", name: "Adolf Hitler" },
-            { id: 2, answers: ["john fitzgerald kennedy", "john f kennedy", "kennedy", "jfk"], color: "blue", name: "John F. Kennedy" },
-            { id: 3, answers: ["julius caesar", "caesar"], color: "green", name: "Julius Caesar" },
-            { id: 4, answers: ["george washington", "washington"], color: "yellow", name: "George Washington" },
-            { id: 5, answers: ["winston churchill", "churchill"], color: "green", name: "Winston Churchill" },
-            { id: 6, answers: ["napoleon bonaparte", "napoleon"], color: "green", name: "Napoleon Bonaparte" },
-            { id: 7, answers: ["muammar gaddafi", "gaddafi"], color: "yellow", name: "Muammar Gaddafi" },
-            { id: 8, answers: ["abraham lincoln", "lincoln"], color: "yellow", name: "Abraham Lincoln" },
-            { id: 9, answers: ["marie curie", "curie"], color: "blue", name: "Marie Curie" },
-            { id: 10, answers: ["robert oppenheimer", "oppenheimer"], color: "red", name: "Robert Oppenheimer" },
-            { id: 11, answers: ["isaac newton", "newton"], color: "green", name: "Isaac Newton" },
-            { id: 12, answers: ["james watt", "watt"], color: "blue", name: "James Watt" },
-            { id: 13, answers: ["nikola tesla", "tesla"], color: "blue", name: "Nikola Tesla" },
-            { id: 14, answers: ["charles darwin", "darwin"], color: "blue", name: "Charles Darwin" },
-            { id: 15, answers: ["jane goodall", "goodall"], color: "blue", name: "Jane Goodall" },
-            { id: 16, answers: ["thomas edison", "edison"], color: "blue", name: "Thomas Edison" },
-            { id: 17, answers: ["pablo picasso", "picasso"], color: "blue", name: "Pablo Picasso" },
-            { id: 18, answers: ["plato"], color: "blue", name: "Plato" },
-            { id: 19, answers: ["ludwig van beethoven", "beethoven"], color: "blue", name: "Ludwig van Beethoven" },
-            { id: 20, answers: ["wolfgang amadeus mozart", "mozart"], color: "blue", name: "Wolfgang Amadeus Mozart" },
-            { id: 21, answers: ["charles dickens", "dickens"], color: "blue", name: "Charles Dickens" },
-            { id: 22, answers: ["brothers grimm", "the brothers grimm", "grimm"], color: "green", name: "Grimm Brothers" },
-            { id: 23, answers: ["salvador dali", "dali"], color: "green", name: "Salvador Dali" },
-            { id: 24, answers: ["beatrix potter", "potter"], color: "blue", name: "Beatrix Potter" },
-            { id: 25, answers: ["jack the ripper", "ripper"], color: "red", name: "Jack the Ripper" },
-            { id: 26, answers: ["henry howard holmes", "h h holmes", "holmes"], color: "red", name: "H.H. Holmes" },
-            { id: 27, answers: ["bonnie parker", "bonnie"], color: "green", name: "Bonnie Parker" },
-            { id: 28, answers: ["clyde barrow", "clyde"], color: "blue", name: "Clyde Barrow" },
-            { id: 29, answers: ["charles manson", "manson"], color: "blue", name: "Charles Manson" },
-            { id: 30, answers: ["rudolf hess", "hess"], color: "blue", name: "Rudolf Hess" },
-            { id: 31, answers: ["zodiac killer", "zodiac"], color: "red", name: "Zodiac Killer" },
-            { id: 32, answers: ["attila the hun", "attila"], color: "yellow", name: "Attila the Hun" },
-            { id: 33, answers: ["john glenn", "glenn"], color: "blue", name: "John Glenn" },
-            { id: 34, answers: ["muhammad ali", "ali"], color: "yellow", name: "Muhammad Ali" },
-            { id: 35, answers: ["grace hopper", "hopper"], color: "blue", name: "Grace Hopper" },
-            { id: 36, answers: ["karl marx", "marx"], color: "blue", name: "Karl Marx" }
+        // Obfuscated validation system
+        const _0x2f8a = {
+            'a': 'sha256',
+            'b': 'createHash',
+            'c': 'update',
+            'd': 'digest',
+            'e': 'hex'
+        };
+
+        // Simple encoding/decoding functions for browser compatibility
+        function _0x1c9f(_0x3d2b) {
+            try {
+                return btoa(_0x3d2b).replace(/=/g, '');
+            } catch (e) {
+                return _0x3d2b.split('').map(c => c.charCodeAt(0).toString(16)).join('');
+            }
+        }
+
+        function _0x2b7d(_0x3d2b) {
+            try {
+                return atob(_0x3d2b);
+            } catch (e) {
+                // Fallback for hex decoding
+                let result = '';
+                for (let i = 0; i < _0x3d2b.length; i += 2) {
+                    result += String.fromCharCode(parseInt(_0x3d2b.substr(i, 2), 16));
+                }
+                return result;
+            }
+        }
+
+        // Database of the 36 Historical Figures (obfuscated)
+        const _0x5d7e = [
+            { id: 1, hashes: ['YWRvbGYgaGl0bGVy', 'aGl0bGVy'], color: 'red', name: 'QWRvbGYgSGl0bGVy' },
+            { id: 2, hashes: ['am9obiBmaXR6Z2VyYWxkIGtlbm5lZHk', 'am9obiBmIGtlbm5lZHk', 'a2VubmVkeQ', 'amZr'], color: 'blue', name: 'Sm9obiBGLiBLZW5uZWR5' },
+            { id: 3, hashes: ['anVsaXVzIGNhZXNhcg', 'Y2Flc2Fy'], color: 'green', name: 'SnVsaXVzIENhZXNhcg' },
+            { id: 4, hashes: ['Z2VvcmdlIHdhc2hpbmd0b24', 'd2FzaGluZ3Rvbg'], color: 'yellow', name: 'R2VvcmdlIFdhc2hpbmd0b24' },
+            { id: 5, hashes: ['d2luc3RvbiBjaHVyY2hpbGw', 'Y2h1cmNoaWxs'], color: 'green', name: 'V2luc3RvbiBDaHVyY2hpbGw' },
+            { id: 6, hashes: ['bmFwb2xlb24gYm9uYXBhcnRl', 'bmFwb2xlb24'], color: 'green', name: 'TmFwb2xlb24gQm9uYXBhcnRl' },
+            { id: 7, hashes: ['bXVhbW1hciBnYWRkYWZp', 'Z2FkZGFmaQ'], color: 'yellow', name: 'TXVhbW1hciBHYWRkYWZp' },
+            { id: 8, hashes: ['YWJyYWhhbSBsaW5jb2xu', 'bGluY29sbq'], color: 'yellow', name: 'QWJyYWhhbSBMaW5jb2xu' },
+            { id: 9, hashes: ['bWFyaWUgY3VyaWU', 'Y3VyaWU'], color: 'blue', name: 'TWFyaWUgQ3VyaWU' },
+            { id: 25, hashes: ['cm9iZXJ0IG9wcGVuaGVpbWVy', 'b3BwZW5oZWltZXI'], color: 'red', name: 'Um9iZXJ0IE9wcGVuaGVpbWVy' },
+            { id: 11, hashes: ['aXNhYWMgbmV3dG9u', 'bmV3dG9u'], color: 'green', name: 'SXNhYWMgTmV3dG9u' },
+            { id: 12, hashes: ['amFtZXMgd2F0dA', 'd2F0dA'], color: 'blue', name: 'SmFtZXMgV2F0dA' },
+            { id: 13, hashes: ['bmlrb2xhIHRlc2xh', 'dGVzbGE'], color: 'blue', name: 'Tmlrb2xhIFRlc2xh' },
+            { id: 14, hashes: ['Y2hhcmxlcyBkYXJ3aW4', 'ZGFyd2lu'], color: 'blue', name: 'Q2hhcmxlcyBEYXJ3aW4' },
+            { id: 15, hashes: ['amFuZSBnb29kYWxs', 'Z29vZGFsbA'], color: 'blue', name: 'SmFuZSBHb29kYWxs' },
+            { id: 16, hashes: ['dGhvbWFzIGVkaXNvbg', 'ZWRpc29u'], color: 'blue', name: 'VGhvbWFzIEVkaXNvbg' },
+            { id: 17, hashes: ['cGFibG8gcGljYXNzby', 'cGljYXNzby'], color: 'blue', name: 'UGFibG8gUGljYXNzby' },
+            { id: 18, hashes: ['cGxhdG8'], color: 'blue', name: 'UGxhdG8' },
+            { id: 19, hashes: ['bHVkd2lnIHZhbiBiZWV0aG92ZW4', 'YmVldGhvdmVu'], color: 'blue', name: 'THVkd2lnIHZhbiBCZWV0aG92ZW4' },
+            { id: 20, hashes: ['d29sZmdhbmcgYW1hZGV1cyBtb3phcnQ', 'bW96YXJ0'], color: 'blue', name: 'V29sZmdhbmcgQW1hZGV1cyBNb3phcnQ' },
+            { id: 21, hashes: ['Y2hhcmxlcyBkaWNrZW5z', 'ZGlja2Vucw'], color: 'blue', name: 'Q2hhcmxlcyBEaWNrZW5z' },
+            { id: 22, hashes: ['YnJvdGhlcnMgZ3JpbW0', 'dGhlIGJyb3RoZXJzIGdyaW1t', 'Z3JpbW0'], color: 'green', name: 'R3JpbW0gQnJvdGhlcnM' },
+            { id: 23, hashes: ['c2FsdmFkb3IgZGFsaQ', 'ZGFsaQ'], color: 'green', name: 'U2FsdmFkb3IgRGFsaQ' },
+            { id: 24, hashes: ['YmVhdHJpeCBwb3R0ZXI', 'cG90dGVy'], color: 'blue', name: 'QmVhdHJpeCBQb3R0ZXI' },
+            { id: 10, hashes: ['amFjayB0aGUgcmlwcGVy', 'cmlwcGVy'], color: 'red', name: 'SmFjayB0aGUgUmlwcGVy' },
+            { id: 26, hashes: ['aGVucnkgaG93YXJkIGhvbG1lcw', 'aCBtcm9sZXM', 'aG9sbWVz'], color: 'red', name: 'SC5ILiBIb2xtZXM' },
+            { id: 27, hashes: ['Ym9ubmllIHBhcmtlcg', 'Ym9ubmll'], color: 'green', name: 'Qm9ubmllIFBhcmtlcg' },
+            { id: 28, hashes: ['Y2x5ZGUgYmFycm93', 'Y2x5ZGU'], color: 'blue', name: 'Q2x5ZGUgQmFycm93' },
+            { id: 29, hashes: ['Y2hhcmxlcyBtYW5zb24', 'bWFuc29u'], color: 'blue', name: 'Q2hhcmxlcyBNYW5zb24' },
+            { id: 30, hashes: ['cnVkb2xmIGhlc3M', 'aGVzcw'], color: 'blue', name: 'UnVkb2xmIEhlc3M' },
+            { id: 31, hashes: ['em9kaWFjIGtpbGxlcg', 'em9kaWFj'], color: 'red', name: 'Wm9kaWFjIEtpbGxlcg' },
+            { id: 32, hashes: ['YXR0aWxhIHRoZSBodW4', 'YXR0aWxh'], color: 'yellow', name: 'QXR0aWxhIHRoZSBIdW4' },
+            { id: 33, hashes: ['am9obiBnbGVubg', 'Z2xlbm4'], color: 'blue', name: 'Sm9obiBHbGVubg' },
+            { id: 34, hashes: ['bXVoaW1tYWQgYWxp', 'YWxp'], color: 'yellow', name: 'TXVoYW1tYWQgQWxp' },
+            { id: 35, hashes: ['Z3JhY2UgaG9wcGVy', 'aG9wcGVy'], color: 'blue', name: 'R3JhY2UgSG9wcGVy' },
+            { id: 36, hashes: ['a2FybCBtYXJ4', 'bWFyeA'], color: 'blue', name: 'S2FybCBNYXJ4' }
         ];
 
         const grid = document.getElementById('door-grid');
@@ -332,22 +363,25 @@
             return input.toLowerCase().trim().replace(/[^a-z0-9 ]/g, "");
         }
 
-        // Check Password Logic
+        // Check Password Logic (obfuscated)
         function checkPassword(doorId) {
             const inputField = document.getElementById(`input-${doorId}`);
             const btn = document.getElementById(`btn-${doorId}`);
             const doorDiv = document.getElementById(`door-${doorId}`);
             
             const userInput = sanitizeInput(inputField.value);
-            const figure = figures.find(f => f.id === doorId);
-
-            if (figure.answers.includes(userInput)) {
+            const _0x4f2c = _0x5d7e.find(f => f.id === doorId);
+            
+            // Encode user input to base64
+            const _0x6b8d = _0x1c9f(userInput);
+            
+            if (_0x4f2c.hashes.includes(_0x6b8d)) {
                 // Success
                 doorDiv.className = 'door unlocked';
                 doorDiv.innerHTML = `
                     <div class="door-number">SECTOR ${doorId}</div>
                     <div class="success-text">ACCESS GRANTED</div>
-                    <div class="echo-name">ECHO: ${figure.name}</div>
+                    <div class="echo-name">ECHO: ${_0x2b7d(_0x4f2c.name)}</div>
                 `;
             } else {
                 // Error feedback
@@ -361,16 +395,16 @@
             }
         }
 
-        // Generate the Doors
-        figures.forEach(figure => {
+        // Generate the Doors (obfuscated)
+        _0x5d7e.forEach(_0x4f2c => {
             const doorDiv = document.createElement('div');
-            doorDiv.className = `door door-${figure.color}`;
-            doorDiv.id = `door-${figure.id}`;
+            doorDiv.className = `door door-${_0x4f2c.color}`;
+            doorDiv.id = `door-${_0x4f2c.id}`;
 
             doorDiv.innerHTML = `
-                <div class="door-number">SECTOR ${figure.id}</div>
-                <input type="text" id="input-${figure.id}" placeholder="ENTER NAME" autocomplete="off" onkeypress="if(event.key === 'Enter') checkPassword(${figure.id})">
-                <button id="btn-${figure.id}" onclick="checkPassword(${figure.id})">UNLOCK</button>
+                <div class="door-number">SECTOR ${_0x4f2c.id}</div>
+                <input type="text" id="input-${_0x4f2c.id}" placeholder="ENTER NAME" autocomplete="off" onkeypress="if(event.key === 'Enter') checkPassword(${_0x4f2c.id})">
+                <button id="btn-${_0x4f2c.id}" onclick="checkPassword(${_0x4f2c.id})">UNLOCK</button>
             `;
             grid.appendChild(doorDiv);
         });
