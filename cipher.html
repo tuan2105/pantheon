@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cipher Office Puzzle</title>
+    <style>
+        /* Base / Background */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            background-color: #2c3135;
+            background-image: radial-gradient(#40464b 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #2b2b2b;
+        }
+
+        /* Layout Container */
+        .main-container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Retro Home Button */
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #e0dcd3;
+            color: #2b2b2b;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 10px 16px;
+            border: 2px solid #2b2b2b;
+            border-radius: 4px;
+            box-shadow: 3px 3px 0px #111;
+            transition: all 0.1s ease-in-out;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        .home-btn:hover {
+            background-color: #f4f1ea;
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0px #111;
+        }
+
+        .home-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #111;
+        }
+
+        /* The Classified Document */
+        .puzzle-document {
+            background-color: #f4f1ea; 
+            background-image: linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px);
+            background-size: 10px 10px;
+            border: 3px solid #2b2b2b;
+            padding: 60px;
+            box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0,0,0,0.05);
+            max-width: 700px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            border-bottom: 3px double #2b2b2b;
+            padding-bottom: 15px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .clue {
+            font-style: italic;
+            font-size: 1.4em;
+            margin-bottom: 50px;
+            color: #444;
+            background-color: rgba(0,0,0,0.05);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 3px;
+        }
+
+        /* Cipher Layout */
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .box {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+            border: 2px solid #2b2b2b;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.2), inset 0 0 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .box::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.1) 100%);
+            pointer-events: none;
+        }
+
+        .left-bar { border-left: 16px solid #2b2b2b; }
+        .right-bar { border-right: 16px solid #2b2b2b; }
+
+        .literal-letter {
+            font-size: 50px;
+            font-weight: bold;
+            margin: 0 8px;
+            color: #2b2b2b;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+        }
+
+        /* Box Colors */
+        .bg-white { background-color: #fcfcfc; }
+        .bg-orange { background-color: #ff9800; }
+        .bg-purple { background-color: #9c27b0; }
+        .bg-grey { background-color: #d9d9d9; color: #2b2b2b; }
+        .bg-yellow { background-color: #ffeb3b; }
+        .bg-brown { background-color: #795548; }
+        .bg-green { background-color: #4caf50; }
+        .bg-pink { background-color: #f48fb1; }
+        .bg-blue { background-color: #2196f3; }
+        .bg-black { background-color: #333; }
+        .bg-red { background-color: #f44336; }
+
+        /* Turing Character Panel */
+        .turing-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+        }
+
+        .turing-img {
+            width: 200px;
+            height: auto;
+            border-radius: 5px;
+            border: 3px solid #f4f1ea;
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.8);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            background-color: #111;
+        }
+
+        /* Highlight effect on hover */
+        .turing-img:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2) drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.4));
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.8);
+        }
+
+        /* Hidden interactive menu */
+        .turing-menu {
+            display: none;
+            margin-top: 20px;
+            background-color: #f4f1ea;
+            border: 2px solid #2b2b2b;
+            padding: 15px;
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.8);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .turing-menu h3 {
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            text-align: center;
+            border-bottom: 2px dashed #2b2b2b;
+            padding-bottom: 5px;
+            font-size: 1.2em;
+        }
+
+        .dialogue-btn {
+            display: block;
+            width: 100%;
+            background-color: #d9d9d9;
+            border: 1px solid #2b2b2b;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .dialogue-btn:hover {
+            background-color: #2b2b2b;
+            color: #f4f1ea;
+        }
+
+        .dialogue-btn:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 950px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 60px 10px 20px 10px; }
+            .puzzle-document { padding: 30px 15px; }
+            h1 { font-size: 1.8em; }
+            .clue { font-size: 1.1em; margin-bottom: 30px; }
+            
+            /* Shrinking the boxes for narrow screens */
+            .box {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+            .left-bar { border-left-width: 10px; }
+            .right-bar { border-right-width: 10px; }
+            .literal-letter { font-size: 32px; margin: 0 3px; }
+            .row { gap: 6px; margin-bottom: 20px; }
+            
+            .turing-img { width: 160px; }
+            .turing-panel { width: 100%; max-width: 320px; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="home-btn">◄ Home</a>
+
+    <div class="main-container">
+        <div class="puzzle-document">
+            <h1>Cipher Office</h1>
+            <div class="clue">"Verwende die lokale Zunge"</div>
+
+            <div class="row">
+                <div class="box left-bar bg-white"></div>
+                <div class="box left-bar bg-orange"></div>
+                <div class="box left-bar bg-purple"></div>
+                <div class="box left-bar bg-grey">5</div>
+                <div class="box left-bar bg-yellow"></div>
+                <div class="box left-bar bg-grey">8</div>
+                <div class="box right-bar bg-brown"></div>
+                <div class="box left-bar bg-green"></div>
+            </div>
+
+            <div class="row">
+                <div class="box right-bar bg-pink"></div>
+                <div class="literal-letter">M</div>
+                <div class="box left-bar bg-grey">8</div>
+                <div class="box left-bar bg-grey">3</div>
+                <div class="box right-bar bg-orange"></div>
+                <div class="box right-bar bg-blue"></div>
+                <div class="box right-bar bg-grey">1</div>
+            </div>
+
+            <div class="row">
+                <div class="literal-letter">M</div>
+                <div class="box left-bar bg-orange"></div>
+                <div class="box right-bar bg-black"></div>
+                <div class="box right-bar bg-purple"></div>
+                <div class="box right-bar bg-grey">4</div>
+                <div class="box right-bar bg-red"></div>
+            </div>
+        </div>
+
+        <div class="turing-panel">
+            <img src="https://i.ibb.co/VYj7GRRy/Alan-turing-header.png" alt="Alan Turing" class="turing-img" onclick="toggleTuringMenu()">
+            
+            <div class="turing-menu" id="turingMenu">
+                <h3>Alan Turing</h3>
+                <button class="dialogue-btn">Just Chatting (People Smart >3)</button>
+                <button class="dialogue-btn">Hint on the puzzle (Word Smart + Logic Smart > 6)</button>
+                <button class="dialogue-btn">What's that line in German mean? (Word Smart >3)</button>
+                <button class="dialogue-btn">Keyword? (Solving the puzzle and People Smart =5)</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTuringMenu() {
+            const menu = document.getElementById("turingMenu");
+            // Toggle display between block and none
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>
