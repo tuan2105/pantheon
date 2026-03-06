@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant 32</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --menu-bg: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --accent-gold: #d4af37;
+            --border-color: #333333;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            color: var(--bg-color);
+            background-color: var(--accent-gold);
+            padding: 10px 18px;
+            border-radius: 4px;
+            font-family: 'Helvetica Neue', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+
+        .home-btn:hover {
+            background-color: #f1c40f;
+            transform: translateY(-2px);
+        }
+
+        .menu-container {
+            background-color: var(--menu-bg);
+            border: 1px solid var(--accent-gold);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            padding: 60px;
+            max-width: 900px;
+            width: 100%;
+            margin: 80px 20px;
+            box-sizing: border-box;
+        }
+
+        .restaurant-title {
+            font-size: 42px;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin: 0 0 10px 0;
+            color: var(--accent-gold);
+            text-align: center;
+        }
+
+        .menu-subtitle {
+            font-size: 18px;
+            font-style: italic;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .menu-subtitle::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 2px;
+            background-color: var(--accent-gold);
+            margin: 15px auto 0;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateX(5px);
+        }
+
+        .dish-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-gold);
+            background-color: #2a2a2a; /* Placeholder background */
+        }
+
+        .item-info {
+            flex-grow: 1;
+        }
+
+        .item-name {
+            font-size: 20px;
+            font-weight: normal;
+            letter-spacing: 1px;
+            margin: 0 0 8px 0;
+            color: var(--text-main);
+        }
+
+        .item-details {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-family: 'Helvetica Neue', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .menu-container {
+                padding: 40px 20px;
+            }
+            .restaurant-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="home-btn">&#8592; Home</a>
+
+    <div class="menu-container">
+        <h1 class="restaurant-title">Restaurant 32</h1>
+        <div class="menu-subtitle">Dessert Menu</div>
+
+        <div class="menu-grid">
+            
+            <div class="menu-item">
+                <img src="https://wheatbythewayside.com/wp-content/uploads/2022/06/Gluten-Free-Peach-Crisp-with-Oats-and-Almonds-2.jpg" alt="Artisan Peach Crunch" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Artisan Peach Crunch</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">June</span><br>Customer Favorite: <span class="highlight">#2</span></p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsiYAUC-87r69RiUF2GIzviaCSEVEyATXLfg&s" alt="Butterscotch Crunch" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Butterscotch Crunch</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">September</span><br>Customer Favorite: <span class="highlight">#3</span></p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoUbtA1fKbOKqv2oaY3tBIOgKcr-CdZpDT4g&s" alt="Cherry Panna Cotta" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Cherry Panna Cotta</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">February</span><br>Customer Favorite: <span class="highlight">#9</span></p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZCah5P9jw_tv5biwvdICYlr1YThGNbzOuYQ&s" alt="Chilled Lemon Tart" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Chilled Lemon Tart</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">January</span><br>Customer Favorite: <span class="highlight">#4</span></p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo2stOCmrdE-BdjlDaeTlP0hOuT77dvtJchA&s" alt="Cinnamon Apple Cobbler" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Cinnamon Apple Cobbler</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">November</span><br>Customer Favorite: <span class="highlight">#12</span></p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzqoVVzd9RqiAus1onxHPL94pMi444Nul8ow&s" alt="Cranberry Almond Bark" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Cranberry Almond Bark</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">March</span><br>Customer Favorite: <span class="highlight">#1</span></p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://aemeromedia.com/storage/2024/03/Ethiopian-coffee-pouring-1200x675.png" alt="Ethiopian Coffee Parfait" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Ethiopian Coffee Parfait</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">August</span><br>Customer Favorite: <span class="highlight">#10</span></p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn1TL8lwooMnNAFEJVpM7Oi55-Vh_EOnmPPA&s" alt="Gelato with Shortbread" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Gelato with Shortbread</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">December</span><br>Customer Favorite: <span class="highlight">#5</span></p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4PZYGm9dXjKxkkIjcM21sELXVVrTwYXLApg&s" alt="Peach and Plum Pie" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Peach and Plum Pie</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">July</span><br>Customer Favorite: <span class="highlight">#6</span></p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR29xrUJtD1pMJf2JRxPB8L_QJbIWx3lqUl_w&s" alt="Petite Vanilla Sponge" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Petite Vanilla Sponge</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">April</span><br>Customer Favorite: <span class="highlight">#7</span></p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA7K2XY-fdgavBewI3SujlXO1rsRF-b16eXA&s" alt="Southern Pecan Tart" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Southern Pecan Tart</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">May</span><br>Customer Favorite: <span class="highlight">#11</span></p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUefYtQtPiIXJZ-rylio4TQUg_jwSzDv7JTg&s" alt="Tahitian Vanilla Cannoli" class="dish-img">
+                <div class="item-info">
+                    <h2 class="item-name">Tahitian Vanilla Cannoli</h2>
+                    <p class="item-details">Signature Month: <span class="highlight">October</span><br>Customer Favorite: <span class="highlight">#8</span></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
