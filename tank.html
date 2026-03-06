@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operation Vanguard - Classified Blueprint</title>
+    <style>
+        :root {
+            --blueprint-bg: #112B4A;
+            --blueprint-grid: #1A3D68;
+            --blueprint-text: #E2E8F0;
+            --blueprint-accent: #63B3ED;
+            --blueprint-highlight: #F6E05E;
+            --blueprint-dark: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            background-color: var(--blueprint-bg);
+            background-image: 
+                linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--blueprint-text);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 40px 20px 100px 20px; /* Extra bottom padding for the character */
+            display: flex;
+            justify-content: center;
+        }
+
+        .document {
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(17, 43, 74, 0.85);
+            border: 2px solid var(--blueprint-accent);
+            padding: 50px 40px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        /* Nav Buttons */
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            color: var(--blueprint-accent);
+            border: 1px solid var(--blueprint-accent);
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            background: var(--blueprint-dark);
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        .home-btn:hover {
+            background: var(--blueprint-accent);
+            color: var(--blueprint-bg);
+        }
+
+        .top-secret {
+            color: #FC8181;
+            font-weight: bold;
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            border: 2px solid #FC8181;
+            display: inline-block;
+            padding: 8px 15px;
+            transform: rotate(-5deg);
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(252, 129, 129, 0.1);
+        }
+
+        /* Header & Hidden Logo */
+        .header {
+            text-align: center;
+            border-bottom: 1px dashed var(--blueprint-accent);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            margin-top: 20px;
+        }
+        
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            opacity: 0.5; 
+        }
+        .logo-container {
+            display: inline-grid;
+            grid-template-columns: repeat(5, 12px);
+            grid-template-rows: repeat(3, 12px);
+            gap: 2px;
+        }
+        .block {
+            background-color: var(--blueprint-accent);
+            opacity: 0.4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1px;
+        }
+        .empty { background-color: transparent; }
+        .dot {
+            width: 6px; height: 6px;
+            background-color: #ffffff;
+            border-radius: 50%; opacity: 0.9;
+        }
+
+        .header h1 {
+            color: var(--blueprint-text);
+            font-size: 2rem;
+            letter-spacing: 2px;
+            margin: 5px 0;
+            text-shadow: 1px 1px 2px #000;
+        }
+        .header h2 {
+            color: var(--blueprint-accent);
+            font-size: 1.2rem;
+            font-weight: normal;
+            margin: 0 0 10px 0;
+        }
+
+        /* Image Illustration */
+        .illustration-container {
+            width: 100%;
+            text-align: center;
+            margin: 30px 0;
+            padding: 15px;
+            background: var(--blueprint-dark);
+            border: 1px solid rgba(99, 179, 237, 0.3);
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        .tank-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            filter: grayscale(100%) sepia(20%) hue-rotate(180deg) contrast(120%);
+            opacity: 0.9;
+        }
+
+        h3 {
+            color: var(--blueprint-accent);
+            border-bottom: 2px solid rgba(99, 179, 237, 0.3);
+            padding-bottom: 5px;
+            font-size: 1.4rem;
+            margin-top: 40px;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 30px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            background: var(--blueprint-dark);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .legend-item {
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .legend-item strong {
+            color: var(--blueprint-highlight);
+            font-size: 1.1rem;
+            background: rgba(0,0,0,0.5);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Assembly Station Styles */
+        .assembly-section {
+            background: var(--blueprint-dark);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+        .station { margin-bottom: 35px; }
+        .station:last-child { margin-bottom: 0; }
+        .station-title {
+            font-weight: bold;
+            color: var(--blueprint-text);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 6px solid var(--blueprint-accent);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 100px;
+            height: 50px;
+            border: 2px solid var(--blueprint-accent);
+            border-radius: 25px;
+            padding: 0 15px;
+            font-weight: bold;
+            font-size: 1rem;
+            background: rgba(26, 54, 93, 0.8);
+            color: #fff;
+            text-align: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .plus {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--blueprint-accent);
+            opacity: 0.7;
+        }
+
+        /* Character Interaction Panel */
+        .npc-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            align-items: flex-end;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .npc-menu {
+            display: none;
+            flex-direction: column;
+            background: rgba(17, 43, 74, 0.95);
+            border: 2px solid var(--blueprint-accent);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            width: 320px;
+            backdrop-filter: blur(5px);
+        }
+
+        .npc-menu.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .npc-name {
+            color: var(--blueprint-highlight);
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--blueprint-accent);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .dialogue-btn {
+            background: var(--blueprint-dark);
+            color: var(--blueprint-text);
+            border: 1px solid var(--blueprint-accent);
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            line-height: 1.4;
+        }
+
+        .dialogue-btn:hover {
+            background: var(--blueprint-accent);
+            color: var(--blueprint-bg);
+            box-shadow: 0 0 10px var(--blueprint-accent);
+        }
+
+        .dialogue-btn:last-child {
+            margin-bottom: 0;
+        }
+
+        .req-text {
+            display: block;
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 4px;
+            font-style: italic;
+        }
+        .dialogue-btn:hover .req-text {
+            color: var(--blueprint-bg);
+            opacity: 1;
+        }
+
+        .npc-portrait {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--blueprint-accent);
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .npc-portrait:hover {
+            box-shadow: 0 0 25px var(--blueprint-accent);
+            transform: scale(1.05);
+            filter: brightness(1.3) contrast(1.1);
+            border-color: var(--blueprint-highlight);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 850px) {
+            .legend-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.5rem; line-height: 1.3; }
+            .document { padding: 80px 20px 30px 20px; }
+            .top-secret { top: 15px; right: 15px; font-size: 0.8rem; }
+            .home-btn { top: 15px; left: 15px; }
+            
+            /* Mobile Character Menu Adjustments */
+            .npc-container {
+                bottom: 15px;
+                right: 15px;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 15px;
+            }
+            .npc-portrait {
+                width: 75px;
+                height: 75px;
+            }
+            .npc-menu {
+                width: calc(100vw - 60px);
+                max-width: 300px;
+                padding: 15px;
+            }
+            .dialogue-btn {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+            .circle {
+                min-width: 80px;
+                height: 40px;
+                font-size: 0.85rem;
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="document">
+    <a href="index.html" class="home-btn">◄ HOME</a>
+    <div class="top-secret">Top Secret</div>
+    
+    <div class="header">
+        <div class="logo-wrapper" title="Manufacturer Designation">
+            <div class="logo-container">
+                <div class="block"></div><div class="block"><div class="dot"></div></div><div class="block"></div><div class="block"></div><div class="empty"></div>
+                <div class="block"></div><div class="block"><div class="dot"></div></div><div class="block"></div><div class="block"><div class="dot"></div></div><div class="block"></div>
+                <div class="empty"></div><div class="empty"></div><div class="block"></div><div class="block"></div><div class="block"><div class="dot"></div></div>
+            </div>
+        </div>
+
+        <h1>BLACKWOOD FORGE HEAVY INDUSTRIES</h1>
+        <h2>Project: Prototype Vanguard-VII</h2>
+        <p style="opacity: 0.8;">Eyes Only - Authorized Assembly Technicians</p>
+    </div>
+
+    <div class="illustration-container">
+        <img class="tank-img" src="https://i.ibb.co/TxJDxbDW/tank.jpg" alt="Tank Anatomy Blueprint">
+    </div>
+
+    <h3>I. BLUEPRINT LEGEND</h3>
+    <div class="legend-grid">
+        <div class="legend-item"><strong>A</strong> - Auxiliary Generator: Powers internal electronics and turret rotation when main engine is idle.</div>
+        <div class="legend-item"><strong>B</strong> - Browning .30 Cal Coaxial: Secondary armament mounted parallel to the main gun.</div>
+        <div class="legend-item"><strong>C</strong> - Commander's Cupola: Armored dome featuring vision slits for 360-degree awareness.</div>
+        <div class="legend-item"><strong>D</strong> - Drive Sprocket: Heavy-duty toothed wheel transferring engine power to the tracks.</div>
+        <div class="legend-item"><strong>E</strong> - Engine Block (V8): The 500-horsepower, liquid-cooled heart of the vehicle.</div>
+        <div class="legend-item"><strong>F</strong> - Forward Fuel Cell: Primary combustible storage, heavily compartmentalized.</div>
+        <div class="legend-item"><strong>G</strong> - Gun Mantlet: Thick frontal armor block protecting the cannon's traverse mechanism.</div>
+        <div class="legend-item"><strong>H</strong> - Heavy Machine Gun Port: Fortified opening in the hull for defensive forward suppression.</div>
+        <div class="legend-item"><strong>I</strong> - Idler Wheel Assembly: Adjustable front wheel that maintains proper tension for the track.</div>
+        <div class="legend-item"><strong>K</strong> - Kinetic Shock Absorber: Dampeners preventing the chassis from bottoming out.</div>
+        <div class="legend-item"><strong>L</strong> - Loader's Hatch: Quick-release door for rapidly resupplying heavy shells.</div>
+        <div class="legend-item"><strong>M</strong> - Main 75mm Cannon: High-velocity rifled barrel optimized for long-range engagements.</div>
+        <div class="legend-item"><strong>N</strong> - Nose Glacis Plate: Sloped frontal armor to deflect incoming armor-piercing projectiles.</div>
+        <div class="legend-item"><strong>O</strong> - Oil Filter Housing: High-capacity purifier to keep the powertrain running smoothly.</div>
+        <div class="legend-item"><strong>P</strong> - Periscope Housing: Angled, shatter-resistant mirrors allowing safe exterior viewing.</div>
+        <div class="legend-item"><strong>R</strong> - Radio Antenna: Long-range, flexible communication mast for coordinated tactics.</div>
+        <div class="legend-item"><strong>S</strong> - Suspension Bogie: Articulated road wheels paired with volute springs to absorb impacts.</div>
+        <div class="legend-item"><strong>T</strong> - Track Links: Interlocking heavy-duty steel treads providing maximum all-terrain traction.</div>
+        <div class="legend-item"><strong>U</strong> - Upper Hull Armor: The primary, heavily welded defensive shell enclosing the crew.</div>
+        <div class="legend-item"><strong>V</strong> - Ventilation Exhaust: Fan system expelling toxic cordite fumes from the cabin.</div>
+        <div class="legend-item"><strong>W</strong> - Welded Turret Ring: heavily reinforced rotating base connecting upper turret to chassis.</div>
+        <div class="legend-item"><strong>Z</strong> - Zimmerit Coating: Specialized paste to prevent magnetic mines from adhering.</div>
+    </div>
+
+    <h3>II. ASSEMBLY DIRECTIVES</h3>
+    <div class="assembly-section">
+        <div class="station">
+            <div class="station-title">STATION 1: Sub-Assembly Alpha</div>
+            <div class="bar">
+                <div class="circle">SPRINGS</div><div class="plus">+</div>
+                <div class="circle">SHELL</div><div class="plus">+</div>
+                <div class="circle">BARREL</div>
+            </div>
+        </div>
+
+        <div class="station">
+            <div class="station-title">STATION 2: Sub-Assembly Bravo</div>
+            <div class="bar">
+                <div class="circle">BASE</div><div class="plus">+</div>
+                <div class="circle">SUPPRESSION</div><div class="plus">+</div>
+                <div class="circle">TENSION</div><div class="plus">+</div>
+                <div class="circle">TREADS</div><div class="plus">+</div>
+                <div class="circle">HORSEPOWER</div>
+            </div>
+        </div>
+
+        <div class="station">
+            <div class="station-title">STATION 3: Sub-Assembly Charlie</div>
+            <div class="bar">
+                <div class="circle">MIRRORS</div><div class="plus">+</div>
+                <div class="circle">ELECTRONICS</div><div class="plus">+</div>
+                <div class="circle">MAST</div><div class="plus">+</div>
+                <div class="circle">TRACTION</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="npc-container">
+    <div class="npc-menu" id="dialogueMenu">
+        <div class="npc-name">Sir William Triton</div>
+        
+        <button class="dialogue-btn" onclick="alert('Dialogue triggered: What are the parts in the Stations?')">
+            "What are the parts in the Stations?"
+            <span class="req-text">[Requires: Logic Smart + Picture Smart > 6]</span>
+        </button>
+        
+        <button class="dialogue-btn" onclick="alert('Dialogue triggered: Hint on the puzzle')">
+            "Hint on the puzzle"
+            <span class="req-text">[Requires: Logic Smart > 3]</span>
+        </button>
+        
+        <button class="dialogue-btn" onclick="alert('Dialogue triggered: Just chatting')">
+            "Just chatting"
+            <span class="req-text">[Requires: People Smart > 3]</span>
+        </button>
+        
+        <button class="dialogue-btn" onclick="alert('Dialogue triggered: Keyword?')">
+            "Keyword?"
+            <span class="req-text">[Requires: Solving the puzzle & People Smart = 5]</span>
+        </button>
+    </div>
+    
+    <img src="https://i.ibb.co/SXWKyCb7/Screenshot-2026-03-06-160155.png" 
+         alt="Sir William Triton" 
+         class="npc-portrait" 
+         id="npcPortrait"
+         title="Click to speak with Sir William Triton">
+</div>
+
+<script>
+    // Simple toggle script for the character menu
+    const npcPortrait = document.getElementById('npcPortrait');
+    const dialogueMenu = document.getElementById('dialogueMenu');
+
+    npcPortrait.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevents click from immediately closing if we add a body listener
+        dialogueMenu.classList.toggle('active');
+    });
+
+    // Close menu if clicking outside of the character panel
+    document.body.addEventListener('click', function(e) {
+        if (!e.target.closest('.npc-container')) {
+            dialogueMenu.classList.remove('active');
+        }
+    });
+</script>
+
+</body>
+</html>
