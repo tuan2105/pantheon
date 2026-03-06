@@ -244,6 +244,29 @@
             50% { text-shadow: 0 0 20px currentColor; }
             100% { text-shadow: 0 0 5px currentColor; }
         }
+
+        /* mobile tweaks */
+        @media (max-width: 600px) {
+            .home-btn {
+                top: 10px;
+                left: 10px;
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .legend {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .grid-container {
+                gap: 15px;
+            }
+            .door {
+                padding: 15px 10px;
+            }
+        }
     </style>
 </head>
 <body>

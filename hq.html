@@ -301,6 +301,74 @@
             font-weight: normal;
         }
 
+        /* ======= Mobile Responsiveness ======= */
+        @media (max-width: 768px) {
+            /* stack layout vertically and reduce background impact */
+            body {
+                flex-direction: column;
+                background-attachment: scroll;
+            }
+
+            .main-content {
+                max-width: 100%;
+                padding: 20px 10px;
+            }
+
+            .right-sidebar {
+                position: relative;
+                width: 100%;
+                top: auto;
+                right: auto;
+                margin: 20px auto;
+            }
+
+            .home-btn {
+                top: 10px;
+                left: 10px;
+                padding: 8px 12px;
+                font-size: 0.9em;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                letter-spacing: 2px;
+                padding-bottom: 10px;
+            }
+
+            .cipher-section {
+                padding: 20px;
+                font-size: 1em;
+            }
+
+            table {
+                width: 100%;
+                table-layout: fixed;
+            }
+
+            .gem-cell {
+                width: 50px;
+                height: 50px;
+            }
+
+            .scherbius-img {
+                width: 180px;
+            }
+
+            .modal-content-gem {
+                width: 90%;
+                height: auto;
+            }
+
+            .modal-content-scherbius {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .interaction-text {
+                font-size: 0.95em;
+            }
+        }
+
     </style>
 </head>
 <body>
