@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1940 Puzzle Documents</title>
+    <style>
+        /* Base styling and desk background */
+        body {
+            background: radial-gradient(circle at center, #4a3f35 0%, #2c251f 100%);
+            font-family: "Times New Roman", Times, serif;
+            color: #1a1a1a;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Home Button */
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #fdfaf1;
+            color: #1a1a1a;
+            text-decoration: none;
+            padding: 10px 18px;
+            font-family: "Georgia", serif;
+            font-size: 1rem;
+            font-weight: bold;
+            border: 2px solid #1a1a1a;
+            box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.8);
+            transition: all 0.1s ease;
+            z-index: 1000;
+        }
+
+        .home-btn:hover {
+            background-color: #e8dcc4;
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Shared Page Styling (The "Paper") */
+        .page {
+            background-color: #f4ebd8;
+            background-image: linear-gradient(to bottom right, rgba(255,255,255,0.3), rgba(0,0,0,0.02));
+            width: 100%;
+            max-width: 850px;
+            margin-bottom: 60px;
+            box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.6), inset 0px 0px 40px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+            position: relative;
+            border: 1px solid #d4c8b2;
+        }
+
+        /* Page 1: Catalogue */
+        .catalogue-page {
+            padding: 15px; /* Creates a slight paper border around the image */
+            transform: rotate(-1deg); /* Slight tilt for realism */
+        }
+        
+        .catalogue-page img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #bdae93;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Page 2: Newspaper */
+        .newspaper-page {
+            padding: 50px;
+            transform: rotate(0.5deg); /* Slight tilt opposite to page 1 */
+        }
+        
+        .newspaper-header {
+            text-align: center;
+            border-bottom: 5px solid #1a1a1a;
+            border-top: 5px solid #1a1a1a;
+            padding: 20px 0;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .newspaper-header::after {
+            content: '';
+            position: absolute;
+            bottom: -9px;
+            left: 0;
+            right: 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .newspaper-title {
+            font-size: 4.5em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: 2px;
+            font-family: "Georgia", serif;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+        }
+
+        .newspaper-meta {
+            display: flex;
+            justify-content: space-between;
+            font-style: italic;
+            font-size: 1.1em;
+            margin-top: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .newspaper-content {
+            column-count: 2;
+            column-gap: 50px;
+            column-rule: 2px solid #1a1a1a;
+        }
+
+        .article {
+            break-inside: avoid;
+            margin-bottom: 40px;
+        }
+
+        .article h2 {
+            font-family: "Georgia", serif;
+            font-size: 1.6em;
+            text-transform: uppercase;
+            text-align: center;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 12px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .article p {
+            text-align: justify;
+            line-height: 1.5;
+            font-size: 1.1em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        /* Classic Newspaper Drop Cap */
+        .article > p:first-of-type::first-letter {
+            float: left;
+            font-size: 3.8em;
+            line-height: 0.8;
+            padding-right: 8px;
+            padding-top: 6px;
+            font-family: "Georgia", serif;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 800px) {
+            .newspaper-content {
+                column-count: 1;
+            }
+            .newspaper-title {
+                font-size: 3em;
+            }
+            .newspaper-page {
+                padding: 25px;
+            }
+            .catalogue-page {
+                padding: 10px;
+            }
+            .home-btn {
+                top: 10px;
+                left: 10px;
+                font-size: 0.9em;
+                padding: 8px 12px;
+            }
+            body {
+                padding: 60px 10px 20px 10px; /* Extra top padding so content doesn't hide behind home button */
+            }
+            .page {
+                transform: none; /* Remove tilt on mobile for easier reading */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="home-btn">&larr; Home</a>
+
+    <div class="page catalogue-page">
+        <img src="https://i.ibb.co/bRvDsz05/ad-1.jpg" alt="Spring 1940 Home Appliance Sale Catalogue">
+    </div>
+
+    <div class="page newspaper-page">
+        <div class="newspaper-header">
+            <h1 class="newspaper-title">The Daily Chronicle</h1>
+            <div class="newspaper-meta">
+                <span>Thursday, October 14, 1940</span>
+                <span>Price: Two Pence</span>
+            </div>
+        </div>
+
+        <div class="newspaper-content">
+            <div class="article">
+                <h2>City Metal Drive Declared a Roaring Success</h2>
+                <p>The Mayor wishes to extend his deepest gratitude to the citizens of our fair city for their overwhelming participation in Tuesday's scrap metal drive. Over four tons of scrap iron and tin were collected for the war effort.</p>
+                <p>The Ministry of Defense reminds the public that while materials like steel, chrome, and cast iron remain available for basic authorized household goods, the manufacturing of solid aluminum goods for civilian households has been completely halted and outlawed. All aluminum is now strictly diverted and reserved for the production of military aircraft. Citizens are further encouraged to save their tin foil wrappers and old cooking fats for next month's collection.</p>
+            </div>
+
+            <div class="article">
+                <h2>Expansion of the National Power Grid Continues</h2>
+                <p>The National Electrical Board released its annual infrastructure report this morning, citing significant progress despite current economic hardships. Officials are proud to announce that 72 percent of homes nationwide are now officially connected to the electrical grid, a record high for the country.</p>
+                <p>For the families in rural counties still relying on gas lamps, coal stoves, and manual labor, the Board promises further expansion by 1943. In the meantime, analysts predict the price of standard lamp oil and paraffin wax will unfortunately rise by twopence before the winter season begins.</p>
+            </div>
+
+            <div class="article">
+                <h2>Industry Experts Discuss "The Factory of Tomorrow"</h2>
+                <p>At the engineering symposium held at the University yesterday, safety inspectors discussed the future of industrial manufacturing. Among the topics was the testing of a new 3-prong earthed plug. Officials noted that while promising for heavy factory machinery, the design remains strictly in the prototype phase and has not yet been implemented in any consumer products or domestic homes. Citizens should continue to safely use standard 2-pin wall outlets and lightbulb socket adapters.</p>
+                <p>The symposium concluded with a stern warning from the War Office: loose lips sink ships. The public is reminded that advanced technologies, particularly radar and radiowave emissions, are highly classified military secrets used solely for national defense and must not be discussed in public forums.</p>
+            </div>
+
+            <div class="article">
+                <h2>Victory Gardens Yield Record Harvests</h2>
+                <p>The Ministry of Agriculture reports a staggering 15 percent increase in domestic potato and turnip yields this quarter, thanks to the tireless efforts of civilian Victory Gardeners. To celebrate, local grocers will be offering discounted flour and yeast this weekend.</p>
+                <p>In related domestic news, while imported silks and nylons remain incredibly scarce, domestic manufacturing of canvas, wool, and wooden goods remains steady, ensuring everyday tools and clothing remain accessible to the sensible housewife.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
