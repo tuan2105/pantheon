@@ -6,7 +6,7 @@
     <title>Headquarters Office</title>
     <style>
         /* =========================================================
-           GEM IMAGE LINKS
+           GEM IMAGE LINKS (Keeping existing setup)
            ========================================================= */
         :root {
             --onyx-img: url('https://static.vecteezy.com/system/resources/previews/067/937/428/non_2x/onyx-jewel-closeup-isolated-on-transparent-background-png.png');
@@ -23,10 +23,9 @@
             --amethyst-img: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwoYYLJcuRzUhxnW78gG1Ni6WdBsik4o0QKQ&s');
             --sapphire-img: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNYyi2h2nFDp1zKZ_pRJB9L9vjOFdn23fcwA&s');
             --amber-img: url('https://media.gemstones.com/image/private/t_gemstones_ratio_4x3_m/d_gemstones-site:default-noimage.png/v1663960926/gemstones-site/articles/legacy/gems_amber_with_bug_nuulrp.jpg');
-            --diamond-img: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR_6BwknScRxQNGNo0OoEImXJ3IeBmrzBc2g&s');
-        }
+            --diamond-img: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR_6BwknScRxQNGNo0OoEImXJ3IeBmrzBc2g&s');}
 
-        /* Vintage aesthetic with new background */
+        /* Basic Setup & Dossier Background */
         body {
             font-family: 'Courier New', Courier, monospace;
             background-image: url('https://49fe30bb3aa7406c16dc-5c968119d095dc32d807923c59347cc2.ssl.cf1.rackcdn.com/2008.002.048_1.jpg');
@@ -35,18 +34,37 @@
             background-attachment: fixed;
             color: #2c2a25;
             margin: 0;
-            padding: 60px 20px;
+            padding: 0;
             position: relative;
+            display: flex; /* Setup for side-by-side layout */
+            min-height: 100vh;
         }
 
-        /* Home Button Styling */
+        /* --- NEW LAYOUT CONTAINERS --- */
+        .main-content {
+            flex: 1; /* Left side takes remaining space */
+            padding: 60px 20px;
+            max-width: calc(100% - 300px); /* Leave room for image on right */
+        }
+        .right-sidebar {
+            width: 300px; /* Width for the portrait */
+            position: fixed; /* Keeps it visible while scrolling */
+            right: 20px;
+            top: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 5;
+        }
+
+        /* Home Button Styling (adjusted z-index for new layout) */
         .home-btn {
-            position: absolute;
+            position: fixed;
             top: 20px;
             left: 20px;
             padding: 10px 20px;
             border: 2px solid #2c2a25;
-            background-color: rgba(234, 221, 207, 0.9);
+            background-color: rgba(234, 221, 207, 0.95);
             color: #2c2a25;
             text-transform: uppercase;
             text-decoration: none;
@@ -59,8 +77,8 @@
         .home-btn:hover {
             background-color: #2c2a25;
             color: #eaddcf;
-            box-shadow: 1px 1px 0px rgba(0,0,0,0.3);
             transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px rgba(0,0,0,0.3);
         }
 
         h1 {
@@ -71,7 +89,7 @@
             padding-bottom: 15px;
             max-width: 600px;
             margin: 0 auto 40px auto;
-            background-color: rgba(244, 244, 240, 0.85); /* Readability backing */
+            background-color: rgba(244, 244, 240, 0.9);
             padding-top: 15px;
         }
 
@@ -79,11 +97,11 @@
         .cipher-section {
             max-width: 800px;
             margin: 0 auto 50px auto;
-            background: rgba(244, 244, 240, 0.95); /* Opaque backing for readability */
+            background: rgba(244, 244, 240, 0.98);
             padding: 30px;
             border: 2px solid #4a453d;
             box-shadow: 5px 5px 25px rgba(0,0,0,0.5);
-            font-size: 1.15em;
+            font-size: 1.1em;
             line-height: 1.8;
         }
         .cipher-line strong {
@@ -102,17 +120,17 @@
         td {
             border: 2px solid #7a7369;
             padding: 0;
-            background-color: #fff; /* Ensures white/transparent images pop */
+            background-color: #fff;
         }
 
-        /* Gem Cell Settings - Bigger images */
+        /* Gem Cell Settings (Keeping your big image updates) */
         .gem-cell {
             width: 100px;
             height: 100px;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-size: 90%; /* Much bigger fit inside the cell */
+            background-size: 90%; 
             background-repeat: no-repeat;
             background-position: center;
             transition: all 0.2s ease-in-out;
@@ -143,19 +161,15 @@
             font-weight: 900;
             font-size: 1.8em; 
             color: rgba(255, 255, 255, 0.7); 
-            text-shadow: 
-                2px 2px 0 #000, 
-                -2px -2px 0 #000, 
-                2px -2px 0 #000, 
-                -2px 2px 0 #000;
+            text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
             transition: all 0.2s ease-in-out;
             z-index: 2;
-            pointer-events: none; /* Let clicks pass through to the cell */
+            pointer-events: none;
         }
 
-        /* Hover Effects */
+        /* Gem Hover Effects */
         .gem-cell:hover {
-            background-size: 100%; /* Zooms to fill */
+            background-size: 100%; 
             background-color: #e6e1d8;
         }
         .gem-cell:hover .gem-letter {
@@ -163,7 +177,25 @@
             font-size: 2.1em; 
         }
 
-        /* Modal (Pop-up) Styling */
+        /* --- ARTHUR SCHERBIUS IMAGE STYLING --- */
+        .scherbius-img {
+            width: 250px;
+            height: auto;
+            border: 8px solid white; /* Looks like an old photo print */
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: grayscale(100%); /* Keeps it black and white until hover */
+        }
+        /* Highlight on hover */
+        .scherbius-img:hover {
+            filter: grayscale(0%) brightness(1.2); /* Brings color/brightness back */
+            transform: scale(1.05) rotate(2deg); /* "Pops" the photo */
+            border-color: #f0e68c; /* Subtle golden highlight */
+            box-shadow: 0px 0px 30px rgba(240, 230, 140, 0.8);
+        }
+
+        /* General Modal (Pop-up) Basic Styling */
         .modal {
             display: none; 
             position: fixed; 
@@ -172,31 +204,10 @@
             top: 0;
             width: 100%; 
             height: 100%; 
-            background-color: rgba(0, 0, 0, 0.85); 
+            background-color: rgba(0, 0, 0, 0.9); 
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(4px);
-        }
-        .modal-content {
-            position: relative;
-            width: 400px;
-            height: 400px;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0px 0px 50px rgba(255,255,255,0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-size: 85%;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-        .modal-letter {
-            font-family: 'Arial', sans-serif;
-            font-weight: 900;
-            font-size: 6em;
-            color: #fff;
-            text-shadow: 4px 4px 0 #000, -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 0px 8px 15px rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
         }
         .close-btn {
             position: absolute;
@@ -212,138 +223,252 @@
             color: #bbb;
             transform: scale(1.1);
         }
+
+        /* Modal Type 1: Gem Cell Expanded View */
+        .modal-content-gem {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: 85%;
+            background-repeat: no-repeat;
+            background-position: center;
+            box-shadow: 0px 0px 50px rgba(255,255,255,0.2);
+        }
+        .modal-letter-gem {
+            font-family: 'Arial', sans-serif;
+            font-weight: 900;
+            font-size: 6em;
+            color: #fff;
+            text-shadow: 4px 4px 0 #000, -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 0px 8px 15px rgba(0,0,0,0.8);
+        }
+
+        /* --- NEW: Modal Type 2: Scherbius Interaction Log --- */
+        .modal-content-scherbius {
+            position: relative;
+            width: 600px;
+            background-color: rgba(244, 244, 240, 0.98); /* Opaque parchment color */
+            border: 4px solid #2c2a25;
+            padding: 40px;
+            box-shadow: 10px 10px 40px rgba(0,0,0,0.8);
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .interaction-title {
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 1.4em;
+            letter-spacing: 2px;
+            border-bottom: 2px solid #2c2a25;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        /* List of text options */
+        .interaction-options {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .interaction-item {
+            margin-bottom: 20px;
+            border: 1px solid #7a7369;
+            background-color: rgba(255,255,255,0.6);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .interaction-item:hover {
+            background-color: #e6e1d8;
+            transform: translateX(5px);
+            border-color: #2c2a25;
+        }
+        /* The requested text inside the options */
+        .interaction-text {
+            padding: 15px;
+            line-height: 1.6;
+            font-size: 1.05em;
+            font-weight: bold;
+        }
+        /* Prefixing with a generic bullet/icon (e.g., [QUESTION]) */
+        .interaction-text::before {
+            content: "[LOG:REQ] ";
+            color: #7a7369;
+            font-weight: normal;
+        }
+
     </style>
 </head>
 <body>
 
     <a href="index.html" class="home-btn">&#8592; Home</a>
 
-    <h1>Headquarters Office</h1>
+    <div class="main-content">
+        <h1>Headquarters Office</h1>
 
-    <div class="cipher-section">
-        <div class="cipher-line"><strong>[3]</strong> Profil den Boykotteur, maximal starken Bösewicht diesem Abenteuer.</div>
-        <div class="cipher-line"><strong>[1]</strong> Alle Menschen beobachten euch regelmäßig, heimlich sowie ständig.</div>
-        <div class="cipher-line"><strong>[1]</strong> Querworte umschreibe alle richtig teutonisch zur gänzlichen Wortfindung, wobei wichtig.</div>
-        <div class="cipher-line"><strong>[3]</strong> Ideal nimmt dieser Wort exakt alle jede Spalte, Linie einzeln von innen.</div>
-        <div class="cipher-line"><strong>[1]</strong> Töne offenbaren praktisch Ausdrucksformen, zeige immer standardisiertes Schriftdeutsch entlang Einfärbungen.</div>
-        <div class="cipher-line"><strong>[1]</strong> Jetzt adaptiere du Englisch gerne, einzig echter Expressionismus.</div>
-        <div class="cipher-line"><strong>[1]</strong> Zeitraum ist real chronologisch offiziell Neunzehnhundertvierzig, Krieg startet sehr schnell.</div>
-        <div class="cipher-line"><strong>[2]</strong> Identifiziere die Kadaver amtierender Vorstände, entdecke Administratoren isoliert unter anderen zwei zweifellos.</div>
-        <div class="cipher-line"><strong>[2]</strong> Streitkampf notiert operativ dasselbe Szenario, zweite Entschlüsselung inklusive.</div>
-        <div class="cipher-line"><strong>[2]</strong> Übeltäter befindet erwartungsgemäß symbolisch platziert exakt unter Teilnehmern derzeit.</div>
+        <div class="cipher-section">
+            <div class="cipher-line"><strong>[3]</strong> Profil den Boykotteur, maximal starken Bösewicht diesem Abenteuer.</div>
+            <div class="cipher-line"><strong>[1]</strong> Alle Menschen beobachten euch regelmäßig, heimlich sowie ständig.</div>
+            <div class="cipher-line"><strong>[1]</strong> Querworte umschreibe alle richtig teutonisch zur gänzlichen Wortfindung, wobei wichtig.</div>
+            <div class="cipher-line"><strong>[3]</strong> Ideal nimmt dieser Wort exakt alle jede Spalte, Linie einzeln von innen.</div>
+            <div class="cipher-line"><strong>[1]</strong> Töne offenbaren praktisch Ausdrucksformen, zeige immer standardisiertes Schriftdeutsch entlang Einfärbungen.</div>
+            <div class="cipher-line"><strong>[1]</strong> Jetzt adaptiere du Englisch gerne, einzig echter Expressionismus.</div>
+            <div class="cipher-line"><strong>[1]</strong> Zeitraum ist real chronologisch offiziell Neunzehnhundertvierzig, Krieg startet sehr schnell.</div>
+            <div class="cipher-line"><strong>[2]</strong> Identifiziere die Kadaver amtierender Vorstände, entdecke Administratoren isoliert unter anderen zwei zweifellos.</div>
+            <div class="cipher-line"><strong>[2]</strong> Streitkampf notiert operativ dasselbe Szenario, zweite Entschlüsselung inklusive.</div>
+            <div class="cipher-line"><strong>[2]</strong> Übeltäter befindet erwartungsgemäß symbolisch platziert exakt unter Teilnehmern derzeit.</div>
+        </div>
+
+        <table>
+            <tbody>
+                <tr>
+                    <td><div class="gem-cell onyx"><span class="gem-letter">A</span></div></td>
+                    <td><div class="gem-cell opal"><span class="gem-letter">B</span></div></td>
+                    <td><div class="gem-cell ruby"><span class="gem-letter">C</span></div></td>
+                    <td><div class="gem-cell jade"><span class="gem-letter">G</span></div></td>
+                    <td><div class="gem-cell quartz"><span class="gem-letter">I</span></div></td>
+                    <td><div class="gem-cell beryl"><span class="gem-letter">J</span></div></td>
+                    <td><div class="gem-cell jade"><span class="gem-letter">F</span></div></td>
+                </tr>
+                <tr>
+                    <td><div class="gem-cell zircon"><span class="gem-letter">K</span></div></td>
+                    <td><div class="gem-cell pearl"><span class="gem-letter">M</span></div></td>
+                    <td><div class="gem-cell topaz"><span class="gem-letter">R</span></div></td>
+                    <td><div class="gem-cell onyx"><span class="gem-letter">N</span></div></td>
+                    <td><div class="gem-cell emerald"><span class="gem-letter">E</span></div></td>
+                    <td><div class="gem-cell ruby"><span class="gem-letter">P</span></div></td>
+                    <td><div class="gem-cell topaz"><span class="gem-letter">Q</span></div></td>
+                </tr>
+                <tr>
+                    <td><div class="gem-cell garnet"><span class="gem-letter">T</span></div></td>
+                    <td><div class="gem-cell amethyst"><span class="gem-letter">V</span></div></td>
+                    <td><div class="gem-cell zircon"><span class="gem-letter">W</span></div></td>
+                    <td><div class="gem-cell opal"><span class="gem-letter">X</span></div></td>
+                    <td><div class="gem-cell sapphire"><span class="gem-letter">O</span></div></td>
+                    <td><div class="gem-cell pearl"><span class="gem-letter">Y</span></div></td>
+                    <td><div class="gem-cell beryl"><span class="gem-letter">Z</span></div></td>
+                </tr>
+                <tr>
+                    <td><div class="gem-cell ruby"><span class="gem-letter">A</span></div></td>
+                    <td><div class="gem-cell amber"><span class="gem-letter">D</span></div></td>
+                    <td><div class="gem-cell jade"><span class="gem-letter">B</span></div></td>
+                    <td><div class="gem-cell onyx"><span class="gem-letter">C</span></div></td>
+                    <td><div class="gem-cell quartz"><span class="gem-letter">G</span></div></td>
+                    <td><div class="gem-cell amber"><span class="gem-letter">H</span></div></td>
+                    <td><div class="gem-cell diamond"><span class="gem-letter">S</span></div></td>
+                </tr>
+                <tr>
+                    <td><div class="gem-cell pearl"><span class="gem-letter">H</span></div></td>
+                    <td><div class="gem-cell topaz"><span class="gem-letter">I</span></div></td>
+                    <td><div class="gem-cell zircon"><span class="gem-letter">J</span></div></td>
+                    <td><div class="gem-cell beryl"><span class="gem-letter">K</span></div></td>
+                    <td><div class="gem-cell opal"><span class="gem-letter">M</span></div></td>
+                    <td><div class="gem-cell ruby"><span class="gem-letter">N</span></div></td>
+                    <td><div class="gem-cell garnet"><span class="gem-letter">P</span></div></td>
+                </tr>
+                <tr>
+                    <td><div class="gem-cell quartz"><span class="gem-letter">Q</span></div></td>
+                    <td><div class="gem-cell jade"><span class="gem-letter">T</span></div></td>
+                    <td><div class="gem-cell amethyst"><span class="gem-letter">S</span></div></td>
+                    <td><div class="gem-cell onyx"><span class="gem-letter">U</span></div></td>
+                    <td><div class="gem-cell pearl"><span class="gem-letter">V</span></div></td>
+                    <td><div class="gem-cell garnet"><span class="gem-letter">U</span></div></td>
+                    <td><div class="gem-cell topaz"><span class="gem-letter">W</span></div></td>
+                </tr>
+                <tr>
+                    <td><div class="gem-cell beryl"><span class="gem-letter">X</span></div></td>
+                    <td><div class="gem-cell zircon"><span class="gem-letter">Y</span></div></td>
+                    <td><div class="gem-cell amber"><span class="gem-letter">Z</span></div></td>
+                    <td><div class="gem-cell ruby"><span class="gem-letter">L</span></div></td>
+                    <td><div class="gem-cell emerald"><span class="gem-letter">A</span></div></td>
+                    <td><div class="gem-cell quartz"><span class="gem-letter">B</span></div></td>
+                    <td><div class="gem-cell jade"><span class="gem-letter">C</span></div></td>
+                </tr>
+            </tbody>
+        </table>
+    </div> <div class="right-sidebar">
+        <img src="https://i.ibb.co/j9r2vX6t/Arthur-Scherbius.png" alt="Arthur Scherbius - Portrait" class="scherbius-img" id="scherbiusPhoto">
     </div>
 
-    <table>
-        <tbody>
-            <tr>
-                <td><div class="gem-cell onyx"><span class="gem-letter">A</span></div></td>
-                <td><div class="gem-cell opal"><span class="gem-letter">B</span></div></td>
-                <td><div class="gem-cell ruby"><span class="gem-letter">C</span></div></td>
-                <td><div class="gem-cell jade"><span class="gem-letter">G</span></div></td>
-                <td><div class="gem-cell quartz"><span class="gem-letter">I</span></div></td>
-                <td><div class="gem-cell beryl"><span class="gem-letter">J</span></div></td>
-                <td><div class="gem-cell jade"><span class="gem-letter">F</span></div></td>
-            </tr>
-            <tr>
-                <td><div class="gem-cell zircon"><span class="gem-letter">K</span></div></td>
-                <td><div class="gem-cell pearl"><span class="gem-letter">M</span></div></td>
-                <td><div class="gem-cell topaz"><span class="gem-letter">R</span></div></td>
-                <td><div class="gem-cell onyx"><span class="gem-letter">N</span></div></td>
-                <td><div class="gem-cell emerald"><span class="gem-letter">E</span></div></td>
-                <td><div class="gem-cell ruby"><span class="gem-letter">P</span></div></td>
-                <td><div class="gem-cell topaz"><span class="gem-letter">Q</span></div></td>
-            </tr>
-            <tr>
-                <td><div class="gem-cell garnet"><span class="gem-letter">T</span></div></td>
-                <td><div class="gem-cell amethyst"><span class="gem-letter">V</span></div></td>
-                <td><div class="gem-cell zircon"><span class="gem-letter">W</span></div></td>
-                <td><div class="gem-cell opal"><span class="gem-letter">X</span></div></td>
-                <td><div class="gem-cell sapphire"><span class="gem-letter">O</span></div></td>
-                <td><div class="gem-cell pearl"><span class="gem-letter">Y</span></div></td>
-                <td><div class="gem-cell beryl"><span class="gem-letter">Z</span></div></td>
-            </tr>
-            <tr>
-                <td><div class="gem-cell ruby"><span class="gem-letter">A</span></div></td>
-                <td><div class="gem-cell amber"><span class="gem-letter">D</span></div></td>
-                <td><div class="gem-cell jade"><span class="gem-letter">B</span></div></td>
-                <td><div class="gem-cell onyx"><span class="gem-letter">C</span></div></td>
-                <td><div class="gem-cell quartz"><span class="gem-letter">G</span></div></td>
-                <td><div class="gem-cell amber"><span class="gem-letter">H</span></div></td>
-                <td><div class="gem-cell diamond"><span class="gem-letter">S</span></div></td>
-            </tr>
-            <tr>
-                <td><div class="gem-cell pearl"><span class="gem-letter">H</span></div></td>
-                <td><div class="gem-cell topaz"><span class="gem-letter">I</span></div></td>
-                <td><div class="gem-cell zircon"><span class="gem-letter">J</span></div></td>
-                <td><div class="gem-cell beryl"><span class="gem-letter">K</span></div></td>
-                <td><div class="gem-cell opal"><span class="gem-letter">M</span></div></td>
-                <td><div class="gem-cell ruby"><span class="gem-letter">N</span></div></td>
-                <td><div class="gem-cell garnet"><span class="gem-letter">P</span></div></td>
-            </tr>
-            <tr>
-                <td><div class="gem-cell quartz"><span class="gem-letter">Q</span></div></td>
-                <td><div class="gem-cell jade"><span class="gem-letter">T</span></div></td>
-                <td><div class="gem-cell amethyst"><span class="gem-letter">S</span></div></td>
-                <td><div class="gem-cell onyx"><span class="gem-letter">U</span></div></td>
-                <td><div class="gem-cell pearl"><span class="gem-letter">V</span></div></td>
-                <td><div class="gem-cell garnet"><span class="gem-letter">U</span></div></td>
-                <td><div class="gem-cell topaz"><span class="gem-letter">W</span></div></td>
-            </tr>
-            <tr>
-                <td><div class="gem-cell beryl"><span class="gem-letter">X</span></div></td>
-                <td><div class="gem-cell zircon"><span class="gem-letter">Y</span></div></td>
-                <td><div class="gem-cell amber"><span class="gem-letter">Z</span></div></td>
-                <td><div class="gem-cell ruby"><span class="gem-letter">L</span></div></td>
-                <td><div class="gem-cell emerald"><span class="gem-letter">A</span></div></td>
-                <td><div class="gem-cell quartz"><span class="gem-letter">B</span></div></td>
-                <td><div class="gem-cell jade"><span class="gem-letter">C</span></div></td>
-            </tr>
-        </tbody>
-    </table>
+    <div id="modalOverlay" class="modal">
+        <div class="modal-content-gem" id="gemModalContent">
+            <span class="close-btn" id="closeGemModal">&times;</span>
+            <span class="modal-letter-gem" id="modalLetter">A</span>
+        </div>
 
-    <div id="gemModal" class="modal">
-        <div class="modal-content" id="modalContent">
-            <span class="close-btn" id="closeModal">&times;</span>
-            <span class="modal-letter" id="modalLetter">A</span>
+        <div class="modal-content-scherbius" id="scherbiusModalContent">
+            <span class="close-btn" id="closeScherbiusModal">&times;</span>
+            <div class="interaction-title">INTERACTION LOG [ID: SCHERBIUS.A]</div>
+            <ul class="interaction-options">
+                <li class="interaction-item"><div class="interaction-text">The meaning of these 10 German sentences? (Word Smart &gt;3, roll dice twice)</div></li>
+                <li class="interaction-item"><div class="interaction-text">Hint on the Gemstone Grids? (Logic Smart + Word Smart + Picture Smart &gt;7)</div></li>
+                <li class="interaction-item"><div class="interaction-text">Just chatting (People Smart &gt;3)</div></li>
+                <li class="interaction-item"><div class="interaction-text">Keyword? (Solving the Gemstone Grid and People Smart =5)</div></li>
+            </ul>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const cells = document.querySelectorAll('.gem-cell');
-            const modal = document.getElementById('gemModal');
-            const modalContent = document.getElementById('modalContent');
+            const scherbiusPhoto = document.getElementById('scherbiusPhoto');
+            
+            const overlay = document.getElementById('modalOverlay');
+            const gemModal = document.getElementById('gemModalContent');
+            const scherbiusModal = document.getElementById('scherbiusModalContent');
+            
             const modalLetter = document.getElementById('modalLetter');
-            const closeBtn = document.getElementById('closeModal');
+            const closeGemBtn = document.getElementById('closeGemModal');
+            const closeScherbiusBtn = document.getElementById('closeScherbiusModal');
 
-            // Open modal on cell click
+            // Function to close all modals and overlay
+            const closeAllModals = () => {
+                overlay.style.display = 'none';
+                gemModal.style.display = 'none';
+                scherbiusModal.style.display = 'none';
+            };
+
+            // --- GEM CELL INTERACTION ---
             cells.forEach(cell => {
                 cell.addEventListener('click', function() {
-                    // Extract the background image from the clicked cell
+                    closeAllModals(); // Clear any open modals first
+                    
+                    // Get data
                     const bgImage = window.getComputedStyle(this).getPropertyValue('background-image');
-                    // Extract the letter inside the cell
                     const letter = this.querySelector('.gem-letter').innerText;
                     
-                    // Apply to modal
-                    modalContent.style.backgroundImage = bgImage;
+                    // Populating Gem Modal
+                    gemModal.style.backgroundImage = bgImage;
                     modalLetter.innerText = letter;
                     
-                    // Show modal
-                    modal.style.display = 'flex';
+                    // Show Gem Modal & Overlay
+                    overlay.style.display = 'flex';
+                    gemModal.style.display = 'flex';
                 });
             });
 
-            // Close modal functions
-            const closeModalFunc = () => {
-                modal.style.display = 'none';
-            };
+            // --- SCHERBIUS IMAGE INTERACTION ---
+            scherbiusPhoto.addEventListener('click', () => {
+                closeAllModals(); // Clear first
+                
+                // Show Scherbius Modal & Overlay
+                overlay.style.display = 'flex';
+                scherbiusModal.style.display = 'block'; // Or flex, depending on layout needs
+            });
 
-            closeBtn.addEventListener('click', closeModalFunc);
+
+            // --- CLOSE FUNCTIONALITY ---
+            closeGemBtn.addEventListener('click', closeAllModals);
+            closeScherbiusBtn.addEventListener('click', closeAllModals);
             
-            // Close if user clicks outside the modal content
-            window.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModalFunc();
+            // Close if user clicks background overlay outside actual modal content
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    closeAllModals();
                 }
             });
         });
