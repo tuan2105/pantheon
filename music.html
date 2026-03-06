@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baroque Music Study - Puzzle</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/abcjs/6.2.2/abcjs-basic-min.js"></script>
+    <style>
+        :root {
+            --parchment-bg: #fdfaf3;
+            --main-dark: #2c2c2c;
+            --accent-border: #d4cbb8;
+            --highlight-glow: rgba(0, 200, 255, 0.6);
+            --portrait-size: 85px;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--parchment-bg);
+            color: var(--main-dark);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- Header --- */
+        #header {
+            width: 100%;
+            text-align: center;
+            padding: 40px 20px 20px;
+            border-bottom: 2px solid var(--accent-border);
+            box-sizing: border-box;
+        }
+
+        /* --- Main Layout --- */
+        #main-container {
+            display: flex;
+            flex-direction: column; /* Stacked by default for mobile */
+            padding: 20px;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Container for Portrait and Playlist */
+        .top-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .playlist {
+            flex: 1 1 500px; /* Expands to fill space next to Bach */
+            background: #fff;
+            padding: 25px;
+            border: 1px solid var(--accent-border);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .playlist ol {
+            columns: 2;
+            gap: 30px;
+        }
+
+        /* --- Full Width Score Section --- */
+        .score-section {
+            width: 100%; /* Force full width */
+            background: #fff;
+            padding: 20px;
+            border: 1px solid var(--accent-border);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+        }
+
+        #paper {
+            width: 100%; /* Ensures SVG stretches */
+        }
+
+        /* --- Bach Side Panel --- */
+        .bach-panel {
+            flex: 0 0 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bach-portrait-container {
+            width: var(--portrait-size);
+            height: var(--portrait-size);
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #6d4c41;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .bach-portrait-container:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--highlight-glow);
+        }
+
+        .bach-portrait-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .dialogue-box {
+            display: none;
+            background: #fff;
+            width: 100%;
+            padding: 20px;
+            border: 1px solid var(--accent-border);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .dialogue-box.visible { display: block; }
+
+        .dialogue-btn {
+            border: 1px solid #eee;
+            padding: 10px;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .dialogue-btn:hover { background: #f9f9f9; }
+
+        /* --- Mobile Optimization --- */
+        @media (max-width: 768px) {
+            .playlist ol { columns: 1; }
+            .top-section { flex-direction: column; align-items: center; }
+            .bach-panel { order: -1; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<header id="header">
+    <h1>Music History 101</h1>
+    <p>Decode the hidden message within <strong>"A Resting Place."</strong></p>
+</header>
+
+<div id="main-container">
+    
+    <div class="top-section">
+        <div class="playlist">
+            <h3>Historic Playlist</h3>
+            <ol>
+                <li>Aloha Oe <small>– Queen Liliʻuokalani</small></li>
+                <li>Blue Skies <small>– Irving Berlin</small></li>
+                <li>Indiana <small>– James F. Hanley</small></li>
+                <li>Always <small>– Irving Berlin</small></li>
+                <li>Dixie <small>– Daniel Decatur Emmett</small></li>
+                <li>Margie <small>– Con Conrad & Robinson</small></li>
+                <li>Avalon <small>– Al Jolson & Rose</small></li>
+                <li>Baby Face <small>– Harry Akst</small></li>
+                <li>Dinah <small>– Harry Akst</small></li>
+                <li>Nobody <small>– Bert Williams</small></li>
+                <li>Memories <small>– Egbert Van Alstyne</small></li>
+                <li>Trees <small>– Oscar Rasbach</small></li>
+                <li>Stardust <small>– Hoagy Carmichael</small></li>
+                <li>Chicago <small>– Fred Fisher</small></li>
+                <li>Rosalie <small>– Cole Porter</small></li>
+                <li>Lover <small>– Richard Rodgers</small></li>
+                <li>Smiles <small>– Lee S. Roberts</small></li>
+                <li>Manhattan <small>– Richard Rodgers</small></li>
+            </ol>
+        </div>
+
+        <div class="bach-panel">
+            <div id="bach-portrait" class="bach-portrait-container">
+                <img src="https://i.ibb.co/qwZCBm6/images-9.png" alt="Bach">
+            </div>
+            <div id="bach-dialogue" class="dialogue-box">
+                <strong style="display:block; margin-bottom:10px;">Johann Sebastian Bach</strong>
+                <div class="dialogue-btn">Just Chatting <br><small>(People Smart > 3)</small></div>
+                <div class="dialogue-btn">Hint on the puzzle <br><small>(Nature Smart > 3)</small></div>
+                <div class="dialogue-btn">Teach me basics <br><small>(People + Logic > 5)</small></div>
+                <div class="dialogue-btn">Keyword? <br><small>(People Smart = 5)</small></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="score-section">
+        <div id="paper"></div>
+    </div>
+
+</div>
+
+<script>
+    var abcString = "X:1\nT:A Resting Place\nM:none\nL:1/4\nK:C\nC z D E F G A | B c z d c B A G F | E F z G A B c | d c z B A G |\nF z E D C | D E F z G A | B z c d c B | A z G F E D C B, |\nC D z E F | G A z B c d | e z d c B A G F | E D z C B, |\nC z D E F G A B | c z d e d c B | A z G F E D C | D E z F G |\nA B c d z e | f e z d c B A G F |]";
+    
+    // The "responsive: 'resize'" option is key to making it fill the container width
+    ABCJS.renderAbc("paper", abcString, { responsive: 'resize' });
+
+    document.getElementById('bach-portrait').onclick = function() {
+        document.getElementById('bach-dialogue').classList.toggle('visible');
+    };
+</script>
+
+</body>
+</html>
