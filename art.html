@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Class Puzzle</title>
+<style>
+    /* Base Page Styles */
+    body {
+        background-color: #2b2824;
+        background-image: radial-gradient(circle, #3e3a35 0%, #1a1815 100%);
+        margin: 0;
+        padding: 0;
+        font-family: 'Courier New', Courier, monospace;
+        color: #333;
+        min-height: 100vh;
+    }
+
+    /* Home Button Navigation */
+    .nav-bar {
+        width: 100%;
+        padding: 15px 20px;
+        box-sizing: border-box;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        background: linear-gradient(to bottom, rgba(26,24,21,0.95), rgba(26,24,21,0));
+    }
+
+    .home-btn {
+        display: inline-block;
+        background-color: #f4f1ea;
+        color: #2b2824;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-family: sans-serif;
+        font-size: 14px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        border: 1px solid #d1caba;
+        transition: all 0.2s;
+    }
+
+    .home-btn:hover {
+        background-color: #e0dcd2;
+        transform: translateY(-2px);
+    }
+
+    /* Layout Wrapper */
+    .main-layout {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 20px 40px 20px;
+        gap: 40px;
+    }
+
+    /* Left Column: Puzzle Content */
+    .studio-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        max-width: 800px;
+    }
+
+    /* Paintings Gallery Wall */
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 20px;
+        width: 100%;
+        padding: 30px;
+        background-color: rgba(0, 0, 0, 0.25);
+        border-radius: 12px;
+        box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+        box-sizing: border-box;
+    }
+
+    .painting-frame {
+        background: #3e2723;
+        padding: 10px;
+        border-radius: 4px;
+        box-shadow: 4px 6px 15px rgba(0,0,0,0.7), inset 1px 1px 2px rgba(255,255,255,0.15);
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .painting-frame:hover {
+        transform: scale(1.05);
+        box-shadow: 6px 8px 20px rgba(0,0,0,0.9), inset 1px 1px 2px rgba(255,255,255,0.2);
+    }
+
+    .painting-frame img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border: 2px solid #1a110f;
+    }
+
+    /* Puzzle Card Styles */
+    .puzzle-card {
+        background-color: #f4f1ea;
+        width: 100%;
+        padding: 40px;
+        border-radius: 4px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+        border: 2px solid #d1caba;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    .puzzle-card::before {
+        content: "";
+        position: absolute;
+        top: 10px; left: 10px; right: 10px; bottom: 10px;
+        border: 1px dashed #c0b8a5;
+        pointer-events: none;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 24px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-bottom: 2px solid #333;
+        padding-bottom: 10px;
+        margin-top: 0;
+        margin-bottom: 25px;
+        color: #222;
+    }
+
+    .note-text {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #222;
+        text-align: justify;
+    }
+
+    .stain {
+        padding: 2px 6px;
+        border-radius: 8px 3px 7px 4px;
+        color: #fff;
+        font-weight: bold;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+        display: inline-block;
+        transform: rotate(-1deg);
+        white-space: nowrap;
+    }
+    
+    .stain.dark-text { color: #111; text-shadow: none; }
+
+    /* Stain/Swatch Colors */
+    .s-red, .bg-red { background-color: #cc3333; }
+    .s-blue, .bg-blue { background-color: #3366cc; }
+    .s-yellow, .bg-yellow { background-color: #ffcc00; color: #111; text-shadow: none; }
+    .s-purple, .bg-purple { background-color: #800080; }
+    .s-cyan, .bg-cyan { background-color: #00cccc; color: #111; text-shadow: none;}
+    .s-magenta, .bg-magenta { background-color: #cc00cc; }
+    .s-lime, .bg-lime { background-color: #99cc33; color: #111; text-shadow: none;}
+    .s-teal, .bg-teal { background-color: #008080; }
+    .s-maroon, .bg-maroon { background-color: #800000; }
+    .s-olive, .bg-olive { background-color: #6b8e23; }
+    .s-peach, .bg-peach { background-color: #ffcc99; color: #111; text-shadow: none;}
+    .s-indigo, .bg-indigo { background-color: #4b0082; }
+    .s-lavender, .bg-lavender { background-color: #ccaadd; color: #111; text-shadow: none;}
+    .s-mint, .bg-mint { background-color: #aaffc3; color: #111; text-shadow: none;}
+    .s-coral, .bg-coral { background-color: #ff7f50; }
+    .s-black, .bg-black { background-color: #222222; }
+
+    .bg-brown { background-color: #8b4513; }
+    .bg-gold { background-color: #daa520; }
+    .bg-grey { background-color: #808080; }
+    .bg-orange { background-color: #ff8c00; }
+    .bg-navy { background-color: #000080; }
+    .bg-pink { background-color: #ffb6c1; }
+    .bg-darkgreen { background-color: #006400; }
+
+    .divider {
+        margin: 35px 0;
+        border: 0;
+        border-top: 2px solid #333;
+    }
+
+    .equations-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .equation {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .swatch {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        box-shadow: inset 2px 2px 4px rgba(255,255,255,0.3), 1px 1px 3px rgba(0,0,0,0.4);
+        border: 1px solid rgba(0,0,0,0.2);
+    }
+
+    /* Right Column: Van Gogh Assistant */
+    .assistant-sidebar {
+        width: 300px;
+        position: sticky;
+        top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .vangogh-avatar {
+        width: 220px;
+        border-radius: 50%;
+        border: 6px solid #d1caba;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        object-fit: cover;
+    }
+
+    .vangogh-avatar:hover {
+        transform: scale(1.05);
+        border-color: #ffcc00;
+        box-shadow: 0 0 25px rgba(255, 204, 0, 0.6), 0 10px 25px rgba(0,0,0,0.8);
+        filter: brightness(1.1);
+    }
+
+    /* Van Gogh Dialogue Menu */
+    .dialogue-menu {
+        background-color: #f4f1ea;
+        border: 2px solid #333;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+        width: 100%;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+        position: relative;
+        display: none; /* Hidden by default */
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .dialogue-menu::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 0 10px 10px 10px;
+        border-style: solid;
+        border-color: transparent transparent #333 transparent;
+    }
+
+    .dialogue-btn {
+        background: #e0dcd2;
+        border: 1px solid #c0b8a5;
+        padding: 12px;
+        font-family: sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        text-align: left;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .dialogue-btn:hover {
+        background: #d1caba;
+    }
+
+    .dialogue-btn span {
+        display: block;
+        font-size: 11px;
+        font-weight: normal;
+        color: #555;
+        margin-top: 4px;
+    }
+
+    /* Fullscreen Lightbox for Paintings */
+    .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: none; /* Hidden by default */
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        cursor: pointer;
+    }
+
+    .lightbox img {
+        max-width: 90%;
+        max-height: 90vh;
+        border: 10px solid #2b2824;
+        box-shadow: 0 0 50px rgba(0,0,0,1);
+        border-radius: 4px;
+    }
+
+    .close-lightbox {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        color: white;
+        font-size: 40px;
+        font-family: sans-serif;
+        cursor: pointer;
+    }
+
+    /* Mobile Responsiveness */
+    @media screen and (max-width: 960px) {
+        .main-layout {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .assistant-sidebar {
+            position: relative;
+            top: 0;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+
+        .gallery {
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .puzzle-card {
+            padding: 25px 15px;
+        }
+        
+        .note-text {
+            font-size: 15px;
+        }
+
+        .gallery {
+            grid-template-columns: repeat(2, 1fr); /* 2 columns on very small screens */
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+    <a href="index.html" class="home-btn">&larr; Home</a>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="close-lightbox">&times;</span>
+    <img id="lightbox-img" src="" alt="Enlarged Painting">
+</div>
+
+<div class="main-layout">
+
+    <div class="studio-container">
+
+        <div class="gallery">
+            <div class="painting-frame" onclick="openLightbox('https://i.ibb.co/jkqBL5Y6/door.jpg')"><img src="https://i.ibb.co/jkqBL5Y6/door.jpg" alt="Brown Door Painting"></div>
+            <div class="painting-frame" onclick="openLightbox('https://i.ibb.co/fzxYs0QF/lion.jpg')"><img src="https://i.ibb.co/fzxYs0QF/lion.jpg" alt="Gold Lion Painting"></div>
+            <div class="painting-frame" onclick="openLightbox('https://i.ibb.co/cSDvQjsX/tray.jpg')"><img src="https://i.ibb.co/cSDvQjsX/tray.jpg" alt="Grey Tray Painting"></div>
+            <div class="painting-frame" onclick="openLightbox('https://i.ibb.co/kV6kmPX1/tiger.jpg')"><img src="https://i.ibb.co/kV6kmPX1/tiger.jpg" alt="Orange Tiger Painting"></div>
+            <div class="painting-frame" onclick="openLightbox('https://i.ibb.co/7xW4Jz84/boat.jpg')"><img src="https://i.ibb.co/7xW4Jz84/boat.jpg" alt="Navy Boat Painting"></div>
+            <div class="painting-frame" onclick="openLightbox('https://i.ibb.co/MxhfhdGd/sponge.jpg')"><img src="https://i.ibb.co/MxhfhdGd/sponge.jpg" alt="Pink Sponge Painting"></div>
+            <div class="painting-frame" onclick="openLightbox('https://i.ibb.co/WNkbdqn4/vine.jpg')"><img src="https://i.ibb.co/WNkbdqn4/vine.jpg" alt="Dark Green Vine Painting"></div>
+        </div>
+
+        <div class="puzzle-card">
+            <h1>Art Class - Notes & Observations</h1>
+            
+            <p class="note-text">
+                Welcome to the studio. A true artist can draw anything, from heavy <span class="stain s-red">ANVILS</span> to a simple <span class="stain s-olive">APPLE</span>. It takes more than just <span class="stain s-blue">A</span> quick <span class="stain s-purple">DART</span> of the <span class="stain s-coral">PEN</span> to create a masterpiece. If your canvas gets <span class="stain s-cyan">TORN</span>, do not <span class="stain s-black">RIP</span> it further; use <span class="stain s-peach">TAPE</span> or some <span class="stain s-magenta">TWINE</span> to mend it. Pay attention to the <span class="stain s-lime">AIR</span> and light around the <span class="stain s-mint">TREES</span> in the courtyard. In our still life section, you will find a <span class="stain s-lavender">GNOME</span>, a beautiful glass <span class="stain s-indigo">MOSAIC</span>, and a coop with live <span class="stain s-teal">HENS</span>. Please look at the <span class="stain s-maroon">SIGN</span> by the door for the daily rules. Every <span class="stain s-yellow">ION</span> of your energy should go into your work.
+            </p>
+
+            <hr class="divider">
+
+            <div class="equations-container">
+                <div class="equation"><div class="swatch bg-brown"></div> + <div class="swatch bg-red"></div> + <div class="swatch bg-blue"></div> - <div class="swatch bg-yellow"></div> = ?</div>
+                <div class="equation"><div class="swatch bg-gold"></div> + <div class="swatch bg-purple"></div> - <div class="swatch bg-cyan"></div> = ?</div>
+                <div class="equation"><div class="swatch bg-grey"></div> + <div class="swatch bg-magenta"></div> - <div class="swatch bg-lime"></div> = ?</div>
+                <div class="equation"><div class="swatch bg-orange"></div> + <div class="swatch bg-teal"></div> - <div class="swatch bg-maroon"></div> = ?</div>
+                <div class="equation"><div class="swatch bg-navy"></div> + <div class="swatch bg-olive"></div> - <div class="swatch bg-peach"></div> = ?</div>
+                <div class="equation"><div class="swatch bg-pink"></div> + <div class="swatch bg-indigo"></div> - <div class="swatch bg-lavender"></div> = ?</div>
+                <div class="equation"><div class="swatch bg-darkgreen"></div> + <div class="swatch bg-mint"></div> + <div class="swatch bg-coral"></div> - <div class="swatch bg-black"></div> = ?</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="assistant-sidebar">
+        <img src="https://i.ibb.co/MDg7LNTG/van-gogh-jpeg-1661004366-2313-1661005378.png" alt="Van Gogh" class="vangogh-avatar" onclick="toggleMenu()">
+        
+        <div class="dialogue-menu" id="vg-menu">
+            <button class="dialogue-btn" onclick="alert('Action triggered: The meaning of these paintings?')">The meaning of these paintings? <br><span>(Requires: Picture Smart > 3)</span></button>
+            <button class="dialogue-btn" onclick="alert('Action triggered: Hint on the puzzle')">Hint on the puzzle <br><span>(Requires: Picture Smart + Word Smart > 6)</span></button>
+            <button class="dialogue-btn" onclick="alert('Action triggered: Just chatting')">Just chatting <br><span>(Requires: People Smart > 3)</span></button>
+            <button class="dialogue-btn" onclick="alert('Action triggered: Keyword?')">Keyword? <br><span>(Requires: Solving the puzzle & People Smart = 5)</span></button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Lightbox Functionality
+    function openLightbox(imageSrc) {
+        document.getElementById('lightbox-img').src = imageSrc;
+        document.getElementById('lightbox').style.display = 'flex';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+
+    // Escape key closes lightbox
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape") {
+            closeLightbox();
+        }
+    });
+
+    // Toggle Van Gogh Menu
+    function toggleMenu() {
+        const menu = document.getElementById('vg-menu');
+        if (menu.style.display === 'flex') {
+            menu.style.display = 'none';
+        } else {
+            menu.style.display = 'flex';
+        }
+    }
+</script>
+
+</body>
+</html>
