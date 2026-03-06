@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Headquarters Office</title>
+    <style>
+        /* =========================================================
+           GEM IMAGE LINKS
+           ========================================================= */
+        :root {
+            --onyx-img: url('https://static.vecteezy.com/system/resources/previews/067/937/428/non_2x/onyx-jewel-closeup-isolated-on-transparent-background-png.png');
+            --opal-img: url('https://media.gemstones.com/image/upload/gemstones-site/gemopedia/opal/colors/opal-white.jpg');
+            --ruby-img: url('https://store.museumofjewelry.com/cdn/shop/articles/ruby-the-king-of-precious-stone-709034.jpg?v=1680493164');
+            --jade-img: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSkbwKdv35CHF09T5HMJWjPRCn-gbMUl6QhA&s');
+            --quartz-img: url('https://cdn.britannica.com/48/100748-050-FFD5027B/Quartz-one-silica-varieties.jpg');
+            --beryl-img: url('https://www.gemadventurer.com/wp-content/uploads/Nigerian-Neon-Beryl-Square.jpg');
+            --zircon-img: url('https://www.gia.edu/images/polished-zircon.png');
+            --pearl-img: url('https://m.media-amazon.com/images/I/21e0uWoFMEL._AC_UY1000_.jpg');
+            --topaz-img: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxQSY5JBKjDlV_LLZZX-ugUDUeGfhAFS5T8Q&s');
+            --emerald-img: url('https://fireandbrilliance.com/cdn/shop/products/Emerald-FAB-Lab-Grown-Emerald-Gems_19916b1e-8afb-4028-9bbd-427877af66c5.jpg?v=1631578880');
+            --garnet-img: url('https://media.gemstones.com/image/private/s--TGDkrZ9x--/v1664212414/gemstones-site/gemopedia/legacy/rhodolite-garnet/colors/rhodoite-garnet-red.jpg');
+            --amethyst-img: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwoYYLJcuRzUhxnW78gG1Ni6WdBsik4o0QKQ&s');
+            --sapphire-img: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNYyi2h2nFDp1zKZ_pRJB9L9vjOFdn23fcwA&s');
+            --amber-img: url('https://media.gemstones.com/image/private/t_gemstones_ratio_4x3_m/d_gemstones-site:default-noimage.png/v1663960926/gemstones-site/articles/legacy/gems_amber_with_bug_nuulrp.jpg');
+            --diamond-img: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR_6BwknScRxQNGNo0OoEImXJ3IeBmrzBc2g&s');
+        }
+
+        /* Vintage aesthetic with new background */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-image: url('https://49fe30bb3aa7406c16dc-5c968119d095dc32d807923c59347cc2.ssl.cf1.rackcdn.com/2008.002.048_1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #2c2a25;
+            margin: 0;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        /* Home Button Styling */
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            border: 2px solid #2c2a25;
+            background-color: rgba(234, 221, 207, 0.9);
+            color: #2c2a25;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        .home-btn:hover {
+            background-color: #2c2a25;
+            color: #eaddcf;
+            box-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+            transform: translate(2px, 2px);
+        }
+
+        h1 {
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            border-bottom: 2px solid #2c2a25;
+            padding-bottom: 15px;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            background-color: rgba(244, 244, 240, 0.85); /* Readability backing */
+            padding-top: 15px;
+        }
+
+        /* Cipher Section */
+        .cipher-section {
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            background: rgba(244, 244, 240, 0.95); /* Opaque backing for readability */
+            padding: 30px;
+            border: 2px solid #4a453d;
+            box-shadow: 5px 5px 25px rgba(0,0,0,0.5);
+            font-size: 1.15em;
+            line-height: 1.8;
+        }
+        .cipher-line strong {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        /* Puzzle Grid Styling */
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #faf8f5;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.6);
+            border: 5px solid #2c2a25;
+        }
+        td {
+            border: 2px solid #7a7369;
+            padding: 0;
+            background-color: #fff; /* Ensures white/transparent images pop */
+        }
+
+        /* Gem Cell Settings - Bigger images */
+        .gem-cell {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: 90%; /* Much bigger fit inside the cell */
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Gem Background Mappings */
+        .onyx { background-image: var(--onyx-img); }
+        .opal { background-image: var(--opal-img); }
+        .ruby { background-image: var(--ruby-img); }
+        .jade { background-image: var(--jade-img); }
+        .quartz { background-image: var(--quartz-img); }
+        .beryl { background-image: var(--beryl-img); }
+        .zircon { background-image: var(--zircon-img); }
+        .pearl { background-image: var(--pearl-img); }
+        .topaz { background-image: var(--topaz-img); }
+        .emerald { background-image: var(--emerald-img); }
+        .garnet { background-image: var(--garnet-img); }
+        .amethyst { background-image: var(--amethyst-img); }
+        .sapphire { background-image: var(--sapphire-img); }
+        .amber { background-image: var(--amber-img); }
+        .diamond { background-image: var(--diamond-img); }
+
+        /* Letter Styling */
+        .gem-letter {
+            font-family: 'Arial', sans-serif;
+            font-weight: 900;
+            font-size: 1.8em; 
+            color: rgba(255, 255, 255, 0.7); 
+            text-shadow: 
+                2px 2px 0 #000, 
+                -2px -2px 0 #000, 
+                2px -2px 0 #000, 
+                -2px 2px 0 #000;
+            transition: all 0.2s ease-in-out;
+            z-index: 2;
+            pointer-events: none; /* Let clicks pass through to the cell */
+        }
+
+        /* Hover Effects */
+        .gem-cell:hover {
+            background-size: 100%; /* Zooms to fill */
+            background-color: #e6e1d8;
+        }
+        .gem-cell:hover .gem-letter {
+            color: rgba(255, 255, 255, 1); 
+            font-size: 2.1em; 
+        }
+
+        /* Modal (Pop-up) Styling */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 100; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0, 0, 0, 0.85); 
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0px 0px 50px rgba(255,255,255,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: 85%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .modal-letter {
+            font-family: 'Arial', sans-serif;
+            font-weight: 900;
+            font-size: 6em;
+            color: #fff;
+            text-shadow: 4px 4px 0 #000, -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 0px 8px 15px rgba(0,0,0,0.8);
+        }
+        .close-btn {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .close-btn:hover {
+            color: #bbb;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="home-btn">&#8592; Home</a>
+
+    <h1>Headquarters Office</h1>
+
+    <div class="cipher-section">
+        <div class="cipher-line"><strong>[3]</strong> Profil den Boykotteur, maximal starken Bösewicht diesem Abenteuer.</div>
+        <div class="cipher-line"><strong>[1]</strong> Alle Menschen beobachten euch regelmäßig, heimlich sowie ständig.</div>
+        <div class="cipher-line"><strong>[1]</strong> Querworte umschreibe alle richtig teutonisch zur gänzlichen Wortfindung, wobei wichtig.</div>
+        <div class="cipher-line"><strong>[3]</strong> Ideal nimmt dieser Wort exakt alle jede Spalte, Linie einzeln von innen.</div>
+        <div class="cipher-line"><strong>[1]</strong> Töne offenbaren praktisch Ausdrucksformen, zeige immer standardisiertes Schriftdeutsch entlang Einfärbungen.</div>
+        <div class="cipher-line"><strong>[1]</strong> Jetzt adaptiere du Englisch gerne, einzig echter Expressionismus.</div>
+        <div class="cipher-line"><strong>[1]</strong> Zeitraum ist real chronologisch offiziell Neunzehnhundertvierzig, Krieg startet sehr schnell.</div>
+        <div class="cipher-line"><strong>[2]</strong> Identifiziere die Kadaver amtierender Vorstände, entdecke Administratoren isoliert unter anderen zwei zweifellos.</div>
+        <div class="cipher-line"><strong>[2]</strong> Streitkampf notiert operativ dasselbe Szenario, zweite Entschlüsselung inklusive.</div>
+        <div class="cipher-line"><strong>[2]</strong> Übeltäter befindet erwartungsgemäß symbolisch platziert exakt unter Teilnehmern derzeit.</div>
+    </div>
+
+    <table>
+        <tbody>
+            <tr>
+                <td><div class="gem-cell onyx"><span class="gem-letter">A</span></div></td>
+                <td><div class="gem-cell opal"><span class="gem-letter">B</span></div></td>
+                <td><div class="gem-cell ruby"><span class="gem-letter">C</span></div></td>
+                <td><div class="gem-cell jade"><span class="gem-letter">G</span></div></td>
+                <td><div class="gem-cell quartz"><span class="gem-letter">I</span></div></td>
+                <td><div class="gem-cell beryl"><span class="gem-letter">J</span></div></td>
+                <td><div class="gem-cell jade"><span class="gem-letter">F</span></div></td>
+            </tr>
+            <tr>
+                <td><div class="gem-cell zircon"><span class="gem-letter">K</span></div></td>
+                <td><div class="gem-cell pearl"><span class="gem-letter">M</span></div></td>
+                <td><div class="gem-cell topaz"><span class="gem-letter">R</span></div></td>
+                <td><div class="gem-cell onyx"><span class="gem-letter">N</span></div></td>
+                <td><div class="gem-cell emerald"><span class="gem-letter">E</span></div></td>
+                <td><div class="gem-cell ruby"><span class="gem-letter">P</span></div></td>
+                <td><div class="gem-cell topaz"><span class="gem-letter">Q</span></div></td>
+            </tr>
+            <tr>
+                <td><div class="gem-cell garnet"><span class="gem-letter">T</span></div></td>
+                <td><div class="gem-cell amethyst"><span class="gem-letter">V</span></div></td>
+                <td><div class="gem-cell zircon"><span class="gem-letter">W</span></div></td>
+                <td><div class="gem-cell opal"><span class="gem-letter">X</span></div></td>
+                <td><div class="gem-cell sapphire"><span class="gem-letter">O</span></div></td>
+                <td><div class="gem-cell pearl"><span class="gem-letter">Y</span></div></td>
+                <td><div class="gem-cell beryl"><span class="gem-letter">Z</span></div></td>
+            </tr>
+            <tr>
+                <td><div class="gem-cell ruby"><span class="gem-letter">A</span></div></td>
+                <td><div class="gem-cell amber"><span class="gem-letter">D</span></div></td>
+                <td><div class="gem-cell jade"><span class="gem-letter">B</span></div></td>
+                <td><div class="gem-cell onyx"><span class="gem-letter">C</span></div></td>
+                <td><div class="gem-cell quartz"><span class="gem-letter">G</span></div></td>
+                <td><div class="gem-cell amber"><span class="gem-letter">H</span></div></td>
+                <td><div class="gem-cell diamond"><span class="gem-letter">S</span></div></td>
+            </tr>
+            <tr>
+                <td><div class="gem-cell pearl"><span class="gem-letter">H</span></div></td>
+                <td><div class="gem-cell topaz"><span class="gem-letter">I</span></div></td>
+                <td><div class="gem-cell zircon"><span class="gem-letter">J</span></div></td>
+                <td><div class="gem-cell beryl"><span class="gem-letter">K</span></div></td>
+                <td><div class="gem-cell opal"><span class="gem-letter">M</span></div></td>
+                <td><div class="gem-cell ruby"><span class="gem-letter">N</span></div></td>
+                <td><div class="gem-cell garnet"><span class="gem-letter">P</span></div></td>
+            </tr>
+            <tr>
+                <td><div class="gem-cell quartz"><span class="gem-letter">Q</span></div></td>
+                <td><div class="gem-cell jade"><span class="gem-letter">T</span></div></td>
+                <td><div class="gem-cell amethyst"><span class="gem-letter">S</span></div></td>
+                <td><div class="gem-cell onyx"><span class="gem-letter">U</span></div></td>
+                <td><div class="gem-cell pearl"><span class="gem-letter">V</span></div></td>
+                <td><div class="gem-cell garnet"><span class="gem-letter">U</span></div></td>
+                <td><div class="gem-cell topaz"><span class="gem-letter">W</span></div></td>
+            </tr>
+            <tr>
+                <td><div class="gem-cell beryl"><span class="gem-letter">X</span></div></td>
+                <td><div class="gem-cell zircon"><span class="gem-letter">Y</span></div></td>
+                <td><div class="gem-cell amber"><span class="gem-letter">Z</span></div></td>
+                <td><div class="gem-cell ruby"><span class="gem-letter">L</span></div></td>
+                <td><div class="gem-cell emerald"><span class="gem-letter">A</span></div></td>
+                <td><div class="gem-cell quartz"><span class="gem-letter">B</span></div></td>
+                <td><div class="gem-cell jade"><span class="gem-letter">C</span></div></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="gemModal" class="modal">
+        <div class="modal-content" id="modalContent">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <span class="modal-letter" id="modalLetter">A</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cells = document.querySelectorAll('.gem-cell');
+            const modal = document.getElementById('gemModal');
+            const modalContent = document.getElementById('modalContent');
+            const modalLetter = document.getElementById('modalLetter');
+            const closeBtn = document.getElementById('closeModal');
+
+            // Open modal on cell click
+            cells.forEach(cell => {
+                cell.addEventListener('click', function() {
+                    // Extract the background image from the clicked cell
+                    const bgImage = window.getComputedStyle(this).getPropertyValue('background-image');
+                    // Extract the letter inside the cell
+                    const letter = this.querySelector('.gem-letter').innerText;
+                    
+                    // Apply to modal
+                    modalContent.style.backgroundImage = bgImage;
+                    modalLetter.innerText = letter;
+                    
+                    // Show modal
+                    modal.style.display = 'flex';
+                });
+            });
+
+            // Close modal functions
+            const closeModalFunc = () => {
+                modal.style.display = 'none';
+            };
+
+            closeBtn.addEventListener('click', closeModalFunc);
+            
+            // Close if user clicks outside the modal content
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModalFunc();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
