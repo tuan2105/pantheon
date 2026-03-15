@@ -216,7 +216,9 @@
             font-family: 'Segoe UI', sans-serif;
             font-size: 18px;
             font-weight: bold;
-            pointer-events: none;
+            pointer-events: auto;
+            user-select: text;
+            cursor: text;
             z-index: 20;
         }
         .point-tooltip::after {
@@ -231,6 +233,69 @@
         }
         .line-blue { color: #1976D2; margin-bottom: 8px; }
         .line-red { color: #d32f2f; }
+
+        /* Line breakdown popup (letter order view) */
+        .line-breakdown-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #f4eacc;
+            padding: 18px 22px;
+            border-radius: 8px;
+            border: 2px solid #5c4033;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            z-index: 3000;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow: auto;
+            display: none;
+        }
+        .line-breakdown-popup .breakdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .line-breakdown-popup .breakdown-header .title {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .line-breakdown-popup .breakdown-header .close-btn {
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+        .line-breakdown-popup .breakdown-letters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding-bottom: 6px;
+        }
+        .line-breakdown-popup .letter-item {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            line-height: 1;
+        }
+        .line-breakdown-popup .letter-item .letter {
+            font-size: 20px;
+            font-weight: bold;
+            user-select: text;
+        }
+        .line-breakdown-popup .letter-item .order {
+            font-size: 10px;
+            color: rgba(0,0,0,0.6);
+            margin-top: 4px;
+            user-select: none;
+        }
 
         /* Antique Fixed Map Text & Arrows */
         .map-text-item {
@@ -818,6 +883,15 @@
         <div class="dialogue-options" id="dialogue-options"></div>
     </div>
 
+    <!-- Letter breakdown popup (for clicked tooltip lines) -->
+    <div id="line-breakdown-popup" class="line-breakdown-popup" role="dialog" aria-modal="true" aria-label="Line breakdown">
+        <div class="breakdown-header">
+            <div class="title">Line breakdown</div>
+            <button class="close-btn" aria-label="Close">×</button>
+        </div>
+        <div class="breakdown-letters"></div>
+    </div>
+
     <script>
         // --- Core Variables ---
         // Retaining your exact pan/zoom settings so it loads right where you left it
@@ -924,6 +998,66 @@
             overlay.classList.remove('show');
         }
 
+        // --- Line breakdown (letter order) popup ---
+        const breakdownPopup = document.getElementById('line-breakdown-popup');
+        const breakdownLettersContainer = breakdownPopup?.querySelector('.breakdown-letters');
+        const breakdownTitleLabel = breakdownPopup?.querySelector('.title');
+
+        function hideLineBreakdown() {
+            if (breakdownPopup) breakdownPopup.style.display = 'none';
+        }
+
+        function showLineBreakdown(text) {
+            if (!breakdownPopup || !breakdownLettersContainer) return;
+
+            // Remove any leading code prefix (e.g., "H1:", "S2:", "P4:") so we only break down the meaningful text.
+            const strippedText = text.replace(/^[A-Za-z0-9]+:\s*/u, '');
+            const displayText = strippedText || text;
+
+            // Build letter breakdown (count letters, ignore whitespace/symbols for ordering)
+            let order = 1;
+            breakdownLettersContainer.innerHTML = '';
+
+            for (const char of displayText) {
+                const letterItem = document.createElement('div');
+                letterItem.className = 'letter-item';
+
+                const letterSpan = document.createElement('div');
+                letterSpan.className = 'letter';
+                letterSpan.textContent = char === ' ' ? '\u00A0' : char;
+
+                const orderSpan = document.createElement('div');
+                orderSpan.className = 'order';
+                // Only increment order for alphabetic letters (A–Z, a–z, and other Unicode letters)
+                const isLetter = /\p{L}/u.test(char);
+                orderSpan.textContent = isLetter ? String(order++) : '';
+
+                letterItem.appendChild(letterSpan);
+                letterItem.appendChild(orderSpan);
+                breakdownLettersContainer.appendChild(letterItem);
+            }
+
+            // Update the title to show the line (using stripped text when possible)
+            if (breakdownTitleLabel) {
+                breakdownTitleLabel.textContent = `Breakdown: ${displayText}`;
+            }
+
+            breakdownPopup.style.display = 'block';
+        }
+
+        // Keep it easy to close
+        if (breakdownPopup) {
+            breakdownPopup.querySelector('.close-btn')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                hideLineBreakdown();
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!breakdownPopup.contains(e.target)) {
+                    hideLineBreakdown();
+                }
+            });
+        }
 
         // --- Initialization ---
         window.onload = () => {
@@ -933,7 +1067,23 @@
                     e.stopPropagation(); // prevent panning the map on click
                     const tooltip = point.querySelector('.point-tooltip');
                     tooltip.style.display = tooltip.style.display === 'block' ? 'none' : 'block';
+                    hideLineBreakdown();
                 });
+
+                const tooltip = point.querySelector('.point-tooltip');
+                if (tooltip) {
+                    // Allow users to select/copy text and stop clicks from bubbling back to the point
+                    tooltip.addEventListener('click', (evt) => evt.stopPropagation());
+
+                    tooltip.querySelectorAll('.line-blue, .line-red').forEach(line => {
+                        line.style.cursor = 'pointer';
+                        line.addEventListener('click', (evt) => {
+                            evt.stopPropagation();
+                            const lineText = line.textContent || '';
+                            showLineBreakdown(lineText.trim());
+                        });
+                    });
+                }
             });
 
             // Conan NPC click handler

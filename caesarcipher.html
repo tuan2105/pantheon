@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caesar Cipher Tool - Walk Inside Rome</title>
+    <style>
+        :root {
+            --bg-overlay: rgba(0, 0, 0, 0.75); /* Dark overlay for background readability */
+            --card-bg: rgba(255, 255, 255, 0.9); /* Semi-transparent white card background */
+            --text-color: #1a1a1a;
+            --header-text-color: #ffffff;
+            --primary: #c99c5c; /* Roman/Gold accent color */
+            --primary-hover: #b3884f;
+            --border: #dcdcdc;
+            --shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Full-screen background image with overlay */
+        body {
+            font-family: 'Playfair Display', serif; /* Roman-style serif font */
+            background-color: var(--text-color);
+            background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
+                              url('https://www.walksinsiderome.com/_next/image/?url=https%3A%2F%2Fwww.walksinsiderome.com%2Fuploads%2F2022%2F09%2FJulius-Caesar-1024x576-1.jpg&w=1920&q=75');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Main content container for centering and max-width */
+        .container {
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Home Button in the top left */
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: var(--primary);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+            z-index: 1000;
+        }
+
+        .home-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Card styles for each cipher mode */
+        .card {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* Main Page Header */
+        h1 {
+            text-align: center;
+            color: var(--header-text-color);
+            font-size: 3rem;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Card Titles */
+        h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 0.75rem;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+
+        /* Input Styling */
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 1.1rem;
+            background: #fff;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Global A=0/A=1 Radio Buttons Styling */
+        .radio-group {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .radio-group strong {
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .radio-group label {
+            display: inline-flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .radio-group input {
+            margin-right: 0.5rem;
+            transform: scale(1.2);
+        }
+
+        /* Modernized Buttons */
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        /* Stylish Result Boxes */
+        .results {
+            margin-top: 2rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .results p {
+            margin: 0.75rem 0;
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: #444;
+        }
+
+        .results span {
+            font-weight: bold;
+            color: #d17a00; /* Darker Roman gold for text contrast */
+            word-break: break-all;
+        }
+
+        /* Checkbox Styling */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .checkbox-group label {
+            margin: 0;
+            font-weight: normal;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .checkbox-group input {
+            transform: scale(1.2);
+        }
+
+        /* --- MOBILE OPTIMIZATIONS --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+                margin-top: 3rem; /* Extra space to not hide under home button */
+                margin-bottom: 1rem;
+            }
+
+            .container {
+                margin-top: 1rem;
+                gap: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            button {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .results p {
+                font-size: 1.1rem;
+            }
+
+            /* Stack inputs slightly differently for mobile */
+            input[type="text"], input[type="number"] {
+                padding: 0.8rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Special handling for very small mobile screens */
+        @media (max-width: 480px) {
+            .home-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin-top: 3.5rem;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="home-btn">&#8962; Home</a>
+
+    <div class="container">
+        <h1>Caesar Cipher Tool</h1>
+
+        <div class="radio-group">
+            <strong>Alphabet Setting:</strong>
+            <label><input type="radio" name="indexMap" value="0" checked> A = 0</label>
+            <label><input type="radio" name="indexMap" value="1"> A = 1</label>
+        </div>
+
+        <div class="card">
+            <h2>Mode 1: String + String</h2>
+            <div class="form-group">
+                <label>Input String:</label>
+                <input type="text" id="str1_text" placeholder="e.g. HELLO WORLD">
+            </div>
+            <div class="form-group">
+                <label>Key String:</label>
+                <input type="text" id="str1_key" placeholder="e.g. KEY">
+            </div>
+            <button onclick="calculateStringString()">Calculate</button>
+            
+            <div class="results">
+                <p>Sum (Plus): <span id="res1_sum">-</span></p>
+                <p>Sub (Minus): <span id="res1_sub">-</span></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Mode 2: String + Number Key</h2>
+            <div class="form-group">
+                <label>Input String:</label>
+                <input type="text" id="str2_text" placeholder="e.g. HELLO WORLD">
+            </div>
+            <div class="form-group">
+                <label>Number Key:</label>
+                <input type="number" id="str2_key" placeholder="e.g. 16">
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="digit_by_digit">
+                <label for="digit_by_digit">Apply digit-by-digit (e.g. key 16: +1, +6, +1, +6...)</label>
+            </div>
+            <button onclick="calculateStringNumber()">Calculate</button>
+            
+            <div class="results">
+                <p>Sum (Plus): <span id="res2_sum">-</span></p>
+                <p>Sub (Minus): <span id="res2_sub">-</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Helper Functions for Math logic ---
+
+        function getAValue() {
+            return parseInt(document.querySelector('input[name="indexMap"]:checked').value);
+        }
+
+        // Convert a character to its integer value based on A=0 or A=1
+        function charToInt(char, aVal) {
+            let code = char.toUpperCase().charCodeAt(0);
+            if (code >= 65 && code <= 90) { // A-Z only
+                return code - 65 + aVal;
+            }
+            return null; // Ignore spaces/punctuation
+        }
+
+        // Convert an integer back to a character, handling proper wrapping (modulo 26)
+        function intToChar(val, aVal) {
+            let normalized;
+            if (aVal === 0) {
+                // For A=0, basic modulo 26
+                normalized = ((val % 26) + 26) % 26;
+                return String.fromCharCode(normalized + 65);
+            } else {
+                // For A=1, we must shift back by 1 before modulo to handle the 1-26 range correctly
+                normalized = (((val - 1) % 26) + 26) % 26 + 1;
+                return String.fromCharCode((normalized - 1) + 65);
+            }
+        }
+
+        // --- Main Calculation Logic ---
+
+        function calculateStringString() {
+            let text = document.getElementById('str1_text').value;
+            let keyStr = document.getElementById('str1_key').value;
+            let aVal = getAValue();
+
+            if (keyStr.trim() === '') keyStr = 'A'; // Default fallback so it doesn't break
+
+            let sumResult = '';
+            let subResult = '';
+            let keyIndex = 0;
+
+            for (let i = 0; i < text.length; i++) {
+                let textChar = text[i];
+                let textVal = charToInt(textChar, aVal);
+
+                // If space or punctuation, pass it through unchanged
+                if (textVal === null) {
+                    sumResult += textChar;
+                    subResult += textChar;
+                    continue;
+                }
+
+                // Get the corresponding key character, loop if key is shorter than text
+                let keyChar = keyStr[keyIndex % keyStr.length];
+                let keyVal = charToInt(keyChar, aVal);
+                
+                // If the key has symbols/spaces, treat them as 0 to avoid breaking math
+                if (keyVal === null) keyVal = 0; 
+
+                sumResult += intToChar(textVal + keyVal, aVal);
+                subResult += intToChar(textVal - keyVal, aVal);
+
+                keyIndex++; // Only advance the key index for alphabetic characters
+            }
+
+            document.getElementById('res1_sum').innerText = sumResult;
+            document.getElementById('res1_sub').innerText = subResult;
+        }
+
+        function calculateStringNumber() {
+            let text = document.getElementById('str2_text').value;
+            let keyStr = document.getElementById('str2_key').value;
+            let useDigitByDigit = document.getElementById('digit_by_digit').checked;
+            let aVal = getAValue();
+
+            let sumResult = '';
+            let subResult = '';
+            let keyIndex = 0;
+
+            let keyNum = parseInt(keyStr);
+            if (isNaN(keyNum)) keyNum = 0;
+
+            // Extract only the numbers in case of negative signs or decimals in the string
+            let digits = keyStr.replace(/\D/g, ''); 
+
+            for (let i = 0; i < text.length; i++) {
+                let textChar = text[i];
+                let textVal = charToInt(textChar, aVal);
+
+                if (textVal === null) {
+                    sumResult += textChar;
+                    subResult += textChar;
+                    continue;
+                }
+
+                let currentKeyVal = 0;
+
+                // Determine whether to use the whole number or specific digit
+                if (useDigitByDigit && digits.length > 0) {
+                    currentKeyVal = parseInt(digits[keyIndex % digits.length]);
+                } else {
+                    currentKeyVal = keyNum;
+                }
+
+                sumResult += intToChar(textVal + currentKeyVal, aVal);
+                subResult += intToChar(textVal - currentKeyVal, aVal);
+
+                keyIndex++;
+            }
+
+            document.getElementById('res2_sum').innerText = sumResult;
+            document.getElementById('res2_sub').innerText = subResult;
+        }
+    </script>
+</body>
+</html>
