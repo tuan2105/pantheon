@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanquish Soul K9 Combo Guide</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --accent: #ff4757;
+            --accent-hover: #ff6b81;
+            --border-radius: 8px;
+            --hex-tag: #3498db;
+            --dkayed-tag: #f1c40f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(18, 18, 18, 0.95);
+            padding: 15px 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 15px 0;
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #444;
+            border-radius: var(--border-radius);
+            background-color: #2a2a2a;
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        #searchInput:focus {
+            border-color: var(--accent);
+        }
+
+        .combo-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .combo-card:hover {
+            transform: translateX(2px);
+        }
+
+        .combo-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: normal;
+            color: #121212;
+        }
+
+        .tag-hex { background-color: var(--hex-tag); }
+        .tag-dkayed { background-color: var(--dkayed-tag); }
+
+        .combo-board {
+            font-size: 0.95rem;
+            color: #ffa502;
+            margin-bottom: 15px;
+            background: rgba(255, 165, 2, 0.1);
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: var(--accent-hover);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            h1 { font-size: 1.5rem; }
+            .combo-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container" style="padding-top: 0; padding-bottom: 0;">
+            <h1>VS K9 Combo Library</h1>
+            <input type="text" id="searchInput" placeholder="Search requirements (e.g., Stake Your Soul! + Any FIRE)...">
+        </div>
+    </header>
+
+    <div class="container" id="comboContainer">
+        
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-hex">Hex Lex</span> Dr. Mad Love + VS Hollie Sue (or Jiaolong)</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, Number C104: Umbral Horror Masquerade, K917 Ripper, Generic Rank 5, K9 - Forced Release (Set).</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Dr. Mad Love. Add VS Start! (or Continue).</li>
+                <li><strong>Activate</strong> Start!, target Mad Love to add VS Jiaolong.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher using Mad Love. Activate Rock to add Mad Love back.</li>
+                <li><strong>Special Summon</strong> Hollie Sue from hand. Reveal Jiaolong and Mad Love to summon another Jiaolong from deck.</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Hollie Sue and Jiaolong (Summon #5).</li>
+                <li><strong>Activate</strong> Ripper, detach to search K966A Jokul.</li>
+                <li><strong>Activate</strong> Jokul in hand, Special Summon itself and Jiaolong.</li>
+                <li><strong>Activate</strong> Jokul to search K966A Lantern.</li>
+                <li><strong>Xyz Summon</strong> N.As.H. Knight using Jokul and Jiaolong. Detach 2 to attach Number 104: Masquerade.</li>
+                <li><strong>Special Summon</strong> Lantern from hand by reviving Jokul. Search A Case for K9.</li>
+                <li><strong>Activate</strong> A Case for K9 to add K917 Ezuna.</li>
+                <li><strong>Xyz Summon</strong> generic Rank 5 using Lantern and Jokul.</li>
+                <li><strong>Xyz Summon</strong> CXyz N.As.Ch. Knight -> Number C104: Umbral Horror Masquerade.</li>
+                <li><strong>Activate</strong> C104 on summon to destroy your own A Case for K9.</li>
+                <li><strong>Activate</strong> A Case for K9 in grave to Set K9 - Forced Release from deck.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-hex">Hex Lex</span> Dr. Mad Love + Stake Your Soul!</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, Number C104, K917 Ripper, Generic Rank 5, Forced Release (Set).</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Mad Love, add VS Start!.</li>
+                <li><strong>Activate</strong> Start!, target Mad Love, add Jiaolong.</li>
+                <li><strong>Activate</strong> Stake Your Soul!, reveal Jiaolong, Special Summon VS Razen from deck.</li>
+                <li><strong>Activate</strong> Razen to add Hollie Sue.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher using Mad Love. Add Mad Love back.</li>
+                <li><strong>Special Summon</strong> Hollie Sue from hand (revealing Jiaolong/Mad Love).</li>
+                <li><strong>Activate</strong> Hollie Sue to summon 2nd Jiaolong from deck.</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Hollie Sue and the deck-summoned Jiaolong.</li>
+                <li><strong>Activate</strong> Ripper, detach to search K966A Jokul.</li>
+                <li><strong>Activate</strong> Jokul in hand, Special Summon itself and Jiaolong.</li>
+                <li><strong>Activate</strong> Jokul to search K966A Lantern.</li>
+                <li><strong>Xyz Summon</strong> N.As.H. Knight using Jokul and Jiaolong. Detach 2 to attach Number 104.</li>
+                <li><strong>Special Summon</strong> Lantern from hand by reviving Jokul. Search A Case for K9.</li>
+                <li><strong>Activate</strong> A Case for K9 to add K917 Ezuna.</li>
+                <li><strong>Xyz Summon</strong> generic Rank 5 using Lantern and Jokul.</li>
+                <li><strong>Xyz Summon</strong> CXyz N.As.Ch. Knight -> Number C104: Umbral Horror Masquerade.</li>
+                <li><strong>Activate</strong> C104 to pop A Case for K9, setting K9 - Forced Release.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-hex">Hex Lex</span> VS Razen + K966A Jokul</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, C104 Masquerade, K917 Ripper, VS Snow Devil (Set), K9 - Forced Release (Set).</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Razen, add Hollie Sue.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher, add Razen back.</li>
+                <li><strong>Activate</strong> Jokul in hand to Special Summon itself and Hollie Sue.</li>
+                <li><strong>Activate</strong> Jokul to add Lantern.</li>
+                <li><strong>Activate</strong> Hollie Sue (revealing Lantern/Razen) to Special Summon Dr. Mad Love from deck.</li>
+                <li><strong>Activate</strong> Mad Love to add VS Start!.</li>
+                <li><strong>Activate</strong> Start!, target Hollie Sue to add VS Heavy Borger.</li>
+                <li><strong>Activate</strong> Heavy Borger, bounce Hollie Sue to Special Summon itself.</li>
+                <li><strong>Activate</strong> Heavy Borger (revealing Lantern) to draw 1 card.</li>
+                <li><strong>Special Summon</strong> Hollie Sue from hand using her effect.</li>
+                <li><strong>Xyz Summon</strong> Ripper using Hollie Sue and Mad Love. Activate Ripper to search Ezuna.</li>
+                <li><strong>Special Summon</strong> Lantern by reviving Jokul. Search A Case for K9.</li>
+                <li><strong>Activate</strong> A Case for K9 to add a follow-up Jokul.</li>
+                <li><strong>Xyz Summon</strong> N.As.H. Knight using Lantern and Jokul. Attach Number 104.</li>
+                <li><strong>Xyz Summon</strong> CXyz N.As.Ch. Knight -> C104 Masquerade. Pop A Case for K9 to Set Forced Release.</li>
+                <li><strong>End Phase:</strong> Use VS Start! in graveyard to Set VS Snow Devil.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-hex">Hex Lex</span> Jokul + Stake Your Soul!</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, C104 Masquerade, K917 Ripper, VS Snow Devil (Set), Forced Release (Set).</div>
+            <ol>
+                <li><strong>Activate</strong> Stake Your Soul!, reveal Jokul to Special Summon Mad Love from deck.</li>
+                <li><strong>Activate</strong> Mad Love to add VS Start!.</li>
+                <li><strong>Activate</strong> Start!, target Mad Love to add Razen.</li>
+                <li><strong>Normal Summon</strong> Razen, add Hollie Sue.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher using Razen. Add Razen back.</li>
+                <li><strong>Activate</strong> Jokul in hand, Special Summon itself and Hollie Sue.</li>
+                <li><strong>Activate</strong> Jokul to add Lantern.</li>
+                <li><strong>Activate</strong> Hollie Sue (reveal Lantern/Razen) to Special Summon Heavy Borger from deck. Draw 1 card.</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Jokul and Hollie Sue. Search Ezuna.</li>
+                <li><strong>Special Summon</strong> Lantern by reviving Jokul. Search A Case for K9.</li>
+                <li><strong>Activate</strong> A Case for K9 to add a follow-up Jokul.</li>
+                <li><strong>Xyz Summon</strong> N.As.H. Knight -> CXyz -> C104 Masquerade.</li>
+                <li>Pop A Case for K9 to Set Forced Release.</li>
+                <li><strong>End Phase:</strong> Use VS Start! in grave to Set VS Snow Devil.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-hex">Hex Lex</span> Jokul + Izuna (Saryuja Skull Dread Route)</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, K917 Ripper, VS Jiaolong, VS Hollie Sue, Forced Release (Set).</div>
+            <ol>
+                <li><strong>Activate</strong> Jokul in hand, Special Summon itself and Izuna.</li>
+                <li><strong>Activate</strong> Izuna to send K9-Lupus from deck to graveyard.</li>
+                <li><strong>Activate</strong> Jokul to add Lantern.</li>
+                <li><strong>Special Summon</strong> Lantern by reviving Lupus. Search A Case for K9.</li>
+                <li><strong>Activate</strong> A Case for K9 to add another Jokul.</li>
+                <li><strong>Link Summon</strong> Saryuja Skull Dread using Jokul, Izuna, Lantern, Lupus.</li>
+                <li><strong>Activate</strong> Saryuja to draw 4, bottom 3 (Dig for Razen/ROTA).</li>
+                <li><strong>Normal Summon</strong> Razen, add Hollie Sue.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher using Razen. Add Razen back.</li>
+                <li><strong>Special Summon</strong> Hollie Sue from hand. Reveal Jokul and Razen to Special Summon Jiaolong from deck.</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Hollie Sue and Jiaolong.</li>
+                <li><strong>Activate</strong> Ripper to add Forced Release and Set it.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-hex">Hex Lex</span> Jokul + Hollie Sue/Jiaolong (No Attributes Route)</h2>
+            <div class="combo-board"><strong>End Board:</strong> C104 Masquerade, K917 Ripper, Forced Release (Set).</div>
+            <ol>
+                <li><strong>Activate</strong> Jokul in hand, Special Summon itself and Hollie Sue/Jiaolong.</li>
+                <li><strong>Activate</strong> Jokul to add Lantern.</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Jokul and Hollie Sue. Search Izuna.</li>
+                <li><strong>Normal Summon</strong> Izuna (no tribute if opponent has 2+ cards).</li>
+                <li><strong>Activate</strong> Izuna to send K9-Lupus to grave.</li>
+                <li><strong>Special Summon</strong> Lantern by reviving Lupus. Search A Case for K9.</li>
+                <li><strong>Activate</strong> A Case for K9 to add another Izuna.</li>
+                <li><strong>Xyz Summon</strong> N.As.H. Knight using Lantern and Izuna. Attach Number 104 and target Lupus in grave to attach it as well (Targeting Protection).</li>
+                <li><strong>Xyz Summon</strong> CXyz N.As.Ch. Knight -> C104 Masquerade.</li>
+                <li>Pop A Case for K9 to Set Forced Release.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-dkayed">Dkayed</span> VS Razen + Any FIRE + Any Level 5</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, C104 Masquerade, K917 Ripper, Generic Link/Xyz, Forced Release (Set).</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Razen. Search VS Jiaolong.</li>
+                <li><strong>Activate</strong> Razen on field to reveal a FIRE. Trigger Jiaolong in hand to Special Summon itself.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher. Add Razen back to hand.</li>
+                <li><strong>Activate</strong> Jiaolong, reveal two FIREs to search VS Start!.</li>
+                <li><strong>Activate</strong> VS Start!, target Jiaolong to search VS Hollie Sue.</li>
+                <li><strong>Activate</strong> Hollie Sue in hand, revealing a VS monster to Special Summon herself (Summon #4).</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Jiaolong and Hollie Sue (Summon #5 - Nibiru Safe).</li>
+                <li><strong>Activate</strong> Ripper, detach to search Jokul.</li>
+                <li><strong>Activate</strong> Jokul in hand, Special Summon itself and the Level 5 you detached.</li>
+                <li><strong>Activate</strong> Jokul to search Lantern.</li>
+                <li><strong>Xyz Summon</strong> N.As.H. Knight using Jokul and the Level 5. Detach 2 to attach Number 104.</li>
+                <li><strong>Special Summon</strong> Lantern by reviving Jokul. Search A Case for K9.</li>
+                <li><strong>Activate</strong> A Case for K9 to search follow-up Jokul/Ezuna.</li>
+                <li><strong>Xyz Summon</strong> CXyz N.As.Ch. Knight -> C104 Masquerade.</li>
+                <li><strong>Activate</strong> C104 to pop A Case for K9, setting Forced Release from deck.</li>
+                <li><strong>Link/Xyz Summon</strong> using Lantern and Jokul for a generic disruption.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-dkayed">Dkayed</span> VS Razen + Any FIRE (Pure Route)</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, VS Jiaolong, VS Hollie Sue, VS Snow Devil (Set). Stops at 4 summons.</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Razen. Search VS Jiaolong.</li>
+                <li><strong>Activate</strong> Razen on field, revealing a FIRE to trigger Jiaolong in hand to Special Summon itself.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher using Razen. Add Razen back.</li>
+                <li><strong>Activate</strong> Jiaolong, revealing two FIRE monsters to search VS Start!.</li>
+                <li><strong>Activate</strong> VS Start!, target Jiaolong to search VS Hollie Sue.</li>
+                <li><strong>Activate</strong> Hollie Sue in hand, revealing a VS monster to Special Summon herself (Summon #4).</li>
+                <li><strong>End Phase:</strong> Field spell sets VS Snow Devil directly from deck.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-dkayed">Dkayed</span> VS Razen + Any DARK (Pure Route)</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, Dr. Mad Love, VS Hollie Sue, VS Heavy Borger (in hand). Stops at 4 summons.</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Razen. Search Hollie Sue.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher using Razen. Add Razen back.</li>
+                <li><strong>Activate</strong> Hollie Sue in hand. Reveal Razen and DARK monster to Special Summon herself, and simultaneously Special Summon Dr. Mad Love from deck (Summon #4).</li>
+                <li><strong>Activate</strong> Mad Love to search VS Start!.</li>
+                <li><strong>Activate</strong> VS Start!, target Mad Love, search VS Heavy Borger. Pass turn.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-dkayed">Dkayed</span> VS Razen + Any DARK (K9 Route)</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, K917 Ripper, K9 - Forced Release (Set). Stops at exactly 5 summons.</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Razen. Search Hollie Sue.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher using Razen. Add Razen back.</li>
+                <li><strong>Activate</strong> Hollie Sue in hand. Reveal Razen and DARK monster to Special Summon herself, and Special Summon VS Jiaolong from deck (Summon #4).</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Hollie Sue and Jiaolong (Summon #5).</li>
+                <li><strong>Activate</strong> Ripper, detach a material to search K9 - Forced Release.</li>
+                <li>Set Forced Release and pass turn.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-dkayed">Dkayed</span> Dr. Mad Love + Any FIRE</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, VS Razen, VS Hollie Sue, VS Snow Devil (Set). Stops at 4 summons.</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Mad Love. Search VS Start!.</li>
+                <li><strong>Activate</strong> VS Start!, target Mad Love, search Hollie Sue.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher using Mad Love. Add Mad Love back.</li>
+                <li><strong>Activate</strong> Hollie Sue to Special Summon herself. Reveal Mad Love and your FIRE monster to Special Summon Razen from deck (Summon #4).</li>
+                <li><strong>Activate</strong> Razen to search VS Caesar Valius.</li>
+                <li><strong>End Phase:</strong> Field spell sets VS Snow Devil.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-dkayed">Dkayed</span> 1-Card K9 Route (Noroi) into Saryuja</h2>
+            <div class="combo-board"><strong>End Board:</strong> Saryuja Skull Dread + Variable drawn VS combo pieces.</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Noroi. Special Summon Jokul from deck.</li>
+                <li><strong>Activate</strong> Jokul to search Lantern.</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Noroi and Jokul.</li>
+                <li><strong>Activate</strong> Ripper (detach Noroi) to search another Jokul.</li>
+                <li><strong>Special Summon</strong> Lantern from hand by reviving Noroi. Search A Case for K9.</li>
+                <li><strong>Activate</strong> A Case for K9 to search K917 Ezuna.</li>
+                <li><strong>Activate</strong> Noroi on field, sending A Case for K9 to look at opponent's hand.</li>
+                <li><strong>Activate</strong> Jokul in hand, Special Summon itself and Ezuna.</li>
+                <li><strong>Activate</strong> Ezuna to send K9-Lupus to grave.</li>
+                <li><strong>Link Summon</strong> Saryuja Skull Dread using Lantern, Noroi, Jokul, Ezuna.</li>
+                <li><strong>Activate</strong> Saryuja to draw 4, bottom 3. Search for a VS starter to begin VS lines.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-dkayed">Dkayed</span> Noroi 1-Card Combo (No Saryuja Bridge)</h2>
+            <div class="combo-board"><strong>End Board:</strong> C104 Masquerade, K917 Ripper, Generic Rank 5 / Link 2, Forced Release (Set).</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Noroi. Special Summon Jokul from deck.</li>
+                <li><strong>Activate</strong> Jokul to search Lantern.</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Noroi and Jokul.</li>
+                <li><strong>Activate</strong> Ripper (detach Noroi) to search another Jokul.</li>
+                <li><strong>Special Summon</strong> Lantern by reviving Noroi. Search A Case for K9. Add Ezuna to hand.</li>
+                <li><strong>Activate</strong> Jokul in hand, Special Summon itself and Ezuna.</li>
+                <li><strong>Activate</strong> Ezuna to send K9-Lupus to graveyard.</li>
+                <li><strong>Xyz Summon</strong> N.As.H. Knight using Jokul and Ezuna.</li>
+                <li>Detach to equip Masquerade, rank up into CXyz N.As.Ch. Knight, then rank up into C104 Masquerade.</li>
+                <li><strong>Activate</strong> C104 to pop A Case for K9, setting Forced Release.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-hex">Hex Lex</span> & <span class="tag tag-dkayed">Dkayed</span> Playing Through Ash Blossom (Starter + Ezuna)</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, N.As.H. Knight, K917 Ripper, Forced Release (Set).</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Razen or Mad Love. Opponent chains Ash Blossom.</li>
+                <li>Because opponent used a monster effect in hand, <strong>Special Summon</strong> Ezuna from hand.</li>
+                <li><strong>Activate</strong> Ezuna to send K9-Lupus to graveyard.</li>
+                <li>Lupus immediately Special Summons itself from graveyard.</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Ezuna and Lupus.</li>
+                <li><strong>Activate</strong> Ripper (detach Ezuna, keep Lupus attached for targeting protection). Search Lantern AND Set K9 - Forced Release from deck (due to handtrap triggering).</li>
+                <li><strong>Special Summon</strong> Lantern by reviving Ezuna. Search A Case for K9.</li>
+                <li><strong>Xyz Summon</strong> N.As.H. Knight using Lantern and Ezuna.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher using your VS starter, add it back to hand for Turn 0 plays.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-dkayed">Dkayed</span> VS Hollie Sue + VS Razen</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, Dr. Mad Love, VS Hollie Sue, VS Snow Devil (Set). Stops at 4 summons.</div>
+            <ol>
+                <li><strong>Normal Summon</strong> Razen. Search Heavy Borger (DARK).</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher using Razen. Add Razen back.</li>
+                <li><strong>Activate</strong> Hollie Sue in hand, revealing Heavy Borger and Razen to Special Summon herself, and simultaneously Special Summon Mad Love from deck (Summon #4).</li>
+                <li><strong>Activate</strong> Mad Love to search the field spell.</li>
+                <li><strong>End Phase:</strong> Field spell sets VS Snow Devil.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-dkayed">Dkayed</span> Stake Your Soul! + Any FIRE</h2>
+            <div class="combo-board"><strong>End Board:</strong> C104 Masquerade, K917 Ripper, K9 Jokul, Forced Release (Set).</div>
+            <ol>
+                <li><strong>Activate</strong> Stake Your Soul!, reveal FIRE to Special Summon Razen from deck.</li>
+                <li><strong>Activate</strong> Razen to search Jiaolong.</li>
+                <li><strong>Activate</strong> Razen on field (reveal FIRE), trigger Jiaolong to Special Summon itself.</li>
+                <li><strong>Link Summon</strong> Rock of the Vanquisher using Razen. Add Razen back.</li>
+                <li><strong>Activate</strong> Jiaolong to search VS Start!.</li>
+                <li><strong>Activate</strong> VS Start!, targeting Jiaolong to search Hollie Sue.</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Jiaolong and Hollie Sue (Summon #5).</li>
+                <li><strong>Activate</strong> Ripper to search Noroi.</li>
+                <li><strong>Normal Summon</strong> Noroi (Normal Summon hasn't been used yet).</li>
+                <li><strong>Activate</strong> Noroi to Special Summon Jokul from deck. Jokul searches Lantern.</li>
+                <li><strong>Activate</strong> Noroi's effect to look at opponent's hand (clears K9 Extra Deck lock).</li>
+                <li><strong>Special Summon</strong> Lantern by reviving Noroi. Lantern searches A Case for K9.</li>
+                <li><strong>Xyz Summon</strong> N.As.H. Knight using Lantern and Noroi -> CXyz -> C104 Masquerade.</li>
+                <li>Pop A Case for K9 to set Forced Release.</li>
+            </ol>
+        </div>
+
+        <div class="combo-card">
+            <h2 class="combo-title"><span class="tag tag-dkayed">Dkayed</span> Stake Your Soul! + K9 Jokul (DARK)</h2>
+            <div class="combo-board"><strong>End Board:</strong> Rock of the Vanquisher, C104 Masquerade, K917 Ripper, Forced Release (Set).</div>
+            <ol>
+                <li><strong>Activate</strong> Stake Your Soul!, reveal Jokul to Special Summon Mad Love from deck.</li>
+                <li><strong>Activate</strong> Mad Love to search VS Start!.</li>
+                <li><strong>Activate</strong> VS Start!, target Mad Love to search Razen.</li>
+                <li><strong>Normal Summon</strong> Razen. Search Hollie Sue.</li>
+                <li><em>Crucial Step:</em> <strong>Activate</strong> Mad Love on field, revealing DARK and EARTH to bounce your own Razen back to your hand (Keeps summon count low).</li>
+                <li><strong>Activate</strong> Hollie Sue in hand to Special Summon herself (Summon #3).</li>
+                <li><strong>Activate</strong> Jokul in hand, Special Summoning itself and Hollie Sue (from hand/detached later).</li>
+                <li><strong>Xyz Summon</strong> K917 Ripper using Jokul and Hollie Sue (Summon #5).</li>
+                <li><strong>Activate</strong> Ripper, detach to search Ezuna.</li>
+                <li><strong>Special Summon</strong> Ezuna (sending Lupus) and proceed with standard K9 Xyz climb into N.As.H. Knight -> C104 Masquerade.</li>
+                <li>Pop A Case for K9 to set Forced Release.</li>
+            </ol>
+        </div>
+
+        <div id="noResults" class="no-results">No combos found matching your search.</div>
+    </div>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const comboCards = document.querySelectorAll('.combo-card');
+            let hasVisibleCards = false;
+
+            comboCards.forEach(card => {
+                // Now only querying the combo-title for the filter
+                const titleText = card.querySelector('.combo-title').innerText.toLowerCase();
+                
+                if (titleText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    hasVisibleCards = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('noResults').style.display = hasVisibleCards ? 'none' : 'block';
+        });
+    </script>
+</body>
+</html>
