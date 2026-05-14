@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Into the Dream Realm</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base Styling */
+        body {
+            font-family: 'Crimson Text', serif;
+            background-color: #1e1e24;
+            color: #2b2623;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Controls Section */
+        .controls {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            border-top: 4px solid #4a627a;
+        }
+
+        .controls h3 { margin-top: 0; color: #2c3e50; font-size: 22px; }
+        
+        textarea {
+            width: 100%;
+            height: 90px;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: monospace;
+            margin-bottom: 10px;
+            resize: vertical;
+            background: #f9f9f9;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 220px;
+            font-family: Arial, sans-serif;
+        }
+
+        input#termDesc { width: 450px; }
+
+        button {
+            padding: 10px 18px;
+            background-color: #34495e;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        button:hover { background-color: #2c3e50; transform: translateY(-1px); }
+        
+        .print-btn { background-color: #27ae60; margin-top: 15px; font-size: 15px; }
+        .print-btn:hover { background-color: #219653; }
+        .control-row { margin-bottom: 15px; }
+
+        /* Printable Area Wrapper */
+        .printable-area {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            min-height: 800px;
+            background-color: #fff;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            border: 1px solid #e0d5c1;
+        }
+
+        /* Blurred Background Image */
+        .bg-image {
+            position: absolute;
+            top: -20px; left: -20px; right: -20px; bottom: -20px;
+            background-image: url('https://wallpapers.com/images/hd/aesthetic-ghibli-wtb6nov885g73fha.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(5px);
+            opacity: 0.6;
+            z-index: 0;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Content Layer over the background */
+        .sheet-content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 50px;
+            background: linear-gradient(135deg, rgba(255, 253, 248, 0.88), rgba(245, 240, 230, 0.92)); 
+            min-height: 100%;
+            box-sizing: border-box;
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.05);
+        }
+
+        /* Sheet Header */
+        .sheet-header {
+            text-align: center;
+            border-bottom: 2px solid #5a4b41;
+            padding-bottom: 20px;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .sheet-header::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: #5a4b41;
+            opacity: 0.5;
+        }
+
+        .sheet-header h1 {
+            font-family: 'Cinzel', serif;
+            margin: 0 0 8px 0;
+            font-size: 46px;
+            font-weight: 800;
+            color: #2b211a;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+        }
+
+        .sheet-header h2 {
+            font-family: 'Cinzel', serif;
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: #5a4b41;
+            letter-spacing: 3px;
+        }
+
+        /* 3-Column Layout */
+        .sheet-body {
+            display: flex;
+            gap: 40px;
+        }
+
+        .col-left, .col-right {
+            width: 22%;
+        }
+
+        .col-mid {
+            width: 56%;
+            padding: 0 30px;
+            background: rgba(255, 255, 255, 0.55);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+        .column-title {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            border-bottom: 1px solid #8c7c6f;
+            padding-bottom: 12px;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #2b211a;
+            letter-spacing: 1px;
+        }
+
+        /* Character Items */
+        .char-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .char-item img {
+            width: 120px; /* Made the images significantly larger */
+            height: 120px;
+            object-fit: contain; /* Better for transparent PNGs so they don't stretch */
+            margin-bottom: 8px;
+            background-color: transparent; /* No background */
+            /* Using drop-shadow instead of box-shadow hugs the actual shape of transparent PNGs! */
+            filter: drop-shadow(2px 5px 6px rgba(0,0,0,0.4));
+        }
+
+        .char-item span {
+            font-size: 19px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #1a1512;
+            text-shadow: 0px 0px 5px rgba(255, 255, 255, 1);
+            padding: 0 5px;
+        }
+
+        /* Terminology List */
+        .terminology-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        .terminology-list li {
+            margin-bottom: 15px;
+            line-height: 1.5;
+            font-size: 18px;
+            color: #2b2623;
+            background: rgba(255, 255, 255, 0.65);
+            padding: 12px 18px;
+            border-radius: 0 8px 8px 0;
+            border-left: 4px solid #5a4b41;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        
+        .terminology-list strong {
+            font-size: 19px;
+            color: #1a1512;
+            font-weight: 700;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        /* Print Settings */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .container {
+                max-width: 100%;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .printable-area {
+                box-shadow: none;
+                border-radius: 0;
+                border: none;
+            }
+            @page {
+                size: landscape;
+                margin: 0mm; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Controls (Hidden on print) -->
+    <div class="controls no-print">
+        <h3>Builder Controls</h3>
+        
+        <div class="control-row">
+            <label><strong>1. Load JSON Data:</strong></label><br>
+            <textarea id="jsonInput" placeholder='Paste JSON here (e.g. [{"id":"setsuko_ghibli","name": "Seita & Setsuko", "firstNight": 16.9, ... }])'></textarea><br>
+            <button onclick="processJSON()">Load Characters</button>
+        </div>
+
+        <div class="control-row" style="border-top: 1px solid #eaeaea; padding-top: 15px;">
+            <label><strong>2. Add Terminology:</strong></label><br>
+            <input type="text" id="termName" placeholder="Name (e.g., Jinx)">
+            <input type="text" id="termDesc" placeholder="Description">
+            <button onclick="addTerminology()">Add Rule</button>
+        </div>
+
+        <div class="control-row" style="border-top: 1px solid #eaeaea; padding-top: 15px;">
+            <label><strong>3. Print Sheet:</strong></label><br>
+            <button class="print-btn" onclick="window.print()">🖨️ Enter Print Mode (Ctrl+P)</button>
+            <small style="margin-left: 10px; color: #666; font-style: italic;">Set your printer layout to <strong>Landscape</strong> and enable <strong>Background Graphics</strong>!</small>
+        </div>
+    </div>
+
+    <!-- Printable Sheet -->
+    <div class="printable-area">
+        <!-- The blurred background element -->
+        <div class="bg-image"></div>
+        
+        <!-- The actual text and images -->
+        <div class="sheet-content">
+            <div class="sheet-header">
+                <h1>Into the Dream Realm</h1>
+                <h2>a Script by DMT</h2>
+            </div>
+
+            <div class="sheet-body">
+                <!-- Left: First Night -->
+                <div class="col-left">
+                    <h3 class="column-title">First Night</h3>
+                    <div id="firstNightContainer">
+                        <!-- Javascript will populate this -->
+                    </div>
+                </div>
+
+                <!-- Middle: Terminology -->
+                <div class="col-mid">
+                    <h3 class="column-title">Terminology & Rules</h3>
+                    <ul class="terminology-list" id="terminologyList">
+                        <li><strong>Drunk/Poison:</strong> Chức năng không hoạt động. Nếu chức năng có thể nhận thông tin, thông tin có thể sai.</li>
+                        <li><strong>Mỗi đêm/Mỗi đêm*:</strong> Chức năng được gọi dậy hằng đêm, dấu * thể hiện rằng chức năng không dậy đêm đầu.</li>
+                        <li><strong>Nominate/Bị nominate:</strong> Hành động nominate là hành động chỉ người khác để đưa họ lên giàn vào phase nominate, một người chỉ có thể nominate một lần mỗi sáng và chỉ có thể bị nominate một lần mỗi sáng.</li>
+                        <li><strong>Vote:</strong> Hành động vote là hành động giơ tay khi đếm vote cho một người bị nominate. Mỗi sáng, người có nhiều vote nhất (không hòa với người khác) và số vote ít nhất bằng một nửa số người còn sống bị hành quyết.</li>
+                        <li><strong>Storyteller:</strong> Thằng cầm gậy chọt người trong đêm.</li>
+                        <li><strong>Hàng xóm/Hàng xóm còn sống:</strong> Hàng xóm của một người chơi là hai người ngồi cạnh người đó từ đầu game. Hàng xóm còn sống của một người chơi là hai người còn sống ngồi gần người đó nhất về hai phía</li>
+                        <li><strong>Chihiro, Haku, No-Face, Yubaba:</strong> Spirited Away (2001)</li>
+                        <li><strong>Sophie, Howl, Calcifer, Witch of the Waste:</strong> Howl's Moving Castle (2004)</li>
+                        <li><strong>Ashitaka, San, Lady Eboshi, Forest Spirit:</strong> Princess Mononoke (1997)</li>
+                        <li><strong>Mahito Maki, Grey Heron:</strong> The Boy and the Heron (2023)</li>
+                        <li><strong>Nausicaä:</strong> Nausicaä of the Valley of the Wind (1984)</li>
+                        <li><strong>Seita & Setsuko:</strong> Grave of the Fireflies (1988)</li>
+                        <li><strong>Totoro:</strong> My Neighbor Totoro (1988)</li>
+                        <li><strong>Pazu:</strong> Castle in the Sky (1986)</li>
+                        <li><strong>Ponyo:</strong> Ponyo (2008)</li>
+                        <li><strong>Gin:</strong> To the Forest of Firefly Lights (2011)</li>
+                        <li><strong>Shinkai Makoto:</strong> Shinkai Makoto</li>
+                    </ul>
+                </div>
+
+                <!-- Right: Other Night -->
+                <div class="col-right">
+                    <h3 class="column-title">Other Night</h3>
+                    <div id="otherNightContainer">
+                        <!-- Javascript will populate this -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function processJSON() {
+        const input = document.getElementById('jsonInput').value;
+        let data = [];
+        
+        try {
+            let textToParse = input.trim();
+            if (textToParse.endsWith(',')) {
+                textToParse = textToParse.slice(0, -1);
+            }
+            if (!textToParse.startsWith('[')) {
+                textToParse = '[' + textToParse + ']';
+            }
+            data = JSON.parse(textToParse);
+        } catch (e) {
+            alert('Invalid JSON formatting. Please check your input.');
+            return;
+        }
+
+        const firstNightChars = data
+            .filter(c => c.firstNight && c.firstNight !== 0)
+            .sort((a, b) => a.firstNight - b.firstNight);
+
+        const otherNightChars = data
+            .filter(c => c.otherNight && c.otherNight !== 0)
+            .sort((a, b) => a.otherNight - b.otherNight);
+
+        renderCharacters(firstNightChars, 'firstNightContainer');
+        renderCharacters(otherNightChars, 'otherNightContainer');
+    }
+
+    function renderCharacters(characters, containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = ''; 
+
+        characters.forEach(char => {
+            const div = document.createElement('div');
+            div.className = 'char-item';
+
+            let imgSrc = '';
+            if (Array.isArray(char.image) && char.image.length > 0) {
+                imgSrc = char.image[0];
+            } else if (typeof char.image === 'string') {
+                imgSrc = char.image;
+            }
+
+            if (imgSrc) {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = char.name || char.id;
+                div.appendChild(img);
+            }
+
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = char.name || char.id;
+            div.appendChild(nameSpan);
+
+            container.appendChild(div);
+        });
+    }
+
+    function addTerminology() {
+        const nameInput = document.getElementById('termName');
+        const descInput = document.getElementById('termDesc');
+        
+        const name = nameInput.value.trim();
+        const desc = descInput.value.trim();
+
+        if (!name || !desc) {
+            alert("Please enter both a Term Name and a Description.");
+            return;
+        }
+
+        const list = document.getElementById('terminologyList');
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${name}:</strong> ${desc}`;
+        list.appendChild(li);
+
+        nameInput.value = '';
+        descInput.value = '';
+    }
+</script>
+
+</body>
+</html>
