@@ -5,84 +5,148 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Puzzle List</title>
                 <style>
+                        :root {
+                            color-scheme: dark;
+                        }
+
+                        * {
+                            box-sizing: border-box;
+                        }
+
                         body {
-                                    font-family: 'Segoe UI', Arial, sans-serif;
-                                                background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
-                                                            margin: 0;
-                                                                        min-height: 100vh;
-                                                                                }
-                                                                                        h1 {
-                                                                                                    color: #1565c0;
-                                                                                                                text-align: center;
-                                                                                                                            margin-top: 40px;
-                                                                                                                                        letter-spacing: 2px;
-                                                                                                                                                }
-                                                                                                                                                        .puzzle-list {
-                                                                                                                                                                    max-width: 500px;
-                                                                                                                                                                                margin: 40px auto;
-                                                                                                                                                                                            background: #fff;
-                                                                                                                                                                                                        border-radius: 16px;
-                                                                                                                                                                                                                    box-shadow: 0 4px 16px #b3c6e0;
-                                                                                                                                                                                                                                padding: 32px 24px;
-                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                .puzzle-item {
-                                                                                                                                                                                                                                                            display: block;
-                                                                                                                                                                                                                                                                        background: linear-gradient(90deg, #1976d2 60%, #64b5f6 100%);
-                                                                                                                                                                                                                                                                                    color: #fff;
-                                                                                                                                                                                                                                                                                                text-decoration: none;
-                                                                                                                                                                                                                                                                                                            font-size: 1.15em;
-                                                                                                                                                                                                                                                                                                                        margin: 12px 0;
-                                                                                                                                                                                                                                                                                                                                    padding: 16px 18px;
-                                                                                                                                                                                                                                                                                                                                                border-radius: 8px;
-                                                                                                                                                                                                                                                                                                                                                            box-shadow: 0 2px 8px #b3c6e0;
-                                                                                                                                                                                                                                                                                                                                                                        transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
-                                                                                                                                                                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                                                                                                                                                                        .puzzle-item:hover {
-                                                                                                                                                                                                                                                                                                                                                                                                    background: linear-gradient(90deg, #1565c0 60%, #42a5f5 100%);
-                                                                                                                                                                                                                                                                                                                                                                                                                box-shadow: 0 8px 24px #90caf9;
-                                                                                                                                                                                                                                                                                                                                                                                                                            transform: translateY(-4px) scale(1.03);
-                                                                                                                                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                            font-family: 'Segoe UI', Arial, sans-serif;
+                            margin: 0;
+                            min-height: 100vh;
+                            color: #f4f8ff;
+                            background:
+                                linear-gradient(120deg, rgba(3, 8, 24, 0.88), rgba(8, 24, 48, 0.82)),
+                                url('IndexBG.png') center/cover no-repeat fixed;
+                            display: flex;
+                            justify-content: center;
+                            align-items: flex-start;
+                            padding: 36px 16px 40px;
+                        }
 
-        /* mobile tweaks */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.8em;
-                margin-top: 20px;
-            }
-            .puzzle-list {
-                margin: 20px 10px;
-                padding: 20px;
-                max-width: 90%;
-            }
-            .puzzle-item {
-                font-size: 1em;
-                padding: 12px 14px;
-            }
-        }
+                        .page-shell {
+                            width: min(620px, 100%);
+                            padding: 28px 24px 32px;
+                            background: rgba(5, 14, 30, 0.76);
+                            border: 1px solid rgba(108, 182, 255, 0.35);
+                            border-radius: 20px;
+                            box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset, 0 20px 60px rgba(0, 0, 0, 0.4);
+                            backdrop-filter: blur(14px);
+                        }
 
-        </style>
+                        h1 {
+                            color: #8ddcff;
+                            text-align: center;
+                            margin: 0 0 10px;
+                            font-size: 2.1rem;
+                            letter-spacing: 0.24em;
+                            text-transform: uppercase;
+                            text-shadow: 0 0 16px rgba(141, 220, 255, 0.45);
+                        }
+
+                        .subtitle {
+                            text-align: center;
+                            margin: 0 0 20px;
+                            color: #cfe8ff;
+                            opacity: 0.9;
+                            font-size: 0.95rem;
+                            letter-spacing: 0.08em;
+                            text-transform: uppercase;
+                        }
+
+                        .puzzle-list {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 10px;
+                        }
+
+                        .puzzle-item {
+                            display: block;
+                            background: linear-gradient(90deg, rgba(16, 66, 129, 0.95) 0%, rgba(7, 142, 199, 0.95) 100%);
+                            color: #f8fbff;
+                            text-decoration: none;
+                            font-size: 1.02em;
+                            padding: 14px 16px;
+                            border-radius: 12px;
+                            border: 1px solid rgba(153, 219, 255, 0.24);
+                            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+                            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+                            position: relative;
+                            overflow: hidden;
+                        }
+
+                        .puzzle-item::before {
+                            content: '';
+                            position: absolute;
+                            inset: 0;
+                            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
+                            transform: translateX(-100%);
+                            transition: transform 0.35s ease;
+                        }
+
+                        .puzzle-item:hover {
+                            background: linear-gradient(90deg, rgba(24, 95, 178, 0.98) 0%, rgba(45, 191, 255, 0.98) 100%);
+                            box-shadow: 0 12px 28px rgba(45, 191, 255, 0.24);
+                            transform: translateY(-3px) scale(1.01);
+                        }
+
+                        .puzzle-item:hover::before {
+                            transform: translateX(100%);
+                        }
+
+                        /* mobile tweaks */
+                        @media (max-width: 600px) {
+                            body {
+                                padding: 16px 10px 24px;
+                            }
+
+                            .page-shell {
+                                padding: 20px 14px 24px;
+                            }
+
+                            h1 {
+                                font-size: 1.6rem;
+                                letter-spacing: 0.16em;
+                            }
+
+                            .subtitle {
+                                font-size: 0.8rem;
+                            }
+
+                            .puzzle-item {
+                                font-size: 0.96em;
+                                padding: 12px 14px;
+                            }
+                        }
+
+                        </style>
                                                                                                                                                                                                                                                                                                                                                                                                                                         </head>
                                                                                                                                                                                                                                                                                                                                                                                                                                         <body>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <h1>Puzzle List</h1>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="puzzle-list">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a class="puzzle-item" href="rauma.html">36</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a class="puzzle-item" href="londonmap.html">London Map</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a class="puzzle-item" href="stpaulfloorplan.html">Beatrix Potter Location</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <a class="puzzle-item" href="pottergrid.html">Paper Grids</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a class="puzzle-item" href="cathedralgallery.html">Cathedral Gallery</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <a class="puzzle-item" href="prison18.html">Prison 18</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a class="puzzle-item" href="camp.html">Army Camp</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a class="puzzle-item" href="crossword.html">Crossword</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a class="puzzle-item" href="stocks.html">Stocks</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a class="puzzle-item" href="cw.html">CW</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a class="puzzle-item" href="body.html">Body</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a class="puzzle-item" href="future.html">Future</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <a class="puzzle-item" href="restaurant32.html">Restaurant 32</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <a class="puzzle-item" href="caesarcipher.html">Tool: Caesar Cipher</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <a class="puzzle-item" href="botcsheet.html">?</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </body>
+                                            <div class="page-shell">
+                                                <h1>Puzzle List</h1>
+                                                <p class="subtitle">Mission control · archive access</p>
+                                                <div class="puzzle-list">
+                                                        <a class="puzzle-item" href="rauma.html">36</a>
+                                                        <a class="puzzle-item" href="londonmap.html">London Map</a>
+                                                        <a class="puzzle-item" href="stpaulfloorplan.html">Beatrix Potter Location</a>
+                                                                <a class="puzzle-item" href="pottergrid.html">Puzzle 6: Paper Grids</a>
+                                                                        <a class="puzzle-item" href="cathedralgallery.html">Cathedral Gallery</a>
+                                                                                <a class="puzzle-item" href="prison18.html">Prison 18</a>
+                                                                                        <a class="puzzle-item" href="camp.html">Army Camp</a>
+                                                                                        <a class="puzzle-item" href="crossword.html">Crossword</a>
+                                                                                        <a class="puzzle-item" href="stocks.html">Stocks</a>
+                                                                                        <a class="puzzle-item" href="cw.html">CW</a>
+                                                                                        <a class="puzzle-item" href="body.html">Body</a>
+                                                                                        <a class="puzzle-item" href="future.html">Future</a>
+                                                                                                <a class="puzzle-item" href="restaurant32.html">Restaurant 32</a>
+                                                                                                        
+                                                                                <a class="puzzle-item" href="caesarcipher.html">Tool: Caesar Cipher</a>
+                                                                                <a class="puzzle-item" href="botcsheet.html">?</a>
+                                                                                    </div>
+                                            </div>
+                    </body>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </html>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     >
